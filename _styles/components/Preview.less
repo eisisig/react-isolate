@@ -1,0 +1,37 @@
+@import "../variables";
+
+.wrapper {
+	.box;
+	top:      0;
+	right:    0;
+	bottom:   0;
+	left:     0;
+	position: absolute;
+}
+
+.preview {
+	.box;
+	overflow: auto;
+	height:   50%;
+	padding:  @mainPadding;
+}
+
+.markup {
+	.box;
+	height:           20%;
+	padding:          @mainPadding;
+	border-top:       1px solid @mainBorderColor;
+	background-color: #263238;
+	z-index:          1;
+	overflow:         auto;
+}
+
+.editor {
+	.box;
+	height:           30%;
+	padding:          @mainPadding;
+	border-top:       1px solid @mainBorderColor;
+	background-color: #263238;
+	overflow:         auto;
+	z-index:          2;
+}

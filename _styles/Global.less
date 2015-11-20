@@ -1,0 +1,203 @@
+//@import "normalize";
+@import "variables";
+
+:global {
+
+	html, body {
+		padding: 0;
+		margin:  0;
+		height:  100%;
+		width:   100%;
+	}
+
+	#root {
+		.box;
+		position:    relative;
+		width:       100%;
+		height:      100%;
+		font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, serif;
+		color:       @mainColor;
+		font-size:   14px;
+	}
+
+	//	.iso-box {
+	//		margin:      0;
+	//		height:      100%;
+	//		width:       100%;
+	//		position:    relative;
+	//	}
+	//
+	//	.iso-h1, .iso-h2, .iso-h3, .iso-h4, .iso-h5, .iso-h6 {
+	//		font-weight:    normal;
+	//		color:          darken(@mainBorderColor, 20%);
+	//		text-transform: uppercase;
+	//		margin-top:     0;
+	//		font-size:      13px;
+	//	}
+	//
+	//	.iso-h1 {
+	//		color: @mainColor;
+	//	}
+	//
+	//	.iso-h3 { }
+	//
+	//	.iso-hr {
+	//		border:     none;
+	//		border-top: 1px solid @mainBorderColor;
+	//		margin:     @mainPadding 0;
+	//	}
+	//
+	//	.iso-link, .iso-link:visited {
+	//		display:         block;
+	//		color:           @mainColor;
+	//		text-decoration: none;
+	//		&:hover {
+	//			opacity: .7;
+	//		}
+	//	}
+	//
+	//	.iso-blockquote {
+	//		margin:           0;
+	//		padding:          5px 15px;
+	//		color:            #888888;
+	//		background-color: @secondaryBackgroundColor;
+	//		margin-bottom:    15px;
+	//	}
+	//
+	//	.iso-code, .iso-pre, .iso-code-part {
+	//		font-family: Hack, Menlo;
+	//	}
+	//
+	//	.iso-code-part {
+	//		border:           1px solid @mainBorderColor;
+	//		padding:          2px 5px;
+	//		font-size:        11px;
+	//		border-radius:    3px;
+	//		background-color: lighten(@mainBorderColor, 5%);
+	//	}
+	//
+	//	.iso-search {
+	//		.box;
+	//		//background:    @secondaryBackgroundColor;
+	//		background:    white;
+	//		padding:       @mainPadding;
+	//		border-bottom: 2px solid @mainBorderColor;
+	//		margin-bottom: 10px;
+	//		z-index:       5;
+	//		position:      fixed;
+	//		width:         18em;
+	//	}
+	//
+	//	.iso-search-input {
+	//		outline:    none;
+	//		background: none;
+	//		border:     none;
+	//		padding:    @mainPadding / 2;
+	//	}
+	//
+	//	.iso-search-clear {
+	//		float:         right;
+	//		height:        24px;
+	//		width:         24px;
+	//		text-align:    center;
+	//		font-size:     12px;
+	//		line-height:   20px;
+	//		border-radius: 2px;
+	//		color:         white;
+	//		background:    #000000;
+	//		margin:        5px 0 0 0;
+	//	}
+	//
+	//	.iso-list {
+	//		padding-top: 80px;
+	//	}
+	//
+	//	.iso-list-components {
+	//		border:         none;
+	//		border-bottom:  1px solid @mainBorderColor;
+	//		padding-bottom: 10px;
+	//		margin-bottom:  10px;
+	//	}
+	//
+	//	.iso-list-header {
+	//		color:          darken(@mainBorderColor, 20%);
+	//		font-size:      12px;
+	//		text-transform: uppercase;
+	//	}
+	//
+	//	//.iso-list-header {
+	//	//	color:          darken(@mainBorderColor, 20%);
+	//	//	font-size:      12px;
+	//	//	text-transform: uppercase;
+	//	//}
+	//	.iso-list-header,
+	//	.iso-list .iso-link {
+	//		padding: 5px @mainPadding;
+	//	}
+	//
+	//	.iso-list .iso-list-fixtures .iso-link {
+	//		font-size: 12px;
+	//		margin-left: 15px;
+	//	}
+	//
+	//	.iso-list .iso-link.is-current,
+	//	.iso-list .is-current > .iso-list-fixtures .iso-link.is-current {
+	//		color: @activeColor;
+	//	}
+	//	.iso-list .is-current > .iso-list-fixtures .iso-link {}
+	//
+	/**
+	 * Table
+	 */
+	.iso-table {
+		width: 100%;
+	}
+
+	.iso-table > thead > tr > th,
+	.iso-table > tbody > tr > td {
+		padding: @mainPadding;
+	}
+
+	.iso-table > thead > tr > th {
+		text-align:    left;
+		font-weight:   700;
+		font-size:     14px;
+		border-bottom: 2px solid @mainBorderColor;
+	}
+
+	.iso-table > thead + tbody > tr.is-required > td {
+		background-color: lighten(@mainBorderColor, 5%);
+	}
+	.iso-table > thead + tbody > tr > td {
+		font-size: 13px;
+	}
+
+	.iso-table.iso-table--bordered > thead + tbody > tr > td {
+		border-bottom: 1px solid @mainBorderColor;
+	}
+
+	/**
+	 * Badge
+	 */
+	//.iso-badge {
+	//	float:            right;
+	//	font-size:        12px;
+	//	font-weight:      bold;
+	//	display:          inline-block;
+	//	background-color: rgba(0, 0, 0, .1);
+	//	border-radius:    2px;
+	//	width:            20px;
+	//	height:           20px;
+	//	line-height:      20px;
+	//	text-align:       center;
+	//}
+	//
+	//.is-current .iso-badge {
+	//	background-color: @activeColor;
+	//	color:            white;
+	//}
+	//
+	//	.CodeMirror {
+	//		height: 405px !important;
+	//	}
+}

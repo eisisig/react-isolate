@@ -1,0 +1,101 @@
+@import "../variables";
+
+.wrapper { }
+
+.search {
+	.box;
+	background:    white;
+	padding:       @mainPadding;
+	border-bottom: 1px solid @mainBorderColor;
+	margin-bottom: 10px;
+	z-index:       5;
+	position:      fixed;
+	width:         18em;
+	box-shadow:    0 5px 10px fade(@mainBorderColor, 50%);
+}
+
+.searchInput {
+	outline:    none;
+	background: none;
+	border:     none;
+	padding:    @mainPadding / 2;
+}
+
+.searchClear {
+	float:         right;
+	height:        24px;
+	width:         24px;
+	text-align:    center;
+	font-size:     12px;
+	line-height:   20px;
+	border-radius: 2px;
+	color:         white;
+	background:    #000000;
+	margin:        5px 0 0 0;
+}
+
+.list {
+	padding-top: 65px;
+	overflow:    auto;
+}
+
+.componentLink, .subLink, .fixtureLink {
+	display:         block;
+	color:           @mainColor;
+	text-decoration: none;
+	&:hover {
+		opacity: .7;
+	}
+}
+
+.componentHeader {
+	margin-top:     10px;
+	margin-left:    15px;
+	font-weight:    normal;
+	color:          darken(@mainBorderColor, 10%);
+	font-size:      11px;
+	text-transform: uppercase;
+}
+
+.componentLinkCurrent,
+.subLinkCurrent,
+.fixtureLinkCurrent {
+	color: @activeColor;
+}
+
+.componentList {
+	padding:         0;
+	margin:          0;
+	list-style-type: none;
+}
+
+.componentListItem {
+	border:         none;
+	border-bottom:  1px solid @mainBorderColor;
+	padding-bottom: 7px;
+}
+
+.subList {
+	padding:         0;
+	margin:          0;
+	list-style-type: none;
+}
+
+.subListItem { }
+
+.subLink {
+	font-size: 16px;
+	margin:    5px 15px;
+}
+
+.fixtureList {
+	padding:         0;
+	list-style-type: none;
+	font-size:       12px;
+	margin-left:     30px;
+	margin-bottom:   15px;
+}
+
+.fixtureListItem { }
+
+.fixtureLink { }

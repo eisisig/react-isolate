@@ -1,0 +1,87 @@
+{
+  "name": "react-isolate",
+  "version": "1.5.0",
+  "description": "A React workbench to work/view react component in isolated environment",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node .bin/start",
+    "demo": "react-isolate --componentsPath=demo/components --fixturesPath=demo/fixtures --testsPath=demo/tests",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
+    "lint": "eslint _components _lib",
+    "test": "echo \"Run tests\" && exit 0"
+  },
+  "contributors": [
+    "Eisi Sig <im.eisisig@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/eisisig/react-isolate/issues"
+  },
+  "bin": {
+    "react-isolate": ".bin/start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eisisig/react-isolate.git"
+  },
+  "keywords": [
+    "react",
+    "isolate",
+    "component",
+    "workbench",
+    "environment"
+  ],
+  "author": "Eisi Sig @eisisig",
+  "dependencies": {
+    "babel": "^5.0.0",
+    "babel-core": "^5.0.0",
+    "babel-loader": "^5.0.0",
+    "babel-plugin-react-transform": "^1.1.1",
+    "codemirror": "^5.8.0",
+    "css-loader": "^0.23.0",
+    "docgen-loader": "^1.1.0",
+    "expose-loader": "^0.7.1",
+    "express": "^4.13.3",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "file-loader": "^0.8.4",
+    "history": "^1.13.1",
+    "json5": "^0.4.0",
+    "json5-loader": "^0.6.0",
+    "jsx-control-statements": "^1.1.2",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.1",
+    "lodash": "^3.10.1",
+    "marked": "^0.3.5",
+    "raw-loader": "^0.5.1",
+    "react": "^0.14.2",
+    "react-docgen": "^2.4.0",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.1",
+    "redbox-react": "^1.1.1",
+    "style-loader": "^0.13.0",
+    "tojson-loader": "^1.0.1",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.6",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-hot-middleware": "^2.5.0",
+    "yargs": "^3.30.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.5",
+    "babel-tape-runner": "^1.3.0",
+    "conventional-changelog": "^0.5.1",
+    "cz-conventional-changelog": "^1.1.4",
+    "eslint": "^1.9.0",
+    "eslint-plugin-react": "^3.8.0",
+    "tape": "^4.2.2",
+    "tape-bdd": "0.0.1"
+  },
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
