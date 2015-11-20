@@ -7,7 +7,6 @@ import { Link } from 'react-router';
 import ui from '../_styles/ui.less';
 import styles from '../_styles/components/SideBar.less';
 
-
 /**
  * SideBar
  * @class SideBar
@@ -54,9 +53,9 @@ export default class SideBar extends React.Component {
 		return (
 			<div>
 				<input className={ styles.searchInput } ref="search" type="text" placeholder="Filter components" onChange={ this.handleSearch } />
-				<If condition={ filteredList }>
+				{ filteredList ? (
 					<button className={ styles.searchClear } onClick={ this.handleClearSearch }>X</button>
-				</If>
+				) : null }
 			</div>
 		);
 	};
@@ -71,7 +70,7 @@ export default class SideBar extends React.Component {
 					return (
 						<li key={ i } className={ styles.componentListItem }>
 							<h1 className={ `${ styles.componentHeader }` }>{ component.name }</h1>
-							<If condition={ component.components }>
+							{ component.components ? (
 								<ul className={ styles.subList }>
 									{ _.map(component.components, ( subComponent, i ) => {
 										let path = `/${component.name}/${subComponent.name}`;
@@ -79,15 +78,15 @@ export default class SideBar extends React.Component {
 										const totalFixtures = subComponent.fixtures ? Object.keys(subComponent.fixtures).length : null;
 										const firstLink = subComponent.fixtures ? subComponent.fixtures[Object.keys(subComponent.fixtures)[0]] : null;
 										if ( firstLink ) { path += `/${firstLink.name}`; }
-										return (
-											<If condition={ subComponent.fixtures }>
+										if ( subComponent.fixtures ) {
+											return (
 												<li key={ i } className={ styles.subList }>
 													<Link className={ `${ styles.subLink } ${ current? styles.subLinkCurrent: '' }` }
 													      to={ path }>
 														{ subComponent.name }
 														{ totalFixtures ? <span className={ ui.badge }>{ totalFixtures }</span> : null }
 													</Link>
-													<If condition={ current && subComponent.fixtures }>
+													{ current && subComponent.fixtures ? (
 														<ul className={ styles.fixtureList }>
 															{ _.map(subComponent.fixtures, ( fixture, i ) => {
 																const path = `/${component.name}/${subComponent.name}/${fixture.name}`;
@@ -103,14 +102,13 @@ export default class SideBar extends React.Component {
 																);
 															}) }
 														</ul>
-													</If>
+													) : null }
 												</li>
-											</If>
-										);
+											);
+										}
 									}) }
 								</ul>
-							</If>
-
+							) : null }
 						</li>
 					);
 				}) }

@@ -17,18 +17,16 @@ export default class Documentation extends React.Component {
 		const { currentData, children } = this.props;
 		return (
 			<div className={ styles.wrapper }>
-
-				<If condition={ currentData.currentDocs }>
+				{ currentData.currentDocs ? (
 					<div className={ styles.docs }>
 						<PropList { ...currentData } />
 					</div>
-				</If>
-
-				<If condition={ currentData.currentFixture }>
+				) : null  }
+				{ currentData.currentFixture ? (
 					<div className={ styles.preview }>
 						{ React.Children.map(children, ( el ) => React.cloneElement(el, { currentData, codeText: currentData.currentFixture.props })) }
 					</div>
-				</If>
+				) : null }
 			</div>
 		);
 	}

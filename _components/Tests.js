@@ -30,8 +30,7 @@ export default class TestList extends React.Component {
 		return (
 			<div className="TestList">
 				<h3>Tests { tests.asserts && tests.asserts.length ? <button onClick={ this.handleRun }>Run</button> : null }</h3>
-
-				<If condition={ tests.asserts.length }>
+				{ tests.asserts.length ? (
 					<div>
 						<ol>
 							{ tests.asserts.map(( test, i ) => {
@@ -40,9 +39,9 @@ export default class TestList extends React.Component {
 						</ol>
 						<iframe style={ style } src="/runTest" frameBorder="1"></iframe>
 					</div>
-					<Else />
+				) : (
 					<div className="Error">No tests found!</div>
-				</If>
+				) }
 			</div>
 		);
 	}

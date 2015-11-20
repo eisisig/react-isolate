@@ -68,12 +68,12 @@ export default class PropList extends React.Component {
 
 		return (
 			<div className={ styles.wrapper }>
-				<If condition={ currentDocs.description }>
+				{ currentDocs.description ? (
 					<div dangerouslySetInnerHTML={{ __html: currentDocs.description }}></div>
-					<Else />
+				) : (
 					<h1>{ currentComponent.name }</h1>
-				</If>
-				<If condition={ currentDocs.props }>
+				) }
+				{ currentDocs.props ? (
 					<div>
 						<h4 className="iso-h4">Props</h4>
 						<table className="iso-table iso-table--bordered">
@@ -101,7 +101,8 @@ export default class PropList extends React.Component {
 							</tbody>
 						</table>
 					</div>
-				</If>
+
+				) : null }
 			</div>
 		);
 	}

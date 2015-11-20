@@ -7,7 +7,6 @@
   "env": {
     "development": {
       "plugins": [
-        "jsx-control-statements/babel",
         "react-transform"
       ],
       "extra": {
