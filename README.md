@@ -38,7 +38,4 @@ To use the most out of babel the users project needs to have stage 0 enabled. So
 
 ## Todo / Ideas
 
-- [ ] Make the props docs generator work within webpack context. It is now dependent on node module
-- [ ] Allow manually selecting Component for Demo OR manually select Component for the documentation while looking at Demo
-- [ ] Make demo's better. Have the main props and demo markup at the same time
-- [ ] Make the first fixture be selected by default when navigating to components
+[https://github.com/eisisig/react-isolate/issues]()
