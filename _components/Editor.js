@@ -2,8 +2,16 @@
 
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/addon/lint/javascript-lint';
+import 'codemirror/addon/lint/lint';
+import 'codemirror/addon/lint/lint.css';
+import 'codemirror/addon/lint/json-lint';
+
 
 import styles from '../_styles/components/Editor.less';
 
@@ -24,37 +32,24 @@ export default class Editor extends React.Component {
 		theme: React.PropTypes.string
 	};
 
-	static defaultProps = {
-		className: '',
-		lineNumbers: false,
-		readOnly: false,
-		tabSize: 4,
-		theme: 'material'
-	};
+	static defaultProps = {};
 
 	componentDidMount () {
 		this.editor = CodeMirror.fromTextArea(this.refs.editor, {
-			mode: 'javascript',
-			lineNumbers: this.props.lineNumbers,
+			mode: 'application/json',
+			lineNumbers: false,
 			smartIndent: true,
-			tabSize: this.props.tabSize,
+			lineWrapping: true,
+			tabSize: 4,
 			matchBrackets: true,
-			//lineWrapping: true,
-			//autofocus: true,
-			theme: this.props.theme,
-			readOnly: this.props.readOnly
+			gutters: ['CodeMirror-lint-markers'],
+			lint: true,
+			theme: 'material',
+			readOnly: false
 		});
 
 		this.editor.on('change', this.handleChange);
 	}
-
-	//shouldComponentUpdate ( nextProps ) {
-		//const shouldUpdate = !_.isEqual(this.props.codeText, nextProps.codeText);
-		//if ( shouldUpdate ) {
-		//	this.editor.setValue(JSON.stringify(nextProps.codeText, null, 4));
-		//}
-		//return shouldUpdate;
-	//}
 
 	handleChange = () => {
 		const { readOnly, onChange } = this.props;

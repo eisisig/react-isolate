@@ -99,6 +99,11 @@ module.exports = function ( customConfig ) {
 					include: /_styles/
 				},
 				{
+					test: /\.css$/,
+					loader: 'style!css',
+					exclude: /_styles/
+				},
+				{
 					test: /\.less$/,
 					loader: 'style!css!less',
 					exclude: /_styles/

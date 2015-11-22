@@ -39,7 +39,6 @@
     "codemirror": "^5.8.0",
     "css-loader": "^0.23.0",
     "docgen-loader": "^1.1.0",
-    "expose-loader": "^0.7.1",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.4",

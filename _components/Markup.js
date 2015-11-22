@@ -23,28 +23,23 @@ export default class Markup extends React.Component {
 
 	static defaultProps = {
 		className: '',
-		lineNumbers: false,
-		readOnly: true,
-		tabSize: 4,
-		theme: 'material'
 	};
 
 	componentDidMount () {
 		this.editor = CodeMirror.fromTextArea(this.refs.markup, {
 			mode: 'javascript',
-			lineNumbers: this.props.lineNumbers,
+			lineNumbers: false,
 			smartIndent: true,
-			tabSize: this.props.tabSize,
+			lineWrapping: true,
+			tabSize: 4,
 			matchBrackets: true,
-			theme: this.props.theme,
-			readOnly: this.props.readOnly
+			theme: 'material',
+			readOnly: true
 		});
 	}
 
 	componentDidUpdate () {
-		if ( this.props.readOnly ) {
-			this.editor.setValue(this.props.codeText);
-		}
+		this.editor.setValue(this.props.codeText);
 	}
 
 	render () {
