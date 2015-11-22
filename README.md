@@ -10,7 +10,6 @@ Until relative plugins work in babel we need few dependancies in the users proje
 
 - babel-core
 - babel-plugin-react-transform
-- jsx-control-statements
 - react-transform
 - react-transform-hmr
 - react-transform-catch-errors
