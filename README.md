@@ -12,10 +12,9 @@ Until relative plugins work in babel we need few dependancies in the users proje
 - babel-plugin-react-transform
 - react-transform
 - react-transform-hmr
-- react-transform-catch-errors
 
 ~~~sh
-npm install jsx-control-statements babel-plugin-react-transform react-transform react-transform-catch-errors react-transform-hmr
+npm install babel-plugin-react-transform react-transform react-transform-hmr
 ~~~
 
 ## .babelrc
@@ -30,10 +29,33 @@ To use the most out of babel the users project needs to have stage 0 enabled. So
 
 ## Getting started
 
-## Config
+### Install 
+
+```bash
+npm install -g react-isolate
+```
+
+## Configuring
+
+There are 2 ways to configure the runner. From the command-line or with a config file
 
 ### CLI
+
+```bash
+$ react-isolate --componentsPath=demo/components --fixturesPath=demo/fixtures
+```
+
 ### isolate.config.js
+
+Create a file in your project root directory named `isolate.config.js` and export the needed variables
+
+```js
+module.exports = {
+	fixturesPath: 'demo/fixtures',
+	componentsPath: 'demo/components'
+};
+
+```
 
 ## Todo / Ideas
 
