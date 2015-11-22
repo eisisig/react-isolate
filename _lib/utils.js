@@ -21,7 +21,7 @@ export const renderComponentMarkup = ( componentName, props, multiLine = false )
 
 		let value = props[key];
 
-		if ( value && value !== true ) { value = value.trim() }
+		if ( value && value !== true && typeof value !== 'object' && typeof value !== 'function' ) { value = value.trim() }
 
 		key = key.trim();
 

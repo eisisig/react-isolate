@@ -21,18 +21,9 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 	const fileArr = removeExtension(filePath).split('/').splice(1);
 	const Component = componentsContext(filePath);
 	const mainComponentName = fileArr[0];
-	//let docs = null;
 
 	if ( !_.contains(fileArr, 'index') ) {
-
 		const name = fileArr.length > 1 ? fileArr[1] : fileArr[0];
-
-		//try {
-		//	docs = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + filePath.slice(2));
-		//} catch ( e ) {
-		//	//console.log('e', e);
-		//}
-
 		return _.merge(results, {
 			[mainComponentName]: {
 				name: mainComponentName,
@@ -40,7 +31,6 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 					[name]: {
 						Component,
 						filePath,
-						//docs,
 						name
 					}
 				}
@@ -110,7 +100,7 @@ const createElement = ( Component, props ) => <Component components={ appData } 
  * Render App Component
  */
 export default ReactDOM.render((
-	<Router history={ history } >
+	<Router history={ history }>
 		<Route path="/" component={ App } appData={ appData }>
 			<Route path=":component" component={ Documentation }>
 				<Route path=":sub">
