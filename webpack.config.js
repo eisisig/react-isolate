@@ -42,8 +42,8 @@ module.exports = function ( customConfig ) {
 		},
 		resolve: {
 			modulesDirectories: [
-				'node_modules',
 				path.resolve(__dirname, 'node_modules'),
+				path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			],
 			alias: {
@@ -58,8 +58,8 @@ module.exports = function ( customConfig ) {
 		},
 		resolveLoader: {
 			modulesDirectories: [
-				'node_modules',
 				path.resolve(__dirname, 'node_modules'),
+				path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			]
 		},
@@ -71,7 +71,7 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.js$/,
 					exclude: [
-						/node_modules\/(?!@cosmic\/react-isolate)/
+						/node_modules\/(?!react-isolate)/
 					],
 					loaders: ['babel']
 				},
