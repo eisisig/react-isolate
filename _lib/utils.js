@@ -19,7 +19,9 @@ export const renderComponentMarkup = ( componentName, props, multiLine = false )
 
 	const propList = Object.keys(props).map(( key, i ) => {
 
-		const value = props[key].trim();
+		let value = props[key];
+
+		if ( value && value !== true ) { value = value.trim() }
 
 		key = key.trim();
 
