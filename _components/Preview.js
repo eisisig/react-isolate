@@ -73,7 +73,29 @@ export default class Preview extends React.Component {
 
 	handlePreviewRender = () => {
 		const { preview } = this.refs;
-		ReactDOM.render(this.DOMNode(), preview);
+		const { code  } = this.state;
+
+		let state = code.state;
+
+		ReactDOM.unmountComponentAtNode(preview);
+
+		const renderedComponent = ReactDOM.render(this.DOMNode(), preview);
+
+		if ( !state && renderedComponent.state ) {
+			state = renderedComponent.state;
+		}
+
+		if ( state ) {
+			renderedComponent.setState(state, () => {
+				renderedComponent.setState = _.wrap(renderedComponent.setState, ( caller, value ) => {
+					caller.call(renderedComponent, value);
+					const newProps = _.assign(code, { state: value });
+					this.setState(newProps, () => {
+						this.handleEditorRender(newProps)
+					});
+				});
+			});
+		}
 	};
 
 	handleEditorRender = () => {
