@@ -1,6 +1,6 @@
 {
   "name": "react-isolate",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "A React workbench to work/view react component in isolated environment",
   "main": "index.js",
   "scripts": {
