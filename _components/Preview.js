@@ -81,7 +81,7 @@ export default class Preview extends React.Component {
 
 		const renderedComponent = ReactDOM.render(this.DOMNode(), preview);
 
-		if ( !state && 'state' in renderedComponent ) {
+		if ( !state && renderedComponent && 'state' in renderedComponent ) {
 			state = renderedComponent.state;
 		}
 
