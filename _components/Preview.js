@@ -32,9 +32,12 @@ export default class Preview extends React.Component {
 	}
 
 	componentDidUpdate ( nextProps ) {
+		const currentComponentName = this.props.currentData.currentComponent.name;
+		const nextComponentName = nextProps.currentData.currentComponent.name;
 		const currentName = this.props.currentData.currentFixture.name;
 		const nextName = nextProps.currentData.currentFixture.name;
-		if ( !_.isEqual(currentName, nextName) ) {
+		const doUpdate = !_.isEqual(currentName, nextName) || !_.isEqual(currentComponentName, nextComponentName);
+		if ( doUpdate ) {
 			this.handleEditorRender();
 		}
 	}

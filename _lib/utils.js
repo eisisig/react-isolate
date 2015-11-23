@@ -17,7 +17,7 @@ export const renderComponentMarkup = ( componentName, props, multiLine = false )
 	// Remove state
 	props = _.omit(props, 'state');
 
-	const propList = Object.keys(props).map(( key, i ) => {
+	const propList = Object.keys(props).map(( key ) => {
 
 		let value = props[key];
 
