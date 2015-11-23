@@ -2,10 +2,7 @@
 
 import React, { PropTypes } from 'react';
 
-const Icon = ( props ) => {
-	const classes = 'Testing this';
-	return <i className={ classes }>{ classes }</i>;
-};
+const Icon = ( { name, classes } ) => <i className={ classes }>{ name }</i>;
 
 Icon.defaultProps = {
 	name: null,
@@ -14,7 +11,10 @@ Icon.defaultProps = {
 };
 
 Icon.propTypes = {
-	name: PropTypes.string.isRequired,
+	name: PropTypes.oneOf([
+		'closeSoftRoundNeg',
+		'up',
+	]).isRequired,
 	size: PropTypes.oneOf(['xs', 'sm', 'lg', 'xl']),
 	iconPrefix: PropTypes.string
 };
