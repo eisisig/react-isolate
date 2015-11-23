@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import styles from '../_styles/components/PropList.less';
+import ui from '../_styles/ui.less';
 
 /**
  * # PropList
@@ -30,29 +31,37 @@ export default class PropList extends React.Component {
 
 	getTypeValues = ( prop ) => {
 
-		if ( !prop.hasOwnProperty('value') ) return null;
+		if ( !prop.hasOwnProperty('value') && !prop.hasOwnProperty('type') ) return null;
 
 		const { value, name: type, raw } = prop.type;
 
 		// shape
 		if ( value && ( type === 'shape'  ) ) {
-			return Object.keys(value).map(( key, i ) => <span key={ i }><span className="iso-code-part">{ `${key}<${value[key].name}>` }</span>, </span>);
+			return (
+				<span className={ ui.codePart }>
+					{ Object.keys(value).map(( key, i ) => `${key}<${value[key].name}>`) }
+				</span>
+			);
 		}
 		// arrayOf
 		else if ( value && ( type === 'arrayOf' ) ) {
-			return <span>[<span className="iso-code-part">{`<${value.name}>`}</span>,...]</span>;
+			return <span>[<span  className={ ui.codePart }>{`<${value.name}>`}</span>,...]</span>;
 		}
 		// enum, union
 		else if ( value && ( type === 'enum' || type === 'union' ) ) {
-			return value.map(( en, i ) => <span key={ i }><span className="iso-code-part">{ `${ en.name || en.value}` }</span>, </span>);
+			return (
+				<span className={ ui.codePart }>
+					{ value.map(( en, i ) => `${ en.name || en.value}`.replace(/'/gmi, '')).join(', ') }
+				</span>
+			);
 		}
 		// instanceOf
 		else if ( value && ( type === 'instanceOf' ) ) {
-			return <span className="iso-code-part">{ `${value}()` }</span>;
+			return <span className={ ui.codePart }>{ `${value}()` }</span>;
 		}
 		// custom
 		else if ( type === 'custom' ) {
-			return <span className="iso-code-part">{ raw }</span>;
+			return <span className={ ui.codePart }>{ raw }</span>;
 		}
 		else {
 			//console.log('I fell through', 'type', type, 'value', value);
