@@ -26,7 +26,12 @@ export default class PropList extends React.Component {
 	};
 
 	getType = ( prop ) => {
-		return prop.type.name || null;
+		return prop.type ? prop.type.name : null;
+	};
+
+	getDefault = ( prop ) => {
+		if ( !prop.defaultValue ) return null;
+		return <span className={ ui.code }>{ prop.defaultValue.value }</span>;
 	};
 
 	getTypeValues = ( prop ) => {
@@ -37,20 +42,16 @@ export default class PropList extends React.Component {
 
 		// shape
 		if ( value && ( type === 'shape'  ) ) {
-			return (
-				<span className={ ui.codePart }>
-					{ Object.keys(value).map(( key, i ) => `${key}<${value[key].name}>`) }
-				</span>
-			);
+			return Object.keys(value).map(( key, i ) => <span className={ ui.code }>{ `${key}<${value[key].name}>` }</span>);
 		}
 		// arrayOf
 		else if ( value && ( type === 'arrayOf' ) ) {
-			return <span>[<span className="iso-code-part">{`<${value.name}>`}</span>,...]</span>;
+			return <span>[<span className={ ui.code }>{`<${value.name}>`}</span>,...]</span>;
 		}
 		// enum, union
 		else if ( value && ( type === 'enum' || type === 'union' ) ) {
 			return (
-				<span className={ ui.codePart }>
+				<span className={ ui.code }>
 					{ value.map(( en, i ) => `${ en.name || en.value}`.replace(/'/gmi, '')).join(', ') }
 				</span>
 			);
@@ -100,9 +101,9 @@ export default class PropList extends React.Component {
 								return (
 									<tr key={ i } className={ `${prop.required ? 'is-required' : '' }` }>
 										<td><strong>{ prop.name + (prop.required ? '*' : '') }</strong></td>
-										<td><em>{ this.getType(prop) }</em></td>
+										<td><em><span className={ ui.code }>{ this.getType(prop) }</span></em></td>
 										<td>{ this.getTypeValues(prop) }</td>
-										<td>{ prop.defaultValue ? prop.defaultValue.value : null }</td>
+										<td>{ this.getDefault(prop) }</td>
 										<td>{ prop.description }</td>
 									</tr>
 								);

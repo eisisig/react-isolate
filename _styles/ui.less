@@ -3,29 +3,45 @@
 .badge {
 	float:            right;
 	font-size:        12px;
-	color:            darken(@mainBorderColor, 25%);
-	display:          inline-block;
-	background-color: lighten(@mainBorderColor, 5%);
 	border-radius:    2px;
 	width:            20px;
 	height:           20px;
 	line-height:      20px;
 	text-align:       center;
+	display:          inline-block;
+	color:            darken(@mainBorderColor, 25%);
+	background-color: lighten(@mainBorderColor, 5%);
 }
 
 .header {
-	font-weight:    normal;
-	color:          darken(@mainBorderColor, 30%);
-	text-transform: uppercase;
 	margin-top:     0;
 	font-size:      13px;
+	font-weight:    normal;
+	text-transform: uppercase;
+	color:          darken(@mainBorderColor, 30%);
+}
+
+.code {
+	//white-space: nowrap;
+	display:     inline-block;
+	font-family: Hack, Menlo, monospace;
+	font-size:   11px;
+
+	&:not(:last-child) {
+		margin-right: 3px;
+		&:after {
+			content: ','
+		}
+	}
 }
 
 .codePart {
-	font-family:      Hack, Menlo;
-	border:           1px solid @mainBorderColor;
+	composes:         code;
+	float:            left;
+	margin-right:     3px;
+	margin-bottom:    3px;
 	padding:          2px 5px;
-	font-size:        11px;
 	border-radius:    3px;
+	border:           1px solid @mainBorderColor;
 	background-color: lighten(@mainBorderColor, 5%);
 }
