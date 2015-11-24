@@ -68,6 +68,7 @@ module.exports = function ( customConfig ) {
 		},
 		module: {
 			loaders: [
+				{ test: /\.md$/, loader: 'html!markdown' },
 				{
 					test: /\.js$/,
 					exclude: [

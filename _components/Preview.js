@@ -119,7 +119,7 @@ export default class Preview extends React.Component {
 				</div>
 				<div className={ styles.markup }>
 					<h3 className={ ui.header }>Markup</h3>
-					<Markup codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' ? code : null )  } />
+					<Markup codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' || !_.isEqual(code, currentFixture.props) ? code : null )  } />
 				</div>
 				<div className={ styles.editor }>
 					<h3 className={ ui.header }>Props / state</h3>

@@ -48,6 +48,37 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 }, {});
 
 /**
+ * Components
+ * @type {*}
+ */
+const docsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.md$/);
+const docsMap = docsContext.keys().reduce(( results, filePath ) => {
+
+	const fileArr = removeExtension(filePath, '.md').split('/').splice(1);
+	const mainComponentName = fileArr[0];
+	const name = fileArr.length > 2 ? fileArr[1] : fileArr[0];
+	const docName = fileArr[fileArr.length - 1];
+
+	return _.merge(results, {
+		[mainComponentName]: {
+			name: mainComponentName,
+			components: {
+				[name]: {
+					docs: {
+						[docName]: {
+							filePath,
+							name: docName
+						}
+					}
+				}
+			}
+		}
+	});
+
+	return results;
+}, {});
+
+/**
  * Fixtures
  * @type {*}
  */
@@ -85,7 +116,7 @@ const testsMap = {};
 /**
  * Merge all data together
  */
-const appData = _.merge(componentsMap, fixturesMap);
+const appData = _.merge(componentsMap, fixturesMap, docsMap);
 
 console.groupCollapsed('Components total:', Object.keys(appData).length);
 Object.keys(appData).forEach(( key ) => {

@@ -78,14 +78,16 @@ export default class PropList extends React.Component {
 
 		return (
 			<div className={ styles.wrapper }>
-				{ currentDocs.description ? (
-					<div dangerouslySetInnerHTML={{ __html: currentDocs.description }}></div>
-				) : (
-					<h1>{ currentComponent.name }</h1>
-				) }
+				{/*
+					<div>
+						<h3 className={ ui.header }>Description</h3>
+						<div dangerouslySetInnerHTML={{ __html: currentDocs.description }}></div>
+					</div>
+				<h1>{ currentComponent.name }</h1>
+				*/}
 				{ currentDocs.props ? (
 					<div>
-						<h4 className="iso-h4">Props</h4>
+						<h3 className={ ui.header }>Props</h3>
 						<table className="iso-table iso-table--bordered">
 							<thead>
 							<tr>
