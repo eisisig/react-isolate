@@ -1,22 +1,16 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
+import cx from 'suit-cx';
 
-const Icon = ( { name, classes } ) => <i className={ classes }>{ name }</i>;
+const Icon = ( { name, className, ...rest } ) => <i className={ cx({ name: 'Icon', modifiers: ['name'] }, { ...rest }, className) } />;
 
 Icon.defaultProps = {
-	name: null,
-	size: 'lg',
-	iconPrefix: 'menicon--'
+	name: null
 };
 
 Icon.propTypes = {
-	name: PropTypes.oneOf([
-		'closeSoftRoundNeg',
-		'up',
-	]).isRequired,
-	size: PropTypes.oneOf(['xs', 'sm', 'lg', 'xl']),
-	iconPrefix: PropTypes.string
+	name: PropTypes.string.isRequired
 };
 
 export default Icon;
