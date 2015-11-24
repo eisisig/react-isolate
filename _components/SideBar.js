@@ -66,10 +66,12 @@ export default class SideBar extends React.Component {
 		return (
 			<ul className={ styles.componentList }>
 				{ _.map(componentList, ( component, i ) => {
-					//const path = `/${component.name}`;
+					const hideHeader = Object.keys(component.components).length <= 1 && Object.keys(component.components)[0].toLowerCase() !== 'demo';
 					return (
 						<li key={ i } className={ styles.componentListItem }>
-							<h1 className={ `${ styles.componentHeader }` }>{ component.name }</h1>
+							{ !hideHeader ? (
+								<h1 className={ `${ styles.componentHeader }` }>{ component.name }</h1>
+							) : null }
 							{ component.components ? (
 								<ul className={ styles.subList }>
 									{ _.map(component.components, ( subComponent, i ) => {
