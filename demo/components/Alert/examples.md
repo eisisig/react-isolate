@@ -1,0 +1,5 @@
+# Alert
+
+## Examples
+
+### Static alert

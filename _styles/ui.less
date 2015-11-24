@@ -45,3 +45,33 @@
 	border:           1px solid @mainBorderColor;
 	background-color: lighten(@mainBorderColor, 5%);
 }
+
+.table {
+	table {
+		width: 100%;
+
+		& > thead > tr > th,
+		& > tbody > tr > td {
+			padding: @mainPadding;
+		}
+
+		& > thead > tr > th {
+			text-align:    left;
+			font-weight:   700;
+			font-size:     14px;
+			border-bottom: 2px solid @mainBorderColor;
+		}
+
+		& > thead + tbody > tr.is-required > td {
+			background-color: lighten(@mainBorderColor, 5%);
+		}
+		& > thead + tbody > tr > td {
+			font-size: 13px;
+		}
+
+		&.iso-table--bordered > thead + tbody > tr > td {
+			border-bottom: 1px solid @mainBorderColor;
+		}
+	}
+}
+

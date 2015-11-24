@@ -4,6 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 
 import PropList from './PropList';
+import Docs from './Docs';
 
 import styles from '../_styles/components/Documentation.less';
 
@@ -20,6 +21,7 @@ export default class Documentation extends React.Component {
 				{ currentData.currentDocs ? (
 					<div className={ styles.docs }>
 						<PropList { ...currentData } />
+						{ currentData.currentComponent && currentData.currentComponent.docs ? <Docs docs={ currentData.currentComponent.docs } /> : null }
 					</div>
 				) : null  }
 				{ currentData.currentFixture ? (
