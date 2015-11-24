@@ -32,11 +32,13 @@ export default class Preview extends React.Component {
 	}
 
 	componentDidUpdate ( nextProps ) {
-		const currentComponentName = this.props.currentData.currentComponent.name;
-		const nextComponentName = nextProps.currentData.currentComponent.name;
-		const currentName = this.props.currentData.currentFixture.name;
-		const nextName = nextProps.currentData.currentFixture.name;
+		const currentComponentName = this.props.currentData.currentComponent.name,
+		      nextComponentName    = nextProps.currentData.currentComponent.name,
+		      currentName          = this.props.currentData.currentFixture.name,
+		      nextName             = nextProps.currentData.currentFixture.name;
+
 		const doUpdate = !_.isEqual(currentName, nextName) || !_.isEqual(currentComponentName, nextComponentName);
+
 		if ( doUpdate ) {
 			this.handleEditorRender();
 		}
@@ -53,7 +55,6 @@ export default class Preview extends React.Component {
 			code = JSON.parse(code);
 			this.setState({ code }, () => {
 				this.handlePreviewRender();
-				//this.handleEditorRender();
 			});
 		} catch ( e ) {
 			//console.log('e', e);
@@ -76,9 +77,9 @@ export default class Preview extends React.Component {
 
 	handlePreviewRender = () => {
 		const { preview } = this.refs;
-		const { code  } = this.state;
+		const { code } = this.state;
 
-		let state = code.state;
+		let { state } = code;
 
 		ReactDOM.unmountComponentAtNode(preview);
 
@@ -118,12 +119,11 @@ export default class Preview extends React.Component {
 				</div>
 				<div className={ styles.markup }>
 					<h3 className={ ui.header }>Markup</h3>
-					<Markup codeText={ renderComponentMarkup(currentComponent.name, code) } />
+					<Markup codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' ? code : null )  } />
 				</div>
 				<div className={ styles.editor }>
 					<h3 className={ ui.header }>Props / state</h3>
 					<div ref="editor"></div>
-
 				</div>
 			</div>
 		);

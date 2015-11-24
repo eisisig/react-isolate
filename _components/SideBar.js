@@ -73,22 +73,21 @@ export default class SideBar extends React.Component {
 							{ component.components ? (
 								<ul className={ styles.subList }>
 									{ _.map(component.components, ( subComponent, i ) => {
-										let path = `/${component.name}/${subComponent.name}`;
+										let path = `/${component.name}/${subComponent.name}/defaultProps`;
 										const current = pathArr[0] === component.name && pathArr[1] === subComponent.name;
-										const totalFixtures = subComponent.fixtures ? Object.keys(subComponent.fixtures).length : null;
-										const firstLink = subComponent.fixtures ? subComponent.fixtures[Object.keys(subComponent.fixtures)[0]] : null;
-										if ( firstLink ) { path += `/${firstLink.name}`; }
-										if ( subComponent.fixtures ) {
-											return (
-												<li key={ i } className={ styles.subList }>
-													<Link className={ `${ styles.subLink } ${ current? styles.subLinkCurrent: '' }` }
-													      to={ path }>
-														{ subComponent.name }
-														{ totalFixtures ? <span className={ ui.badge }>{ totalFixtures }</span> : null }
-													</Link>
-													{ current && subComponent.fixtures ? (
-														<ul className={ styles.fixtureList }>
-															{ _.map(subComponent.fixtures, ( fixture, i ) => {
+										const totalFixtures = subComponent.fixtures ? Object.keys(subComponent.fixtures).length - 1 : null;
+										//const firstLink = subComponent.fixtures ? subComponent.fixtures[Object.keys(subComponent.fixtures)[0]] : null;
+										return (
+											<li key={ i } className={ styles.subList }>
+												<Link className={ `${ styles.subLink } ${ current ? styles.subLinkCurrent: '' }` }
+												      to={ path }>
+													{ subComponent.name }
+													{ totalFixtures ? <span className={ ui.badge }>{ totalFixtures }</span> : null }
+												</Link>
+												{ current && subComponent.fixtures && Object.keys(subComponent.fixtures).length > 1 ? (
+													<ul className={ styles.fixtureList }>
+														{ _.map(subComponent.fixtures, ( fixture, i ) => {
+															if ( fixture.name !== 'defaultProps' ) {
 																const path = `/${component.name}/${subComponent.name}/${fixture.name}`;
 																const current = pathArr[0] === component.name && pathArr[1] === subComponent.name && pathArr[2] === fixture.name;
 																return (
@@ -100,12 +99,12 @@ export default class SideBar extends React.Component {
 																		</Link>
 																	</li>
 																);
-															}) }
-														</ul>
-													) : null }
-												</li>
-											);
-										}
+															}
+														}) }
+													</ul>
+												) : null }
+											</li>
+										);
 									}) }
 								</ul>
 							) : null }

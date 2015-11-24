@@ -21,10 +21,6 @@ export default class Markup extends React.Component {
 		theme: React.PropTypes.string
 	};
 
-	static defaultProps = {
-		className: '',
-	};
-
 	componentDidMount () {
 		this.editor = CodeMirror.fromTextArea(this.refs.markup, {
 			mode: 'javascript',

@@ -29,9 +29,15 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 				name: mainComponentName,
 				components: {
 					[name]: {
+						name,
 						Component,
 						filePath,
-						name
+						fixtures: {
+							defaultProps: {
+								name: 'defaultProps',
+								props: Component.defaultProps
+							}
+						}
 					}
 				}
 			}

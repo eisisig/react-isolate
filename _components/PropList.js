@@ -26,7 +26,7 @@ export default class PropList extends React.Component {
 	};
 
 	getType = ( prop ) => {
-		return prop.name || prop.type.name;
+		return prop.type.name || null;
 	};
 
 	getTypeValues = ( prop ) => {
@@ -45,7 +45,7 @@ export default class PropList extends React.Component {
 		}
 		// arrayOf
 		else if ( value && ( type === 'arrayOf' ) ) {
-			return <span>[<span  className={ ui.codePart }>{`<${value.name}>`}</span>,...]</span>;
+			return <span>[<span className="iso-code-part">{`<${value.name}>`}</span>,...]</span>;
 		}
 		// enum, union
 		else if ( value && ( type === 'enum' || type === 'union' ) ) {

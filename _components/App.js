@@ -40,7 +40,6 @@ export default class App extends React.Component {
 		const currentFixture = _.get(currentComponent, ['fixtures', params.fixture]);
 
 		if ( currentComponent && currentFixture ) {
-			//currentData.currentFixture = require('FIXTURES_PATH/' + currentFixture.filePath.slice(2));
 			currentData.currentFixture = currentFixture;
 		}
 
