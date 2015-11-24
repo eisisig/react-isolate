@@ -67,8 +67,11 @@ module.exports = function ( customConfig ) {
 			fs: 'empty'
 		},
 		module: {
+			noParse: [
+				/autoit.js/
+			],
 			loaders: [
-				{ test: /\.md$/, loader: 'html!markdown' },
+				{ test: /\.md$/, loader: 'raw!markdown' },
 				{
 					test: /\.js$/,
 					exclude: [

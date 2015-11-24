@@ -1,7 +1,12 @@
 'use strict';
 
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import marked from 'marked';
+import hljs from 'highlight.js';
+import { AllHtmlEntities } from 'html-entities';
+
+const entities = new AllHtmlEntities();
 
 import ui from '../_styles/ui.less';
 import styles from '../_styles/components/Docs.less';
@@ -22,9 +27,22 @@ marked.setOptions({
  */
 export default class Docs extends React.Component {
 
-	//static defaultProps = {};
+	componentDidMount () {
+		this.highlightSyntax();
+	}
 
-	//static propTypes = {};
+	componentDidUpdate () {
+		this.highlightSyntax();
+	}
+
+	highlightSyntax = () => {
+		const codeBlocks = document.getElementsByTagName('code');
+		if ( codeBlocks ) {
+			_.forEach(codeBlocks, ( block ) => {
+				hljs.highlightBlock(block)
+			});
+		}
+	};
 
 	render () {
 		const { docs } = this.props;
@@ -37,7 +55,8 @@ export default class Docs extends React.Component {
 
 		keys.forEach(( key ) => {
 			const doc = docs[key];
-			const parsedDoc = marked(require('COMPONENTS_PATH/' + doc.filePath.slice(2)));
+			const requiredDoc = require('COMPONENTS_PATH/' + doc.filePath.slice(2));
+			const parsedDoc = entities.decode(marked(requiredDoc));
 			if ( parsedDoc ) {
 				parsedDocs.push(parsedDoc);
 			}
@@ -52,4 +71,10 @@ export default class Docs extends React.Component {
 			</div>
 		);
 	}
+}
+
+function decodeHtml ( html ) {
+	var txt = document.createElement("textarea");
+	txt.innerHTML = html;
+	return txt.value;
 }

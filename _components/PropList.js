@@ -58,11 +58,11 @@ export default class PropList extends React.Component {
 		}
 		// instanceOf
 		else if ( value && ( type === 'instanceOf' ) ) {
-			return <span className={ ui.codePart }>{ `${value}()` }</span>;
+			return <span className={ ui.codet }>{ `${value}()` }</span>;
 		}
 		// custom
 		else if ( type === 'custom' ) {
-			return <span className={ ui.codePart }>{ raw }</span>;
+			return <span className={ ui.code }>{ raw }</span>;
 		}
 		else {
 			//console.log('I fell through', 'type', type, 'value', value);
