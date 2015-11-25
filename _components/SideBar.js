@@ -122,6 +122,7 @@ export default class SideBar extends React.Component {
 		const { filteredList } = this.state;
 		return (
 			<div className={ styles.wrapper }>
+				<Link className={ styles.title } to="/">Home</Link>
 				<div className={ styles.search }>{ this.renderSearch() }</div>
 				<div className={ styles.list }>{ this.renderList(filteredList || components) }</div>
 			</div>

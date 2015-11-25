@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
 /**
  * # Alert
  */
-export default class Alert extends React.Component {
+export class Alert extends React.Component {
 
 	static propTypes = {
 		/**
@@ -31,3 +31,5 @@ export default class Alert extends React.Component {
 		);
 	}
 }
+
+export default Alert;

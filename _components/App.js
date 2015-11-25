@@ -32,8 +32,12 @@ export default class App extends React.Component {
 			currentData.currentComponent = currentComponent;
 			try {
 				currentData.currentDocs = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + currentComponent.filePath.slice(2));
+
+				if ( Array.isArray(currentData.currentDocs) ) {
+					currentData.currentDocs = currentData.currentDocs[0];
+				}
 			} catch ( e ) {
-				//console.log('e', e);
+				//console.log('App.requireDocs', e);
 			}
 		}
 

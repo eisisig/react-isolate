@@ -19,8 +19,12 @@ const componentsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$
 const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 
 	const fileArr = removeExtension(filePath).split('/').splice(1);
-	const Component = componentsContext(filePath);
+	let Component = componentsContext(filePath);
 	const mainComponentName = fileArr[0];
+
+	if ( 'default' in Component ) {
+		Component = Component.default;
+	}
 
 	if ( !_.contains(fileArr, 'index') ) {
 		const name = fileArr.length > 1 ? fileArr[1] : fileArr[0];

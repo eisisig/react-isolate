@@ -7,14 +7,13 @@ import React, { PropTypes } from 'react';
  */
 export default class Demo extends React.Component {
 
-	//static propTypes = {};
-	//static defaultProps = {};
-	//state = {};
+	static propTypes = {
+		name: PropTypes.string
+	};
 
-	//componentWillMount () {}
-	//componentDidMount () {}
-	//componentWillUnmount () {}
-	//shouldComponentMount () { return true; }
+	static defaultProps = {
+		name: 'Demo name'
+	};
 
 	render () {
 		return (
