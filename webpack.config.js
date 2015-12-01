@@ -28,6 +28,7 @@ module.exports = function ( customConfig ) {
 	const defaultConfig = {
 		context: __dirname,
 		debug: true,
+		cache: true,
 		devtool: 'eval',
 		entry: [
 			'./_lib/entry.js',
@@ -68,7 +69,8 @@ module.exports = function ( customConfig ) {
 		},
 		module: {
 			noParse: [
-				/autoit.js/
+				/autoit.js/,
+				/marked/
 			],
 			loaders: [
 				{ test: /\.md$/, loader: 'raw!markdown' },
@@ -81,21 +83,25 @@ module.exports = function ( customConfig ) {
 				},
 				{
 					test: /\.json$/,
-					loaders: ['json5']
+					loaders: ['json5'],
+					exclude: [
+						/node_modules\/(?!react-isolate)/
+					]
 				},
 				{
 					test: /\.gif$/,
-					loaders: ['file']
+					loaders: ['file'],
+					exclude: /node_modules/
 				},
 				{
 					test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /images/
+					exclude: /node_modules|images/
 				},
 				{
 					test: /\.(woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /css/
+					exclude: /node_modules|css/
 				},
 				{
 					test: /\.less$/,
