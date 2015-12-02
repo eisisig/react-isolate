@@ -59,9 +59,9 @@ module.exports = {
 
 ## Folder structure
 
-If components have their own folder I suggest having the fixture for that in the same manner 
+If components have their own folder I suggest having the fixture for that in the same manner
 
-``` 
+```
 /components
 	/MyList
     	MyList.js
