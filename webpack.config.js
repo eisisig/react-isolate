@@ -83,10 +83,10 @@ module.exports = function ( customConfig ) {
 				},
 				{
 					test: /\.json$/,
-					loaders: ['json5'],
-					exclude: [
-						/node_modules\/(?!react-isolate)/
-					]
+					loaders: ['json5']
+					//exclude: [
+					//	/node_modules\/(?!react-isolate)/
+					//]
 				},
 				{
 					test: /\.gif$/,
