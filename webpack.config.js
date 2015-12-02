@@ -18,7 +18,7 @@ try {
 	console.log('No custom isolate.config.js found');
 }
 
-const isolateConfig = merge({}, isolateDefaultConfig, isolateCustomConfig);
+const isolateConfig = _.merge({}, isolateDefaultConfig, isolateCustomConfig);
 
 const resolvePath = function ( userPath ) {
 	return cwd + '/' + userPath;
