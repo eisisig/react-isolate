@@ -2,7 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('lodash.merge');
+const _ = require('lodash');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 
@@ -127,7 +127,7 @@ module.exports = function ( customConfig ) {
 		]
 	};
 
-	const webpackConfig = merge(defaultConfig, customConfig);
+	const webpackConfig = _.merge(defaultConfig, customConfig);
 
 	//console.log('webpackConfig', webpackConfig);
 
