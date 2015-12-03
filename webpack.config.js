@@ -96,12 +96,12 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /node_modules|images/
+					exclude: /images/
 				},
 				{
 					test: /\.(woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /node_modules|css/
+					exclude: /css/
 				},
 				{
 					test: /\.less$/,
