@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node .bin/start",
-    "demo": "react-isolate --componentsPath=demo/components --fixturesPath=demo/fixtures --testsPath=demo/tests",
+    "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures --testsPath=demo/tests",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
     "lint": "eslint _components _lib",
     "test": "echo \"Run tests\" && exit 0"

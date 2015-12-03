@@ -1,18 +1,27 @@
 #!/usr/bin/env node
 
+var _ = require('lodash');
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var argv = require('yargs').argv;
 
-var customConfig = {
-	argv: argv
-};
+var isolateDefaultConfig = require(path.resolve(__dirname, '..', 'isolate.config.js'));
 
-var config = require('../webpack.config')(customConfig);
+var isolateCustomConfig = {};
 
-var port = argv.port || 9999;
-var host = argv.host || 'localhost';
+try {
+	isolateCustomConfig = require(path.resolve(process.cwd(), 'isolate.config.js'));
+} catch ( e ) {
+	//console.log('No custom isolate.config.js found');
+}
+
+var isolateConfig = _.merge({}, isolateDefaultConfig, isolateCustomConfig, argv);
+
+var config = require('../webpack.config')(isolateConfig);
+
+var port = argv.port || isolateConfig.port;
+var host = argv.host || isolateConfig.host;
 
 var app = express();
 var compiler = webpack(config);
