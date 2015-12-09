@@ -1,5 +1,7 @@
 WIP
 
+[![wercker status](https://app.wercker.com/status/755b7ad314c8f91c3bed20c8ec2c4bd6/s "wercker status")](https://app.wercker.com/project/bykey/755b7ad314c8f91c3bed20c8ec2c4bd6)
+
 # React Component Isolate
 
 All-in-one development, documentation, testing environment for React components
@@ -73,7 +75,7 @@ If components have their own folder I suggest having the fixture for that in the
 
 The system will pick up and match if the component is in a top-level folder but the fixture need to have a folder with the same name
 
-``` 
+```
 /components
 	/MyList.js
     /Menu.js
