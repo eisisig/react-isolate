@@ -60,6 +60,12 @@ export default class SideBar extends React.Component {
 		);
 	};
 
+	getFirstFixtureName(fixtures) {
+		const keys = _.keys(fixtures);
+		if (keys.length > 1 && keys[1] != 'defaultProps') return keys[1];
+		return keys[0];
+	}
+
 	renderList = ( componentList ) => {
 		const { location: { pathname } } = this.props;
 		const pathArr = pathname.split('/');
@@ -75,9 +81,11 @@ export default class SideBar extends React.Component {
 							{ component.components ? (
 								<ul className={ styles.subList }>
 									{ _.map(component.components, ( subComponent, i ) => {
-										let path = `/${component.name}/${subComponent.name}/defaultProps`;
-										const current = pathArr[0] === component.name && pathArr[1] === subComponent.name;
 										const totalFixtures = subComponent.fixtures ? Object.keys(subComponent.fixtures).length - 1 : null;
+										const defaultComponentName = this.getFirstFixtureName(subComponent.fixtures);
+										const path = `/${component.name}/${subComponent.name}/` + defaultComponentName;
+										const current = pathArr[0] === component.name && pathArr[1] === subComponent.name;
+
 										//const firstLink = subComponent.fixtures ? subComponent.fixtures[Object.keys(subComponent.fixtures)[0]] : null;
 										return (
 											<li key={ i } className={ styles.subList }>
