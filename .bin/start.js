@@ -4,30 +4,15 @@ var _ = require('lodash');
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
-var argv = require('yargs').argv;
-
-var isolateDefaultConfig = require(path.resolve(__dirname, '..', 'isolate.config.js'));
-
-var isolateCustomConfig = {};
-
-try {
-	isolateCustomConfig = require(path.resolve(process.cwd(), 'isolate.config.js'));
-} catch ( e ) {
-	//console.log('No custom isolate.config.js found');
-}
-
-var isolateConfig = _.merge({}, isolateDefaultConfig, isolateCustomConfig, argv);
-
-var config = require('../webpack.config')(isolateConfig);
-
-var port = argv.port || isolateConfig.port;
-var host = argv.host || isolateConfig.host;
-
 var app = express();
-var compiler = webpack(config);
+
+var isolateConfig = require('../config')(require('yargs').argv);
+var webpackConfig = require('../webpack.config')(isolateConfig);
+
+var compiler = webpack(webpackConfig);
 
 app.use(require('webpack-dev-middleware')(compiler, {
-	publicPath: config.output.publicPath,
+	publicPath: webpackConfig.output.publicPath,
 	stats: {
 		colors: true,
 		timings: true,
@@ -45,7 +30,15 @@ app.get('/*', function ( req, res ) {
 	res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-app.listen(port, host, function ( err ) {
+app.listen(isolateConfig.port, isolateConfig.host, function ( err ) {
 	if ( err ) { return console.log(err); }
-	console.log('Listening at http://' + host + ':' + port);
+	console.log(`
+	                                         _
+  ,_   _  __,   __  -/-     .  ,    _,_ // __,  -/- _
+_/ (__(/_(_/(__(_,__/_    _/__/_)__(_/_(/_(_/(__/__(/_  ...starting
+	`);
+	console.log('Listening:         ', 'http://' + isolateConfig.host + ':' + isolateConfig.port);
+	console.log('Components path:   ', path.resolve(isolateConfig.componentsPath));
+	console.log('Fixtures path:     ', path.resolve(isolateConfig.fixturesPath));
+	console.log('');
 });
