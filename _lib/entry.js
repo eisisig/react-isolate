@@ -28,7 +28,7 @@ var _reactRouter = require('react-router');
 
 var _utils = require('./utils');
 
-var _componentsApp = require('./__components/App');
+var _componentsApp = require('./_components/App');
 
 var _componentsApp2 = _interopRequireDefault(_componentsApp);
 
