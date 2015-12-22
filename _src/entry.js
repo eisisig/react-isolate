@@ -7,9 +7,9 @@ import { createHistory, useBasename } from 'history';
 import { Router, Route } from 'react-router';
 import { removeExtension } from './utils';
 
-import App from '../_components/App';
-import Preview from '../_components/Preview';
-import Documentation from '../_components/Documentation';
+import App from './__components/App';
+import Preview from './_components/Preview';
+import Documentation from './_components/Documentation';
 
 /**
  * Components
