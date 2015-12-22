@@ -1,47 +1,9 @@
-'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var _reactTransformHmr2 = require('react-transform-hmr');
+const analyzeRender = ( Component ) => {
 
-var _reactTransformHmr3 = _interopRequireDefault(_reactTransformHmr2);
-
-var _react = require('react');
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _components = {
-	_$Unknown: {
-		isInFunction: true
-	}
-};
-
-var _reactComponentWrapper = (0, _reactTransformHmr3['default'])({
-	filename: '_src/analyzeRender.js',
-	components: _components,
-	locals: [module],
-	imports: [_react]
-});
-
-function _wrapComponent(uniqueId) {
-	return function (ReactClass) {
-		return _reactComponentWrapper(ReactClass, uniqueId);
-	};
-}
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var analyzeRender = function analyzeRender(Component) {
-
-	return _wrapComponent('_$Unknown')(_react2['default'].createClass({
+	return React.createClass({
 
 		UPDATE_RENDER_LOG_POSITION_TIMEOUT_MS: 500,
 
@@ -87,7 +49,7 @@ var analyzeRender = function analyzeRender(Component) {
 			}
 		},
 
-		componentDidMount: function componentDidMount() {
+		componentDidMount: function () {
 			// Reset the logs
 			this._resetRenderLog();
 
@@ -101,10 +63,11 @@ var analyzeRender = function analyzeRender(Component) {
 			this._highlightChange(this.STATE_CHANGES.MOUNT);
 
 			// Set the watch to update log position
-			this._updateRenderLogPositionTimeout = setInterval(this._updateRenderLogPosition, this.UPDATE_RENDER_LOG_POSITION_TIMEOUT_MS);
+			this._updateRenderLogPositionTimeout = setInterval(
+				this._updateRenderLogPosition, this.UPDATE_RENDER_LOG_POSITION_TIMEOUT_MS);
 		},
 
-		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+		componentDidUpdate: function ( prevProps, prevState ) {
 			// Get the changes in state and props
 			this._getReasonForReRender(prevProps, prevState);
 
@@ -115,7 +78,7 @@ var analyzeRender = function analyzeRender(Component) {
 			this._highlightChange(this.STATE_CHANGES.UPDATE);
 		},
 
-		componentWillUnmount: function componentWillUnmount() {
+		componentWillUnmount: function () {
 			// Remove the monitor node
 			this._removeRenderLogNode();
 
@@ -123,7 +86,7 @@ var analyzeRender = function analyzeRender(Component) {
 			clearInterval(this._updateRenderLogPositionTimeout);
 		},
 
-		getInitialState: function getInitialState() {
+		getInitialState: function () {
 			return {
 				renderLog: [],
 				renderCount: 1
@@ -131,32 +94,32 @@ var analyzeRender = function analyzeRender(Component) {
 		},
 
 		/*
-   * Reset the logs
-   * @return void
-   */
-		_resetRenderLog: function _resetRenderLog() {
+		 * Reset the logs
+		 * @return void
+		 */
+		_resetRenderLog: function () {
 			this.state.renderLog = [];
 			this.state.renderCount = 1;
 		},
 
-		_applyCSSStyling: function _applyCSSStyling(node, styles) {
-			Object.keys(styles).forEach(function (className) {
+		_applyCSSStyling: function ( node, styles ) {
+			Object.keys(styles).forEach(function ( className ) {
 				node.style[className] = styles[className];
 			});
 		},
 
 		/*
-   * Build the renderLog node, add it to the body and assign it's position
-   * based on the monitored component
-   * @return void
-   */
-		_buildRenderLogNode: function _buildRenderLogNode() {
-			var self = this,
-			    renderLogContainer = document.createElement('div'),
+		 * Build the renderLog node, add it to the body and assign it's position
+		 * based on the monitored component
+		 * @return void
+		 */
+		_buildRenderLogNode: function () {
+			var self                     = this,
+			    renderLogContainer       = document.createElement('div'),
 			    renderLogRenderCountNode = document.createElement("div"),
 			    renderLogDetailContainer = document.createElement("div"),
-			    renderLogNotesNode = document.createElement("div"),
-			    renderLogDetailNode = document.createElement("div");
+			    renderLogNotesNode       = document.createElement("div"),
+			    renderLogDetailNode      = document.createElement("div");
 
 			renderLogContainer.className = 'renderLog';
 
@@ -167,17 +130,18 @@ var analyzeRender = function analyzeRender(Component) {
 			renderLogContainer.addEventListener('click', function () {
 
 				// Show the detail Log
-				if (renderLogRenderCountNode.style.display === 'none') {
+				if ( renderLogRenderCountNode.style.display === 'none' ) {
 					renderLogRenderCountNode.style.display = 'block';
 					renderLogDetailContainer.style.display = 'none';
 					renderLogContainer.style.zIndex = '10000';
 
 					// Hide it
-				} else {
-						renderLogRenderCountNode.style.display = 'none';
-						renderLogDetailContainer.style.display = 'block';
-						renderLogContainer.style.zIndex = '10001';
-					}
+				}
+				else {
+					renderLogRenderCountNode.style.display = 'none';
+					renderLogDetailContainer.style.display = 'block';
+					renderLogContainer.style.zIndex = '10001';
+				}
 			});
 
 			renderLogRenderCountNode.className = 'renderLogCounter';
@@ -186,7 +150,7 @@ var analyzeRender = function analyzeRender(Component) {
 			renderLogDetailContainer.style.display = 'none';
 			renderLogDetailNode.innerText = '';
 
-			if (this.shouldComponentUpdate) {
+			if ( this.shouldComponentUpdate ) {
 				renderLogNotesNode.innerText = 'NOTE: This component uses a custom shouldComponentUpdate(), so the results above are purely informational';
 			}
 
@@ -211,36 +175,37 @@ var analyzeRender = function analyzeRender(Component) {
 
 			//
 			this._updateRenderLogNode();
+
 		},
 
 		/*
-   * Update the render log position based on its parent position
-   * @return void
-   */
-		_updateRenderLogPosition: function _updateRenderLogPosition() {
-			var parentNode = _reactDom2['default'].findDOMNode(this),
+		 * Update the render log position based on its parent position
+		 * @return void
+		 */
+		_updateRenderLogPosition: function () {
+			var parentNode     = ReactDOM.findDOMNode(this),
 			    parentNodeRect = parentNode && parentNode.getBoundingClientRect();
 
-			if (this.renderLogContainer && parentNodeRect) {
-				this.renderLogContainer.style.top = window.pageYOffset + parentNodeRect.top + 'px';
-				this.renderLogContainer.style.left = parentNodeRect.left + 'px';
+			if ( this.renderLogContainer && parentNodeRect ) {
+				this.renderLogContainer.style.top = (window.pageYOffset + parentNodeRect.top) + 'px';
+				this.renderLogContainer.style.left = (parentNodeRect.left) + 'px';
 			}
 		},
 
 		/*
-   * Update the render log count and details
-   * @return void
-   */
-		_updateRenderLogNode: function _updateRenderLogNode() {
+		 * Update the render log count and details
+		 * @return void
+		 */
+		_updateRenderLogNode: function () {
 			var logFragment = document.createDocumentFragment();
 
-			if (this.renderLogRenderCount) {
-				this.renderLogRenderCount.innerText = this.state.renderCount - 1;
+			if ( this.renderLogRenderCount ) {
+				this.renderLogRenderCount.innerText = (this.state.renderCount - 1 );
 			}
 
-			if (this.renderLogDetail) {
+			if ( this.renderLogDetail ) {
 				this.renderLogDetail.innerHTML = '';
-				for (var i = 0; i < this.state.renderLog.length; i++) {
+				for ( var i = 0; i < this.state.renderLog.length; i++ ) {
 					var item = document.createElement('div');
 					item.innerText = this.state.renderLog[i];
 					logFragment.appendChild(item);
@@ -252,22 +217,22 @@ var analyzeRender = function analyzeRender(Component) {
 		},
 
 		/*
-   * Remove the render log node from the body
-   * @return void
-   */
-		_removeRenderLogNode: function _removeRenderLogNode() {
-			if (this.renderLogContainer) {
+		 * Remove the render log node from the body
+		 * @return void
+		 */
+		_removeRenderLogNode: function () {
+			if ( this.renderLogContainer ) {
 				document.getElementsByTagName('body')[0].removeChild(this.renderLogContainer);
 			}
 		},
 
 		/*
-   * Add a detail message to the render log and update the count
-   * @param object nextState - The most current state of the component
-   * @param String message
-   * @return void
-   */
-		addToRenderLog: function addToRenderLog(state, message) {
+		 * Add a detail message to the render log and update the count
+		 * @param object nextState - The most current state of the component
+		 * @param String message
+		 * @return void
+		 */
+		addToRenderLog: function ( state, message ) {
 			state.renderLog.unshift(state.renderCount + ') ' + message);
 			state.renderCount++;
 
@@ -276,34 +241,39 @@ var analyzeRender = function analyzeRender(Component) {
 		},
 
 		/*
-   * Get the changes made to props or state.  In the event this component has its own
-   * shouldComponentUpdate, don't do
-   * anything
-   * @param object prevProps
-   * @param object prevState
-   * @return boolean
-   */
-		_getReasonForReRender: function _getReasonForReRender(prevProps, prevState) {
+		 * Get the changes made to props or state.  In the event this component has its own
+		 * shouldComponentUpdate, don't do
+		 * anything
+		 * @param object prevProps
+		 * @param object prevState
+		 * @return boolean
+		 */
+		_getReasonForReRender: function ( prevProps, prevState ) {
 			var nextState = this.state,
 			    nextProps = this.props,
 			    key;
 
-			for (key in nextState) {
-				if (nextState.hasOwnProperty(key) && nextState[key] !== prevState[key]) {
-					if (typeof nextState[key] === 'object') {
+			for ( key in nextState ) {
+				if ( nextState.hasOwnProperty(key) && nextState[key] !== prevState[key] ) {
+					if ( typeof nextState[key] === 'object' ) {
 						return this.addToRenderLog(this.state, 'this.state[' + key + '] changed');
-					} else {
-						return this.addToRenderLog(this.state, 'this.state[' + key + '] changed: \'' + prevState[key] + '\' => \'' + nextState[key] + '\'');
 					}
+					else {
+						return this.addToRenderLog(this.state,
+							'this.state[' + key + '] changed: \'' + prevState[key] + '\' => \'' + nextState[key] + '\'');
+					}
+
 				}
 			}
 
-			for (key in nextProps) {
-				if (nextProps.hasOwnProperty(key) && nextProps[key] !== prevProps[key]) {
-					if (typeof nextProps[key] === 'object') {
+			for ( key in nextProps ) {
+				if ( nextProps.hasOwnProperty(key) && nextProps[key] !== prevProps[key] ) {
+					if ( typeof nextProps[key] === 'object' ) {
 						return this.addToRenderLog(this.state, 'this.props[' + key + '] changed');
-					} else {
-						return this.addToRenderLog(this.state, 'this.props[' + key + '] changed: \'' + prevProps[key] + '\' => \'' + nextProps[key] + '\'');
+					}
+					else {
+						return this.addToRenderLog(this.state,
+							'this.props[' + key + '] changed: \'' + prevProps[key] + '\' => \'' + nextProps[key] + '\'');
 					}
 				}
 			}
@@ -312,40 +282,42 @@ var analyzeRender = function analyzeRender(Component) {
 		},
 
 		/*
-   * Highlight any change by adding an animation style to the component DOM node
-   * @param String change - The type of change being made to the node
-   * @return void
-   */
-		_highlightChange: function _highlightChange(change) {
-			var parentNode = _reactDom2['default'].findDOMNode(this),
+		 * Highlight any change by adding an animation style to the component DOM node
+		 * @param String change - The type of change being made to the node
+		 * @return void
+		 */
+		_highlightChange: function ( change ) {
+			var parentNode         = ReactDOM.findDOMNode(this),
 			    ANIMATION_DURATION = 500,
-			    self = this;
+			    self               = this;
 
-			if (parentNode) {
+			if ( parentNode ) {
 				parentNode.style.boxSizing = 'border-box';
 
-				window.requestAnimationFrame(function highlightParentElementBorder() {
+				window.requestAnimationFrame(function highlightParentElementBorder () {
 					// Immediately show the border
 					parentNode.style.transition = 'outline 0s';
-					if (change === self.STATE_CHANGES.MOUNT) {
+					if ( change === self.STATE_CHANGES.MOUNT ) {
 						parentNode.style.outline = self.styling.elementHighlightMount.outline;
-					} else {
+					}
+					else {
 						parentNode.style.outline = self.styling.elementHighlightUpdate.outline;
 					}
 
 					// Animate the border back to monitored color
-					window.requestAnimationFrame(function animateParentElementBorder() {
+					window.requestAnimationFrame(function animateParentElementBorder () {
 						parentNode.style.outline = self.styling.elementHighlightMonitor.outline;
 						parentNode.style.transition = 'outline ' + ANIMATION_DURATION + 'ms linear';
 					});
 				});
 			}
 		},
-		render: function render() {
-			return _react2['default'].createElement(Component, _extends({}, this.props, this.state));
+		render: function () {
+			return (
+				<Component { ...this.props } { ...this.state } />
+			);
 		}
-	}));
+	});
 };
 
-exports['default'] = analyzeRender;
-module.exports = exports['default'];
+export default analyzeRender;
