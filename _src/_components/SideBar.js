@@ -4,8 +4,8 @@ import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
-import ui from '../_styles/ui.less';
-import styles from '../_styles/components/SideBar.less';
+import ui from '../../_styles/ui.less';
+import styles from '../../_styles/components/SideBar.less';
 
 /**
  * SideBar

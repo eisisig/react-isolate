@@ -6,7 +6,7 @@ import React from 'react';
 import PropList from './PropList';
 import Docs from './Docs';
 
-import styles from '../_styles/components/Documentation.less';
+import styles from '../../_styles/components/Documentation.less';
 
 /**
  * # Documentation

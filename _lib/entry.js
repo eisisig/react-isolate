@@ -28,15 +28,15 @@ var _reactRouter = require('react-router');
 
 var _utils = require('./utils');
 
-var _componentsApp = require('../_components/App');
+var _componentsApp = require('./__components/App');
 
 var _componentsApp2 = _interopRequireDefault(_componentsApp);
 
-var _componentsPreview = require('../_components/Preview');
+var _componentsPreview = require('./_components/Preview');
 
 var _componentsPreview2 = _interopRequireDefault(_componentsPreview);
 
-var _componentsDocumentation = require('../_components/Documentation');
+var _componentsDocumentation = require('./_components/Documentation');
 
 var _componentsDocumentation2 = _interopRequireDefault(_componentsDocumentation);
 

@@ -1,8 +1,8 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
-import styles from '../_styles/components/PropList.less';
-import ui from '../_styles/ui.less';
+import styles from '../../_styles/components/PropList.less';
+import ui from '../../_styles/ui.less';
 
 /**
  * # PropList

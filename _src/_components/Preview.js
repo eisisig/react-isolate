@@ -8,8 +8,8 @@ import { renderComponentMarkup } from '../_lib/utils';
 import Editor from './Editor';
 import Markup from './Markup';
 
-import styles from '../_styles/components/Preview.less';
-import ui from '../_styles/ui.less';
+import styles from '../../_styles/components/Preview.less';
+import ui from '../../_styles/ui.less';
 
 /**
  * # PreviewPanel
