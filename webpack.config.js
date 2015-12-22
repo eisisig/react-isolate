@@ -127,7 +127,11 @@ module.exports = function ( customConfig ) {
 		]
 	};
 
-	const webpackConfig = _.merge(defaultConfig, customConfig);
+	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, function(a, b) {
+	  if (_.isArray(a)) {
+	    return a.concat(b);
+	  }
+	});
 
 	//console.log('webpackConfig', webpackConfig);
 
