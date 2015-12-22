@@ -4,6 +4,7 @@
     "es7.decorators"
   ],
   "plugins": [],
+  "ignore": ["node_modules"],
   "env": {
     "development": {
       "plugins": [
