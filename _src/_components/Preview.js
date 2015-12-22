@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import React, { PropTypes } from 'react';
-import { renderComponentMarkup } from '../_lib/utils';
+import { renderComponentMarkup } from '../../_lib/utils';
 
 import Editor from './Editor';
 import Markup from './Markup';
