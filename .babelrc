@@ -1,30 +1,42 @@
 {
-  "stage": 0,
-  "optional": [
-    "es7.decorators"
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
   ],
-  "plugins": [],
-  "ignore": ["node_modules"],
+  "ignore": [
+    "node_modules"
+  ],
   "env": {
     "development": {
       "plugins": [
-        "react-transform"
-      ],
-      "extra": {
-        "react-transform": {
-          "transforms": [
-            {
-              "transform": "react-transform-hmr",
-              "imports": [
-                "react"
-              ],
-              "locals": [
-                "module"
-              ]
-            }
-          ]
-        }
-      }
+        [
+          "transform-runtime"
+        ],
+        [
+          "react-transform",
+          {
+            "transforms": [
+              {
+                "transform": "react-transform-hmr",
+                "imports": [
+                  "react"
+                ],
+                "locals": [
+                  "module"
+                ]
+              },
+              {
+                "transform": "react-transform-catch-errors",
+                "imports": [
+                  "react",
+                  "redbox-react"
+                ]
+              }
+            ]
+          }
+        ]
+      ]
     }
   }
 }

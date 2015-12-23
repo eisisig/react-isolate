@@ -33,7 +33,7 @@ module.exports = function ( customConfig ) {
 		entry: [
 			'./_lib/entry.js',
 			'./_styles/global.less',
-			'babel-core/lib/polyfill',
+			'babel-polyfill',
 			'webpack-hot-middleware/client'
 		],
 		output: {
@@ -127,10 +127,8 @@ module.exports = function ( customConfig ) {
 		]
 	};
 
-	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, function(a, b) {
-	  if (_.isArray(a)) {
-	    return a.concat(b);
-	  }
+	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
+		if ( _.isArray(a) ) return a.concat(b);
 	});
 
 	//console.log('webpackConfig', webpackConfig);
