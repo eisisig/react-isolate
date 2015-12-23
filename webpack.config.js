@@ -85,7 +85,7 @@ module.exports = function ( customConfig ) {
 						env: {
 							development: {
 								plugins: [
-									['transform-runtime'],
+									//['transform-runtime'],
 									['react-transform', {
 										transforms: [
 											{
