@@ -79,7 +79,30 @@ module.exports = function ( customConfig ) {
 					exclude: [
 						/node_modules\/(?!react-isolate)/
 					],
-					loaders: ['babel']
+					loader: 'babel',
+					query: {
+						presets: ['es2015', 'stage-0', 'react'],
+						env: {
+							development: {
+								plugins: [
+									['transform-runtime'],
+									['react-transform', {
+										transforms: [
+											{
+												transform: 'react-transform-hmr',
+												imports: ['react'],
+												locals: ['module']
+											},
+											{
+												transform: 'react-transform-catch-errors',
+												imports: ['react', 'redbox-react']
+											}
+										]
+									}]
+								]
+							}
+						}
+					}
 				},
 				{
 					test: /\.json$/,
