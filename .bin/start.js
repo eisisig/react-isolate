@@ -4,6 +4,7 @@ var _ = require('lodash');
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
+var pkg = require('../package.json');
 var app = express();
 
 var isolateConfig = require('../config')(require('yargs').argv);
@@ -35,7 +36,7 @@ app.listen(isolateConfig.port, isolateConfig.host, function ( err ) {
 	console.log(`
 	                                         _
   ,_   _  __,   __  -/-     .  ,    _,_ // __,  -/- _
-_/ (__(/_(_/(__(_,__/_    _/__/_)__(_/_(/_(_/(__/__(/_  ...starting
+_/ (__(/_(_/(__(_,__/_    _/__/_)__(_/_(/_(_/(__/__(/_     v${pkg.version} ...starting
 	`);
 	console.log('Listening:         ', 'http://' + isolateConfig.host + ':' + isolateConfig.port);
 	console.log('Components path:   ', path.resolve(isolateConfig.componentsPath));
