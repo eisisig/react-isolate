@@ -34,7 +34,6 @@
   ],
   "author": "Eisi Sig @eisisig",
   "dependencies": {
-    "babel": "^6.3.26",
     "babel-cli": "^6.3.17",
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
@@ -81,10 +80,10 @@
     "webpack-dev-server": "^1.14.0",
     "webpack-hot-middleware": "^2.5.0",
     "webpack-sources": "^0.1.0",
+    "in-publish": "^2.0.0",
     "yargs": "^3.30.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.3.17",
     "babel-eslint": "^5.0.0-beta6",
     "babel-tape-runner": "^2.0.0",
     "concurrently": "^1.0.0",
@@ -92,7 +91,6 @@
     "cz-conventional-changelog": "^1.1.4",
     "eslint": "^1.10.1",
     "eslint-plugin-react": "^3.10.0",
-    "in-publish": "^2.0.0",
     "tape": "^4.2.2",
     "tape-bdd": "0.0.1"
   },
