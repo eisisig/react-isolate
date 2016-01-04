@@ -95,9 +95,6 @@
     "tape-bdd": "0.0.1"
   },
   "license": "MIT",
-  "publishConfig": {
-    "tag": "next"
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
