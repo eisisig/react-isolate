@@ -34,9 +34,12 @@
   ],
   "author": "Eisi Sig @eisisig",
   "dependencies": {
+    "babel": "^6.3.26",
+    "babel-cli": "^6.3.17",
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
     "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-runtime": "^6.3.13",
     "babel-polyfill": "^6.3.14",
     "babel-preset-es2015": "^6.3.13",
@@ -55,6 +58,7 @@
     "html-loader": "^0.4.0",
     "json5": "^0.4.0",
     "json5-loader": "^0.6.0",
+    "jsx-control-statements": "^2.0.3",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "lodash": "^3.10.1",
@@ -76,6 +80,7 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-dev-server": "^1.14.0",
     "webpack-hot-middleware": "^2.5.0",
+    "webpack-sources": "^0.1.0",
     "yargs": "^3.30.0"
   },
   "devDependencies": {

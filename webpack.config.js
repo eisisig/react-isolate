@@ -82,6 +82,10 @@ module.exports = function ( customConfig ) {
 					loader: 'babel',
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
+						plugins: [
+							'jsx-control-statements/babel',
+							'transform-decorators-legacy'
+						],
 						env: {
 							development: {
 								plugins: [
