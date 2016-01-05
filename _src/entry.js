@@ -88,7 +88,10 @@ const docsMap = docsContext.keys().reduce(( results, filePath ) => {
  */
 const fixturesContext = require.context('FIXTURES_PATH', true, /^\.\/.*\.js$/);
 const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
-	const props = fixturesContext(filePath);
+	let props = fixturesContext(filePath);
+
+	if ( 'default' in props ) props = props.default;
+
 	const fileArr = removeExtension(filePath).split('/').splice(1);
 	const mainComponentName = fileArr[0];
 	const subName = fileArr.length > 2 ? fileArr[1] : fileArr[0];
@@ -111,13 +114,6 @@ const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
 }, {});
 
 /**
- * Tests
- * @type {exports|module.exports}
- */
-      //const testsMap = require('tojson!babel!LIB_PATH/tests');
-const testsMap = {};
-
-/**
  * Merge all data together
  */
 const appData = _.merge(componentsMap, fixturesMap, docsMap);
@@ -133,9 +129,6 @@ console.groupEnd();
 const history = useBasename(createHistory)({
 	basename: '/'
 });
-
-// default behavior
-const createElement = ( Component, props ) => <Component components={ appData } { ...props } />;
 
 /**
  * Render App Component

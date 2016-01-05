@@ -42,7 +42,7 @@ export default class PropList extends React.Component {
 
 		// shape
 		if ( value && ( type === 'shape'  ) ) {
-			return Object.keys(value).map(( key, i ) => <span className={ ui.code }>{ `${key}<${value[key].name}>` }</span>);
+			return Object.keys(value).map(( key, i ) => <span key={ i } className={ ui.code }>{ `${key}<${value[key].name}>` }</span>);
 		}
 		// arrayOf
 		else if ( value && ( type === 'arrayOf' ) ) {

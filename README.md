@@ -1,33 +1,12 @@
 WIP
 
+> ### v2.*.* requires babel v6+
+
 [![wercker status](https://app.wercker.com/status/755b7ad314c8f91c3bed20c8ec2c4bd6/s "wercker status")](https://app.wercker.com/project/bykey/755b7ad314c8f91c3bed20c8ec2c4bd6)
 
 # React Component Isolate
 
 All-in-one development, documentation, testing environment for React components
-
-## Requirements
-
-Until relative plugins work in babel we need few dependancies in the users project
-
-- babel-core
-- babel-plugin-react-transform
-- react-transform
-- react-transform-hmr
-
-``` sh
-npm install babel-plugin-react-transform react-transform react-transform-hmr
-```
-
-## .babelrc
-
-To use the most out of babel the users project needs to have stage 0 enabled. So in `.babelrc`
-
-``` json
-{
-  "stage": 0
-}
-```
 
 ## Getting started
 

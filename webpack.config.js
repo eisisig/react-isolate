@@ -33,7 +33,7 @@ module.exports = function ( customConfig ) {
 		entry: [
 			'./_lib/entry.js',
 			'./_styles/global.less',
-			'babel-core/lib/polyfill',
+			'babel-polyfill',
 			'webpack-hot-middleware/client'
 		],
 		output: {
@@ -79,7 +79,34 @@ module.exports = function ( customConfig ) {
 					exclude: [
 						/node_modules\/(?!react-isolate)/
 					],
-					loaders: ['babel']
+					loader: 'babel',
+					query: {
+						presets: ['es2015', 'stage-0', 'react'],
+						plugins: [
+							'jsx-control-statements/babel',
+							'transform-decorators-legacy'
+						],
+						env: {
+							development: {
+								plugins: [
+									//['transform-runtime'],
+									['react-transform', {
+										transforms: [
+											{
+												transform: 'react-transform-hmr',
+												imports: ['react'],
+												locals: ['module']
+											},
+											{
+												transform: 'react-transform-catch-errors',
+												imports: ['react', 'redbox-react']
+											}
+										]
+									}]
+								]
+							}
+						}
+					}
 				},
 				{
 					test: /\.json$/,
@@ -127,10 +154,8 @@ module.exports = function ( customConfig ) {
 		]
 	};
 
-	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, function(a, b) {
-	  if (_.isArray(a)) {
-	    return a.concat(b);
-	  }
+	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
+		if ( _.isArray(a) ) return a.concat(b);
 	});
 
 	//console.log('webpackConfig', webpackConfig);
