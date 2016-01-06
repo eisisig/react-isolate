@@ -6,8 +6,6 @@ const _ = require('lodash');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 const isolateDefaultConfig = require(path.resolve(__dirname, 'isolate.config.js'));
 
 let isolateCustomConfig = {};
@@ -132,7 +130,7 @@ module.exports = function ( customConfig ) {
 				},
 				{
 					test: /\.less$/,
-					loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less'),
+					loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
 					include: /_styles/
 				},
 				{
@@ -149,8 +147,7 @@ module.exports = function ( customConfig ) {
 		},
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
-			new webpack.NoErrorsPlugin(),
-			new ExtractTextPlugin('styles.css')
+			new webpack.NoErrorsPlugin()
 		]
 	};
 
