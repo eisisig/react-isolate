@@ -65,10 +65,8 @@ export default class App extends React.Component {
 			currentData.currentFixture = currentFixture;
 		}
 
-		let classNameText = styles.wrapper;
-
 		return (
-			<div ref="mainApp" className={ styles.wrapper }>
+			<div className={ styles.wrapper }>
 				<div className={ styles.sidebar }>
 					<SideBar components={ appData } location={ location } history={ history } currentData={ currentData } onChange={ this.handleLayoutChange } />
 				</div>
