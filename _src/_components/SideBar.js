@@ -16,7 +16,11 @@ import styles from '../../_styles/components/SideBar.less';
 export default class SideBar extends React.Component {
 
 	state = {
-		filteredList: null
+		filteredList: null,
+		showProps: true,
+		showState: true,
+		showMarkup: true,
+		showDocs: true
 	};
 
 	handleSearch = ( e ) => {
@@ -48,6 +52,18 @@ export default class SideBar extends React.Component {
 		this.setState({ filteredList: null });
 	};
 
+	handleChangeLayout = ( prop, e ) => {
+		const { onChange } = this.props;
+		
+		this.setState({
+			[prop]: e.target.checked
+		}, () => {
+			if(onChange) {
+				onChange(this.state);
+			}
+		});
+	};
+
 	renderSearch = () => {
 		const { filteredList } = this.state;
 		return (
@@ -65,6 +81,20 @@ export default class SideBar extends React.Component {
 		if (keys.length > 1 && keys[1] != 'defaultProps') return keys[1];
 		return keys[0];
 	}
+
+	renderLayouts = () => {
+		const { showProps, showDocs, showState, showMarkup } = this.state;
+
+		return (
+			<div>
+				<h3 className={ ui.header }>Layout</h3>
+				<label className={ styles.layoutsLabel }><input onChange={ this.handleChangeLayout.bind(this, 'showDocs') } checked={ showDocs } className={ styles.layoutsInput } type="checkbox" /> Show docs</label>
+				<label className={ styles.layoutsLabel }><input onChange={ this.handleChangeLayout.bind(this, 'showProps') } checked={ showProps } className={ styles.layoutsInput } type="checkbox" /> Show props</label>
+				<label className={ styles.layoutsLabel }><input onChange={ this.handleChangeLayout.bind(this, 'showMarkup') } checked={ showMarkup } className={ styles.layoutsInput } type="checkbox" /> Show markup</label>
+				<label className={ styles.layoutsLabel }><input onChange={ this.handleChangeLayout.bind(this, 'showState') } checked={ showState } className={ styles.layoutsInput } type="checkbox" /> Show props/state</label>
+			</div>
+		);
+	};
 
 	renderList = ( componentList ) => {
 		const { location: { pathname } } = this.props;
@@ -131,6 +161,7 @@ export default class SideBar extends React.Component {
 		return (
 			<div className={ styles.wrapper }>
 				<Link to="/" className={ styles.title } to="/"></Link>
+				<div className={ styles.layouts }>{ this.renderLayouts() }</div>
 				<div className={ styles.search }>{ this.renderSearch() }</div>
 				<div className={ styles.list }>{ this.renderList(filteredList || components) }</div>
 			</div>

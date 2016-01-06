@@ -109,23 +109,30 @@ export default class Preview extends React.Component {
 	};
 
 	render () {
-		const { currentData: { currentComponent, currentFixture } } = this.props;
+		const { currentData: { showMarkup, showState, currentComponent, currentFixture } } = this.props;
+		const showMarkupState = showState || showMarkup;
+
 		const { code } = this.state;
 		return (
 			<div className={ styles.wrapper }>
-				<div className={ styles.preview }>
+				<div className={ showMarkupState ? styles.previewWithMarkup : styles.preview }>
 					<h3 className={ ui.header }>{ `Preview (${currentFixture.name})` }</h3>
 					<div ref="preview"></div>
 				</div>
+				{ showMarkup ? 
 				<div className={ styles.markup }>
 					<h3 className={ ui.header }>Markup</h3>
+					
 					<Markup
-						codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' || !_.isEqual(code, currentFixture.props) ? code : null )  } />
+						codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' || !_.isEqual(code, currentFixture.props) ? code : null )  } />					
 				</div>
+				: null }
+				{ showState ? 
 				<div className={ styles.editor }>
 					<h3 className={ ui.header }>Props / state</h3>
 					<div ref="editor"></div>
 				</div>
+				: null }
 			</div>
 		);
 	}

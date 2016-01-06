@@ -16,16 +16,18 @@ import styles from '../../_styles/components/Documentation.less';
 export default class Documentation extends React.Component {
 	render () {
 		const { currentData, children } = this.props;
+		const showDocumentationPanel = currentData.showProps || currentData.showDocs;
+
 		return (
 			<div className={ styles.wrapper }>
-				{ currentData.currentDocs ? (
+				{ currentData.currentDocs && showDocumentationPanel ? (
 					<div className={ styles.docs }>
-						<PropList { ...currentData } />
-						{ currentData.currentComponent && currentData.currentComponent.docs ? <Docs docs={ currentData.currentComponent.docs } /> : null }
+						{ currentData.showProps ? <PropList { ...currentData } /> : null }
+						{ currentData.currentComponent && currentData.currentComponent.docs && currentData.showDocs ? <Docs docs={ currentData.currentComponent.docs } /> : null }
 					</div>
 				) : null  }
 				{ currentData.currentFixture ? (
-					<div className={ styles.preview }>
+					<div className={ showDocumentationPanel ? styles.previewWithDocs : styles.preview }>
 						{ React.Children.map(children, ( el ) => React.cloneElement(el, { currentData, codeText: currentData.currentFixture.props })) }
 					</div>
 				) : null }

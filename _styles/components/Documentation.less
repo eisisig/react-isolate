@@ -19,13 +19,23 @@
 	bottom:       0;
 	border-right: 1px solid @mainBorderColor;
 	z-index:      3;
+	//display:	  none;
+
+	.has-docs & {
+		display: block;
+	}
 }
 
 .preview {
 	.box;
 	position: absolute;
-	width:    50%;
 	right:    0;
 	top:      0;
 	bottom:   0;
+	width: 100%;
+}
+
+.previewWithDocs {
+	.preview;
+	width: 50%;
 }
