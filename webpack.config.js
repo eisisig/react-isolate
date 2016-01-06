@@ -77,7 +77,7 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.js$/,
 					exclude: [
-						/node_modules\/(?!react-isolate)/
+						/node_modules/
 					],
 					loader: 'babel',
 					query: {
