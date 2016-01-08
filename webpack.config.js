@@ -81,7 +81,7 @@ module.exports = function ( customConfig ) {
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
 						plugins: [
-							'jsx-control-statements/babel',
+							'jsx-control-statements',
 							'transform-decorators-legacy'
 						],
 						env: {
