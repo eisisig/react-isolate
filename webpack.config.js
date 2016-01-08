@@ -21,7 +21,6 @@ module.exports = function ( customConfig ) {
 		entry: [
 			'./_lib/entry.js',
 			'./_styles/global.less',
-			'babel-polyfill',
 			'webpack-hot-middleware/client'
 		],
 		output: {
@@ -71,13 +70,13 @@ module.exports = function ( customConfig ) {
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
 						plugins: [
+							'transform-runtime',
 							'jsx-control-statements',
 							'transform-decorators-legacy'
 						],
 						env: {
 							development: {
 								plugins: [
-									//['transform-runtime'],
 									['react-transform', {
 										transforms: [
 											{
@@ -99,9 +98,6 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.json$/,
 					loaders: ['json5']
-					//exclude: [
-					//	/node_modules\/(?!react-isolate)/
-					//]
 				},
 				{
 					test: /\.gif$/,
