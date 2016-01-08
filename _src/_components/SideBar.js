@@ -60,9 +60,9 @@ export default class SideBar extends React.Component {
 		);
 	};
 
-	getFirstFixtureName(fixtures) {
+	getFirstFixtureName ( fixtures ) {
 		const keys = _.keys(fixtures);
-		if (keys.length > 1 && keys[1] != 'defaultProps') return keys[1];
+		if ( keys.length > 1 && keys[1] != 'defaultProps' ) return keys[1];
 		return keys[0];
 	}
 
