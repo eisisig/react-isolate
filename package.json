@@ -7,7 +7,7 @@
     "dev": "concurrent \"npm run watch\" \"node .bin/start\" ",
     "build": "babel _src --out-dir _lib --presets es2015,stage-0,react",
     "watch": "babel _src --out-dir _lib --watch --presets es2015,stage-0,react",
-    "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures --testsPath=demo/tests",
+    "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures",
     "lint": "eslint _components _lib",
     "prepublish": "in-publish && npm run build",
     "test": "echo \"Run tests\" && exit 0"

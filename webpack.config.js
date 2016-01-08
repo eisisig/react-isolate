@@ -6,17 +6,7 @@ const _ = require('lodash');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
 
-const isolateDefaultConfig = require(path.resolve(__dirname, 'isolate.config.js'));
-
-let isolateCustomConfig = {};
-
-try {
-	isolateCustomConfig = require(path.resolve(process.cwd(), 'isolate.config.js'));
-} catch ( e ) {
-	console.log('No custom isolate.config.js found');
-}
-
-const isolateConfig = _.merge({}, isolateDefaultConfig, isolateCustomConfig);
+const isolateConfig = require('./config')(argv);
 
 const resolvePath = function ( userPath ) {
 	return cwd + '/' + userPath;
@@ -47,11 +37,11 @@ module.exports = function ( customConfig ) {
 			],
 			alias: {
 				LIB_PATH: path.resolve(__dirname, '_lib'),
-				TESTS_PATH: resolvePath(argv.testsPath || isolateConfig.testsPath),
-				FIXTURES_PATH: resolvePath(argv.fixturesPath || isolateConfig.fixturesPath),
-				COMPONENTS_PATH: resolvePath(argv.componentsPath || isolateConfig.componentsPath),
-				RAW_COMPONENTS_PATH: resolvePath(argv.componentsPath || isolateConfig.componentsPath),
-				RAW: resolvePath(argv.componentsPath || isolateConfig.componentsPath)
+				TESTS_PATH: resolvePath(isolateConfig.testsPath),
+				FIXTURES_PATH: resolvePath(isolateConfig.fixturesPath),
+				COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
+				RAW_COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
+				RAW: resolvePath(isolateConfig.componentsPath)
 			},
 			extensions: ['', '.js', '.jsx']
 		},
