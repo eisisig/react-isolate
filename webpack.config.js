@@ -70,7 +70,6 @@ module.exports = function ( customConfig ) {
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
 						plugins: [
-							'transform-runtime',
 							'jsx-control-statements',
 							'transform-decorators-legacy'
 						],
