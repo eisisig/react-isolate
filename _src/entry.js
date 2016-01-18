@@ -113,10 +113,14 @@ const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
 	});
 }, {});
 
+const merge = ( componentsMap, fixturesMap, docsMap ) => _.merge(componentsMap, fixturesMap, docsMap);
+const clean = ( data ) => _.omit(data, ( item ) => !item.name);
+const prepareData = _.compose(clean, merge);
+
 /**
  * Merge all data together
  */
-const appData = _.merge(componentsMap, fixturesMap, docsMap);
+const appData = prepareData(componentsMap, fixturesMap, docsMap);
 
 console.groupCollapsed('Components total:', Object.keys(appData).length);
 Object.keys(appData).forEach(( key ) => {

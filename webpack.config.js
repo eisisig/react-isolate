@@ -5,20 +5,9 @@ const webpack = require('webpack');
 const _ = require('lodash');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const isolateDefaultConfig = require(path.resolve(__dirname, 'isolate.config.js'));
-
-let isolateCustomConfig = {};
-
-try {
-	isolateCustomConfig = require(path.resolve(process.cwd(), 'isolate.config.js'));
-} catch ( e ) {
-	console.log('No custom isolate.config.js found');
-}
-
-const isolateConfig = _.merge({}, isolateDefaultConfig, isolateCustomConfig);
+const isolateConfig = require('./config')(argv);
 
 const resolvePath = function ( userPath ) {
 	return cwd + '/' + userPath;
@@ -33,11 +22,10 @@ module.exports = function ( customConfig ) {
 		entry: [
 			'./_lib/entry.js',
 			'./_styles/global.less',
-			'babel-polyfill',
 			'webpack-hot-middleware/client'
 		],
 		output: {
-			path: path.resolve(__dirname, 'bundles'),
+			path: path.resolve(cwd, 'bundles'),
 			filename: 'bundle.js',
 			publicPath: '/'
 		},
@@ -49,11 +37,11 @@ module.exports = function ( customConfig ) {
 			],
 			alias: {
 				LIB_PATH: path.resolve(__dirname, '_lib'),
-				TESTS_PATH: resolvePath(argv.testsPath || isolateConfig.testsPath),
-				FIXTURES_PATH: resolvePath(argv.fixturesPath || isolateConfig.fixturesPath),
-				COMPONENTS_PATH: resolvePath(argv.componentsPath || isolateConfig.componentsPath),
-				RAW_COMPONENTS_PATH: resolvePath(argv.componentsPath || isolateConfig.componentsPath),
-				RAW: resolvePath(argv.componentsPath || isolateConfig.componentsPath)
+				TESTS_PATH: resolvePath(isolateConfig.testsPath),
+				FIXTURES_PATH: resolvePath(isolateConfig.fixturesPath),
+				COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
+				RAW_COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
+				RAW: resolvePath(isolateConfig.componentsPath)
 			},
 			extensions: ['', '.js', '.jsx']
 		},
@@ -83,13 +71,12 @@ module.exports = function ( customConfig ) {
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
 						plugins: [
-							'jsx-control-statements/babel',
+							'jsx-control-statements',
 							'transform-decorators-legacy'
 						],
 						env: {
 							development: {
 								plugins: [
-									//['transform-runtime'],
 									['react-transform', {
 										transforms: [
 											{
@@ -111,9 +98,6 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.json$/,
 					loaders: ['json5']
-					//exclude: [
-					//	/node_modules\/(?!react-isolate)/
-					//]
 				},
 				{
 					test: /\.gif$/,
@@ -132,7 +116,7 @@ module.exports = function ( customConfig ) {
 				},
 				{
 					test: /\.less$/,
-					loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less'),
+					loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
 					include: /_styles/
 				},
 				{
@@ -150,7 +134,9 @@ module.exports = function ( customConfig ) {
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
 			new webpack.NoErrorsPlugin(),
-			new ExtractTextPlugin('styles.css')
+			new HtmlWebpackPlugin({
+				template: path.resolve(__dirname, 'index.html')
+			})
 		]
 	};
 
