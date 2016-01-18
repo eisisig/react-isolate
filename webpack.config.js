@@ -66,7 +66,7 @@ module.exports = function ( customConfig ) {
 					exclude: [
 						/node_modules/
 					],
-					loader: 'babel',
+					loader: 'component-css?babel',
 					query: {
 						presets: ['es2015', 'stage-0', 'react'],
 						plugins: [
