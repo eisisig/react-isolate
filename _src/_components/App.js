@@ -13,35 +13,17 @@ export default class App extends React.Component {
 
 	state = {
 		currentFixture: null,
-		currentComponent: null,
-		showDocs: true,
-		showMarkup: true,
-		showState: true,
-		showProps: true
-	};
-
-	handleLayoutChange = ( layoutState ) => {
-		this.setState({
-			showDocs: layoutState.showDocs,
-			showProps: layoutState.showProps,
-			showMarkup: layoutState.showMarkup,
-			showState: layoutState.showState
-		});
+		currentComponent: null
 	};
 
 	render () {
 
 		const { params, children, location, history, route: { appData } } = this.props;
-		const { showState, showMarkup, showProps, showDocs } = this.state;
 
 		const currentData = {
 			currentDocs: null,
 			currentFixture: null,
-			currentComponent: null,
-			showState: showState,
-			showMarkup: showMarkup,
-			showProps: showProps,
-			showDocs: showDocs
+			currentComponent: null
 		};
 
 		const currentComponent = _.get(appData, [params.component, 'components', params.sub]);
@@ -68,7 +50,7 @@ export default class App extends React.Component {
 		return (
 			<div className={ styles.wrapper }>
 				<div className={ styles.sidebar }>
-					<SideBar components={ appData } location={ location } history={ history } currentData={ currentData } onChange={ this.handleLayoutChange } />
+					<SideBar components={ appData } location={ location } history={ history } currentData={ currentData } />
 				</div>
 				<div className={ styles.main }>
 					{ React.Children.map(children, ( el ) => React.cloneElement(el, { currentData })) }
