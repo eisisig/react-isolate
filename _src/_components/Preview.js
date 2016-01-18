@@ -109,7 +109,7 @@ export default class Preview extends React.Component {
 	};
 
 	render () {
-		const { currentData: { showMarkup, showState, currentComponent, currentFixture } } = this.props;
+		const { currentData: { currentComponent, currentFixture }, showMarkup, showState } = this.props;
 		const showMarkupState = showState || showMarkup;
 
 		const { code } = this.state;
