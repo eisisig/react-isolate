@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const _ = require('lodash');
 const argv = require('yargs').argv;
 const cwd = process.cwd();
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isolateConfig = require('./config')(argv);
 
@@ -24,7 +25,7 @@ module.exports = function ( customConfig ) {
 			'webpack-hot-middleware/client'
 		],
 		output: {
-			path: path.resolve(__dirname, 'bundles'),
+			path: path.resolve(cwd, 'bundles'),
 			filename: 'bundle.js',
 			publicPath: '/'
 		},
@@ -132,7 +133,10 @@ module.exports = function ( customConfig ) {
 		},
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
-			new webpack.NoErrorsPlugin()
+			new webpack.NoErrorsPlugin(),
+			new HtmlWebpackPlugin({
+				template: path.resolve(__dirname, 'index.html')
+			})
 		]
 	};
 
