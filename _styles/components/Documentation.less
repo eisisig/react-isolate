@@ -15,17 +15,46 @@
 	width:        50%;
 	padding:      15px;
 	left:         0;
-	top:          0;
+	top:          40px;
 	bottom:       0;
 	border-right: 1px solid @mainBorderColor;
 	z-index:      3;
+	//display:	  none;
+
+	.has-docs & {
+		display: block;
+	}
+}
+
+.layouts {
+	.box;
+
+	position:absolute;
+	z-index:       1;
+	top:0;
+	left:0;
+	width: 100%;
+	padding:       @mainPadding;
+	border-bottom: 1px solid @mainBorderColor;
+	height:		   40px;
+	box-sizing:	   border-box;
+}
+
+.layoutsLabel {
+	display: inline;
+	margin: 0 10px;
 }
 
 .preview {
 	.box;
 	position: absolute;
-	width:    50%;
 	right:    0;
-	top:      0;
+	top:      40px;
 	bottom:   0;
+	width: 100%;
+}
+
+.previewWithDocs {
+	.preview;
+	width: 50%;
 }
