@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrent \"npm run watch\" \"node .bin/start\" ",
-    "build": "babel _src --out-dir _lib --presets es2015,stage-0,react",
-    "watch": "babel _src --out-dir _lib --watch --presets es2015,stage-0,react",
+    "build": "babel _src --out-dir _lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc",
+    "watch": "babel _src --out-dir _lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc --watch",
     "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures",
+    "styles": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures --autoImportLess",
     "lint": "eslint _components _lib",
     "prepublish": "in-publish && npm run build",
     "test": "echo \"Run tests\" && exit 0"
@@ -34,8 +35,8 @@
   ],
   "author": "Eisi Sig @eisisig",
   "dependencies": {
-    "babel-cli": "^6.3.17",
-    "babel-core": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.4.5",
     "babel-loader": "^6.2.0",
     "babel-plugin-react-transform": "^2.0.0-beta1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -66,7 +67,7 @@
     "marked": "^0.3.5",
     "raw-loader": "^0.5.1",
     "react": "^0.14.3",
-    "react-docgen": "^2.4.0",
+    "react-docgen": "^2.6.3",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.0",
     "react-transform-catch-errors": "^1.0.0",
@@ -76,12 +77,12 @@
     "suit-cx": "^1.1.4",
     "tojson-loader": "^1.0.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.9",
+    "webpack": "^1.12.11",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-dev-server": "^1.14.0",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.5.0",
     "webpack-sources": "^0.1.0",
-    "yargs": "^3.30.0"
+    "yargs": "^3.32.0"
   },
   "devDependencies": {
     "babel-eslint": "^5.0.0-beta6",
@@ -90,7 +91,7 @@
     "conventional-changelog": "^0.5.1",
     "cz-conventional-changelog": "^1.1.4",
     "eslint": "^1.10.1",
-    "eslint-plugin-react": "^3.10.0",
+    "eslint-plugin-react": "^3.15.0",
     "tape": "^4.2.2",
     "tape-bdd": "0.0.1"
   },

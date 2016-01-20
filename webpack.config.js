@@ -1,20 +1,53 @@
 'use strict';
 
-const path = require('path');
-const webpack = require('webpack');
-const _ = require('lodash');
-const argv = require('yargs').argv;
-const cwd = process.cwd();
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+var webpack = require('webpack');
+var _ = require('lodash');
+var argv = require('yargs').argv;
+var cwd = process.cwd();
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isolateConfig = require('./config')(argv);
+var isolateConfig = require('./config')(argv);
 
-const resolvePath = function ( userPath ) {
+var resolvePath = function ( userPath ) {
 	return cwd + '/' + userPath;
 };
 
+var babelQuery = {
+	presets: ['es2015', 'stage-0', 'react'],
+	plugins: [
+		'jsx-control-statements',
+		'transform-decorators-legacy'
+	],
+	env: {
+		development: {
+			plugins: [
+				['react-transform', {
+					transforms: [
+						{
+							transform: 'react-transform-hmr',
+							imports: ['react'],
+							locals: ['module']
+						},
+						{
+							transform: 'react-transform-catch-errors',
+							imports: ['react', 'redbox-react']
+						}
+					]
+				}]
+			]
+		}
+	}
+};
+
+var jsLoader = 'babel?' + JSON.stringify(babelQuery);
+
+if ( isolateConfig.autoImportLess ) {
+	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
+}
+
 module.exports = function ( customConfig ) {
-	const defaultConfig = {
+	var defaultConfig = {
 		context: __dirname,
 		debug: true,
 		cache: true,
@@ -67,33 +100,8 @@ module.exports = function ( customConfig ) {
 					exclude: [
 						/node_modules/
 					],
-					loader: 'component-css?babel',
-					query: {
-						presets: ['es2015', 'stage-0', 'react'],
-						plugins: [
-							'jsx-control-statements',
-							'transform-decorators-legacy'
-						],
-						env: {
-							development: {
-								plugins: [
-									['react-transform', {
-										transforms: [
-											{
-												transform: 'react-transform-hmr',
-												imports: ['react'],
-												locals: ['module']
-											},
-											{
-												transform: 'react-transform-catch-errors',
-												imports: ['react', 'redbox-react']
-											}
-										]
-									}]
-								]
-							}
-						}
-					}
+					loader: jsLoader,
+					//query: babelQuery
 				},
 				{
 					test: /\.json$/,
@@ -140,7 +148,7 @@ module.exports = function ( customConfig ) {
 		]
 	};
 
-	const webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
+	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
 		if ( _.isArray(a) ) return a.concat(b);
 	});
 

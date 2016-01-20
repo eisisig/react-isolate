@@ -38,7 +38,7 @@ export default class Button extends React.Component {
 	render () {
 		const { value } = this.props;
 		return (
-			<button>{ value }</button>
+			<button className="Button">{ value }</button>
 		);
 	}
 }
