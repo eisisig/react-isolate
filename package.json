@@ -1,6 +1,6 @@
 {
   "name": "react-isolate",
-  "version": "2.0.12",
+  "version": "2.3.0",
   "description": "A React workbench to work/view react component in isolated environment",
   "main": "index.js",
   "scripts": {
@@ -54,6 +54,7 @@
     "history": "^1.13.1",
     "html-entities": "^1.2.0",
     "html-loader": "^0.4.0",
+    "html-webpack-plugin": "^1.7.0",
     "in-publish": "^2.0.0",
     "json5": "^0.4.0",
     "json5-loader": "^0.6.0",
