@@ -59,10 +59,13 @@ if ( argv.build ) {
 		res.sendFile(indexPath);
 	});
 
-	app.listen(process.env.PORT || isolateConfig.port, isolateConfig.host, function ( err ) {
+	var PORT = process.env.PORT || isolateConfig.port;
+	var HOST = process.env.HOST || '0.0.0.0';
+
+	app.listen(PORT, function ( err ) {
 		if ( err ) { return console.log(err); }
 		banner();
-		console.log('Listening:         ', 'http://' + isolateConfig.host + ':' + isolateConfig.port);
+		console.log('Listening:         ', 'http://' + HOST + ':' + PORT);
 		console.log('Components path:   ', path.resolve(isolateConfig.componentsPath));
 		console.log('Fixtures path:     ', path.resolve(isolateConfig.fixturesPath));
 		console.log('');
