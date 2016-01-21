@@ -59,7 +59,7 @@ if ( argv.build ) {
 		res.sendFile(indexPath);
 	});
 
-	app.listen(isolateConfig.port, isolateConfig.host, function ( err ) {
+	app.listen(process.env.PORT || isolateConfig.port, isolateConfig.host, function ( err ) {
 		if ( err ) { return console.log(err); }
 		banner();
 		console.log('Listening:         ', 'http://' + isolateConfig.host + ':' + isolateConfig.port);
