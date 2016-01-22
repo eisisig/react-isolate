@@ -33,7 +33,13 @@ if ( argv.build ) {
 			return console.log('react-isolate error', err);
 		}
 		console.log('Build successful!');
-		console.log(stats);
+		console.log('===================================');
+		console.log('stats.fileDependencies', JSON.stringify(stats.fileDependencies, null, 4));
+		console.log('- - - - - - - - - - - - - - - - - -');
+		console.log('stats.assets', JSON.stringify(stats.assets, null, 4));
+		console.log('- - - - - - - - - - - - - - - - - -');
+		console.log('stats.errors', JSON.stringify(stats.errors, null, 4));
+		console.log('===================================');
 	});
 } else {
 
