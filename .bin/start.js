@@ -6,6 +6,7 @@ var express = require('express');
 var webpack = require('webpack');
 var argv = require('yargs').argv;
 var pkg = require('../package.json');
+var ProgressPlugin = require('webpack/lib/ProgressPlugin');
 var app = express();
 
 var isolateConfig = require('../config')(require('yargs').argv);
@@ -21,7 +22,11 @@ var banner = function () {
 
 var compiler = webpack(webpackConfig);
 
+
 if ( argv.build ) {
+	compiler.apply(new ProgressPlugin(function ( percentage, msg ) {
+		console.log((percentage * 100) + '%', msg);
+	}));
 	console.log('Starting build...');
 	compiler.run(function ( err, stats ) {
 		if ( err ) {
@@ -31,7 +36,7 @@ if ( argv.build ) {
 	});
 } else {
 
-	var indexPath = path.join(process.cwd(), 'bundles', 'index.html');
+	var indexPath = path.join('bundles', 'index.html');
 
 	if ( !argv.static ) {
 
@@ -53,6 +58,7 @@ if ( argv.build ) {
 		app.use(require('webpack-hot-middleware')(compiler));
 	}
 
+	app.use(express.static('app'));
 	app.use(express.static('bundles'));
 
 	app.get('/*', function ( req, res ) {
