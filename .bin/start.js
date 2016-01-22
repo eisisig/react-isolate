@@ -22,23 +22,40 @@ var banner = function () {
 
 var compiler = webpack(webpackConfig);
 
-
 if ( argv.build ) {
 	compiler.apply(new ProgressPlugin(function ( percentage, msg ) {
-		console.log(Math.round(percentage * 100) + '% -', msg);
+		var perc = Math.round(percentage * 100);
+		perc % 10 == 0 ? console.log(perc + '% -', msg) : null;
 	}));
+
 	console.log('Starting build...');
 	compiler.run(function ( err, stats ) {
 		if ( err ) {
 			return console.log('react-isolate error', err);
 		}
 		console.log('Build successful!');
+
 		console.log('===================================');
-		console.log('stats.fileDependencies', JSON.stringify(stats.fileDependencies, null, 4));
-		console.log('- - - - - - - - - - - - - - - - - -');
-		console.log('stats.assets', JSON.stringify(stats.assets, null, 4));
-		console.log('- - - - - - - - - - - - - - - - - -');
-		console.log('stats.errors', JSON.stringify(stats.errors, null, 4));
+		console.log(JSON.stringify(stats.toJson({
+			context: false,
+			hash: false,
+			version: false,
+			timings: false,
+			assets: false,
+			chunks: false,
+			chunkModules: false,
+			modules: false,
+			children: false,
+			cached: false,
+			reasons: false,
+			source: false,
+			errorDetails: false,
+			chunkOrigins: false,
+			modulesSort: false,
+			chunksSort: false,
+			assetsSort: false
+		})), null, 4);
+		//console.log(prettyjson.render(stats, { noColor: true }));
 		console.log('===================================');
 	});
 } else {
