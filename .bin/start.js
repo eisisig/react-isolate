@@ -33,6 +33,7 @@ if ( argv.build ) {
 			return console.log('react-isolate error', err);
 		}
 		console.log('Build successful!');
+		console.log(stats);
 	});
 } else {
 
