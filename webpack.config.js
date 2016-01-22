@@ -57,7 +57,7 @@ module.exports = function ( customConfig ) {
 		entry: [
 			path.resolve(__dirname, '_lib', 'entry.js'), // './_lib/entry.js'
 			path.resolve(__dirname, '_styles', 'global.less') // './_styles/global.less'
-		].concat(argv.build ? [] : 'webpack-hot-middleware/client'),
+		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: process.env.OUTPUT_PATH ? process.env.OUTPUT_PATH : path.resolve(cwd, isolateConfig.outputPath),
 			filename: 'bundle.js',
@@ -152,10 +152,6 @@ module.exports = function ( customConfig ) {
 	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
 		if ( _.isArray(a) ) return a.concat(b);
 	});
-
-	if ( argv.build ) {
-		console.log('webpackConfig.output', JSON.stringify(webpackConfig.output, null, 4));
-	}
 
 	return webpackConfig;
 
