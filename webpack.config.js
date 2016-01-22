@@ -22,7 +22,7 @@ var babelQuery = {
 	env: {}
 };
 
-if ( !argv.build ) {
+if ( !argv.static ) {
 	babelQuery.env.development = {
 		plugins: [
 			['react-transform', {
