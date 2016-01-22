@@ -12,6 +12,8 @@ var app = express();
 var isolateConfig = require('../config')(require('yargs').argv);
 var webpackConfig = require('../webpack.config')(isolateConfig);
 
+var indexFile = path.join(__dirname, '..', 'index.html');
+
 var banner = function () {
 	console.log(`
 		                                         _
@@ -40,7 +42,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(express.static('bundles'));
 
 app.get('/*', function ( req, res ) {
-	res.sendFile(path.join(__dirname, '..', 'index.html'));
+	res.sendFile(indexFile);
 });
 
 var PORT = process.env.PORT || isolateConfig.port || 9999;
@@ -49,8 +51,10 @@ var HOST = process.env.HOST || '0.0.0.0';
 app.listen(PORT, function ( err ) {
 	if ( err ) { return console.log(err); }
 	banner();
+	console.log('Static:            ', argv.static);
 	console.log('Listening:         ', 'http://' + HOST + ':' + PORT);
 	console.log('Components path:   ', path.resolve(isolateConfig.componentsPath));
 	console.log('Fixtures path:     ', path.resolve(isolateConfig.fixturesPath));
+	console.log('Index file:        ', indexFile);
 	console.log('');
 });

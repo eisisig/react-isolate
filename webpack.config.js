@@ -59,7 +59,7 @@ module.exports = function ( customConfig ) {
 			path.resolve(__dirname, '_styles', 'global.less') // './_styles/global.less'
 		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
 		output: {
-			path: process.env.OUTPUT_PATH ? process.env.OUTPUT_PATH : path.resolve(cwd, isolateConfig.outputPath),
+			path: path.resolve(cwd, isolateConfig.outputPath),
 			filename: 'bundle.js',
 			publicPath: '/'
 		},
