@@ -36,7 +36,9 @@ if ( argv.build ) {
 	});
 } else {
 
-	var indexPath = path.join('bundles', 'index.html');
+	var indexPath = path.resolve(process.cwd(), 'bundles', 'index.html');
+
+	console.log('indexPath', indexPath);
 
 	if ( !argv.static ) {
 
