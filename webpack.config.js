@@ -19,26 +19,28 @@ var babelQuery = {
 		'jsx-control-statements',
 		'transform-decorators-legacy'
 	],
-	env: {
-		development: {
-			plugins: [
-				['react-transform', {
-					transforms: [
-						{
-							transform: 'react-transform-hmr',
-							imports: ['react'],
-							locals: ['module']
-						},
-						{
-							transform: 'react-transform-catch-errors',
-							imports: ['react', 'redbox-react']
-						}
-					]
-				}]
-			]
-		}
-	}
+	env: {}
 };
+
+if ( !argv.build ) {
+	babelQuery.env.development = {
+		plugins: [
+			['react-transform', {
+				transforms: [
+					{
+						transform: 'react-transform-hmr',
+						imports: ['react'],
+						locals: ['module']
+					},
+					{
+						transform: 'react-transform-catch-errors',
+						imports: ['react', 'redbox-react']
+					}
+				]
+			}]
+		]
+	}
+}
 
 var jsLoader = 'babel?' + JSON.stringify(babelQuery);
 
@@ -54,9 +56,8 @@ module.exports = function ( customConfig ) {
 		devtool: 'eval',
 		entry: [
 			'./_lib/entry.js',
-			'./_styles/global.less',
-			'webpack-hot-middleware/client'
-		],
+			'./_styles/global.less'
+		].concat(argv.build ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: process.env.OUTPUT_PATH ? process.env.OUTPUT_PATH : path.resolve(cwd, isolateConfig.outputPath),
 			filename: 'bundle.js',
