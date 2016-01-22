@@ -152,7 +152,9 @@ module.exports = function ( customConfig ) {
 		if ( _.isArray(a) ) return a.concat(b);
 	});
 
-	//console.log('webpackConfig', webpackConfig);
+	if ( argv.build ) {
+		console.log('webpackConfig.output', JSON.stringify(webpackConfig.output, null, 4));
+	}
 
 	return webpackConfig;
 

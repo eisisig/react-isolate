@@ -25,12 +25,12 @@ var compiler = webpack(webpackConfig);
 
 if ( argv.build ) {
 	compiler.apply(new ProgressPlugin(function ( percentage, msg ) {
-		console.log((percentage * 100) + '%', msg);
+		console.log(Math.round(percentage * 100) + '% -', msg);
 	}));
 	console.log('Starting build...');
 	compiler.run(function ( err, stats ) {
 		if ( err ) {
-			console.log('react-isolate error', err);
+			return console.log('react-isolate error', err);
 		}
 		console.log('Build successful!');
 	});
@@ -65,7 +65,7 @@ if ( argv.build ) {
 		res.sendFile(indexPath);
 	});
 
-	var PORT = process.env.PORT || isolateConfig.port;
+	var PORT = process.env.PORT || isolateConfig.port || 9999;
 	var HOST = process.env.HOST || '0.0.0.0';
 
 	app.listen(PORT, function ( err ) {
