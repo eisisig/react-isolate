@@ -36,7 +36,7 @@ if ( argv.build ) {
 		console.log('Build successful!');
 
 		console.log('===================================');
-		console.log(JSON.stringify(stats.toJson({
+		console.log(stats.toJson({
 			context: false,
 			hash: false,
 			version: false,
@@ -54,7 +54,7 @@ if ( argv.build ) {
 			modulesSort: false,
 			chunksSort: false,
 			assetsSort: false
-		})), null, 4);
+		}));
 		//console.log(prettyjson.render(stats, { noColor: true }));
 		console.log('===================================');
 	});
