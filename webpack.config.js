@@ -58,7 +58,7 @@ module.exports = function ( customConfig ) {
 			'webpack-hot-middleware/client'
 		],
 		output: {
-			path: path.resolve(cwd, process.env.OUTPUT_PATH || isolateConfig.outputPath),
+			path: process.env.OUTPUT_PATH ? process.env.OUTPUT_PATH : path.resolve(cwd, isolateConfig.outputPath),
 			filename: 'bundle.js',
 			publicPath: '/'
 		},
