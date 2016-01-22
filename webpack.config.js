@@ -55,8 +55,8 @@ module.exports = function ( customConfig ) {
 		cache: true,
 		devtool: 'eval',
 		entry: [
-			'./_lib/entry.js',
-			'./_styles/global.less'
+			path.resolve(__dirname, '_lib', 'entry.js'), // './_lib/entry.js'
+			path.resolve(__dirname, '_styles', 'global.less') // './_styles/global.less'
 		].concat(argv.build ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: process.env.OUTPUT_PATH ? process.env.OUTPUT_PATH : path.resolve(cwd, isolateConfig.outputPath),
