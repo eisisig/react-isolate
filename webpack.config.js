@@ -141,12 +141,11 @@ module.exports = function ( customConfig ) {
 			]
 		},
 		plugins: [
-			new webpack.HotModuleReplacementPlugin(),
 			new webpack.NoErrorsPlugin(),
 			new HtmlWebpackPlugin({
 				template: path.resolve(__dirname, 'index.html')
 			})
-		]
+		].concat(argv.static ? [] : new webpack.HotModuleReplacementPlugin())
 	};
 
 	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
