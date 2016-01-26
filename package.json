@@ -101,8 +101,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npm.org"
   }
 }
