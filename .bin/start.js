@@ -56,5 +56,7 @@ app.listen(PORT, function ( err ) {
 	console.log('Components path:   ', path.resolve(isolateConfig.componentsPath));
 	console.log('Fixtures path:     ', path.resolve(isolateConfig.fixturesPath));
 	console.log('Index file:        ', indexFile);
+	console.log('Auto import less:  ', isolateConfig.autoImportStyle);
+	console.log('Auto import ext:   ', isolateConfig.autoImportStyleExt);
 	console.log('');
 });

@@ -5,7 +5,6 @@ var webpack = require('webpack');
 var _ = require('lodash');
 var argv = require('yargs').argv;
 var cwd = process.cwd();
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var isolateConfig = require('./config')(argv);
 
@@ -44,7 +43,8 @@ if ( !argv.static ) {
 
 var jsLoader = 'babel?' + JSON.stringify(babelQuery);
 
-if ( isolateConfig.autoImportLess ) {
+if ( isolateConfig.autoImportStyle ) {
+	console.log('here');
 	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
 }
 
@@ -55,8 +55,11 @@ module.exports = function ( customConfig ) {
 		cache: true,
 		devtool: 'eval',
 		entry: [
-			path.resolve(__dirname, '_lib', 'entry.js'), // './_lib/entry.js'
-			path.resolve(__dirname, '_styles', 'global.less') // './_styles/global.less'
+			path.resolve(__dirname, '_vendor', 'highlight.default.min.css'),
+			path.resolve(__dirname, '_vendor', 'highlight.github.min.css'),
+			//path.resolve(__dirname, '_vendor', 'jsonlint-1.6.0.min.js'),
+			path.resolve(__dirname, '_lib', 'entry.js'),
+			path.resolve(__dirname, '_styles', 'global.less')
 		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: path.resolve(cwd, isolateConfig.outputPath),
@@ -92,7 +95,8 @@ module.exports = function ( customConfig ) {
 		module: {
 			noParse: [
 				/autoit.js/,
-				/marked/
+				/marked/,
+				/jsonlint/
 			],
 			loaders: [
 				{ test: /\.md$/, loader: 'raw!markdown' },
@@ -101,8 +105,7 @@ module.exports = function ( customConfig ) {
 					exclude: [
 						/node_modules/
 					],
-					loader: jsLoader,
-					//query: babelQuery
+					loader: jsLoader
 				},
 				{
 					test: /\.json$/,
@@ -141,10 +144,7 @@ module.exports = function ( customConfig ) {
 			]
 		},
 		plugins: [
-			new webpack.NoErrorsPlugin(),
-			new HtmlWebpackPlugin({
-				template: path.resolve(__dirname, 'index.html')
-			})
+			new webpack.NoErrorsPlugin()
 		].concat(argv.static ? [] : new webpack.HotModuleReplacementPlugin())
 	};
 
