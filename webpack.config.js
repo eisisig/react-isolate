@@ -13,12 +13,29 @@ var resolvePath = function ( userPath ) {
 };
 
 var babelQuery = {
+	babelrc: false,
 	presets: ['es2015', 'stage-0', 'react'],
 	plugins: [
 		'jsx-control-statements',
 		'transform-decorators-legacy'
 	],
-	env: {}
+	env: {},
+	//only: [
+	//	"demo/**/*.js",
+	//	"src/**/*.js",
+	//	"fixtures/**/*.js",
+	//	"*/ui/lib/index.js",
+	//	"*/ui/lib/**/*.{js,less}"
+	//],
+	only: [
+		'demo/**/*.js',
+		'src/**/*.js',
+		'fixtures/**/*.js',
+		'node_modules\/@cosmic'
+	],
+	ignore: [
+		"node_modules"
+	]
 };
 
 if ( !argv.static ) {
@@ -44,7 +61,6 @@ if ( !argv.static ) {
 var jsLoader = 'babel?' + JSON.stringify(babelQuery);
 
 if ( isolateConfig.autoImportStyle ) {
-	console.log('here');
 	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
 }
 
@@ -69,7 +85,7 @@ module.exports = function ( customConfig ) {
 		resolve: {
 			modulesDirectories: [
 				path.resolve(__dirname, 'node_modules'),
-				path.resolve(__dirname, '..', 'node_modules'),
+				//path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			],
 			alias: {
@@ -84,8 +100,8 @@ module.exports = function ( customConfig ) {
 		},
 		resolveLoader: {
 			modulesDirectories: [
-				path.resolve(__dirname, 'node_modules'),
-				path.resolve(__dirname, '..', 'node_modules'),
+				//path.resolve('node_modules'),
+				//path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			]
 		},
@@ -102,9 +118,13 @@ module.exports = function ( customConfig ) {
 				{ test: /\.md$/, loader: 'raw!markdown' },
 				{
 					test: /\.js$/,
-					exclude: [
-						/node_modules/
-					],
+					//include: [
+					//	path.resolve(cwd, 'src'),
+					//	/ui\/src\/.+/
+					//],
+					//exclude: [
+					//	/node_modules/
+					//],
 					loader: jsLoader
 				},
 				{

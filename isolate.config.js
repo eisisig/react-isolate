@@ -6,6 +6,6 @@ module.exports = {
 	outputPath: 'bundles',
 	fixturesPath: 'demo/fixtures',
 	componentsPath: 'demo/components',
-	autoImportStyle: false,
+	autoImportStyle: true,
 	autoImportStyleExt: 'less'
 };
