@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-addons-test-utils';
 import { createHistory, useBasename } from 'history';
 import { Router, Route } from 'react-router';
 import { removeExtension } from './utils';
@@ -26,7 +27,7 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 		Component = Component.default;
 	}
 
-	if ( !_.contains(fileArr, 'index') ) {
+	if ( !_.contains(fileArr, 'index') && typeof Component === 'function' ) {
 		const name = fileArr.length > 1 ? fileArr[1] : fileArr[0];
 		return _.merge(results, {
 			[mainComponentName]: {
