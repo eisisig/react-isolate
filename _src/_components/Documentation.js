@@ -15,7 +15,7 @@ import styles from '../../_styles/components/Documentation.less';
 //import analyzeRender from '../_lib/analyzeRender';
 //@analyzeRender
 export default class Documentation extends React.Component {
-	
+
 	state = {
 		filteredList: null,
 		showProps: true,
@@ -27,7 +27,7 @@ export default class Documentation extends React.Component {
 
 	handleChangeLayout = ( prop, e ) => {
 		const { onChange } = this.props;
-		
+
 		this.setState({
 			[prop]: e.target.checked
 		}, () => {
@@ -35,6 +35,27 @@ export default class Documentation extends React.Component {
 				onChange(this.state);
 			}
 		});
+	};
+
+	componentWillMount = () => {
+		let localStateString = localStorage.getItem('state');
+
+		if(!localStateString)
+			return;
+
+		let localState = JSON.parse(localStorage.getItem('state'));
+
+		this.setState({
+			showProps: localState.showProps,
+			showState: localState.showState,
+			showMarkup: localState.showMarkup,
+			showDocs: localState.showDocs,
+			showDocumentationPanel: localState.showDocumentationPanel
+		});
+	};
+
+	componentDidUpdate = () => {
+		localStorage.setItem('state', JSON.stringify(this.state));
 	};
 
 	render () {
