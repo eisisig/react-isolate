@@ -7,7 +7,7 @@ import merge from 'lodash/merge';
 import includes from 'lodash/includes';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Perf from 'expose?ReactPerf!react-addons-perf';
+import Perf from '!!expose?Perf!react-addons-perf';
 import ReactTestUtils from 'react-addons-test-utils';
 import {createHistory, useBasename} from 'history';
 import {Router, Route, IndexRoute} from 'react-router';

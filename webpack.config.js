@@ -120,13 +120,6 @@ module.exports = function ( customConfig ) {
 				{ test: /\.md$/, loader: 'raw!markdown' },
 				{
 					test: /\.js$/,
-					//include: [
-					//	path.resolve(cwd, 'src'),
-					//	/ui\/src\/.+/
-					//],
-					//exclude: [
-					//	/node_modules/
-					//],
 					loader: jsLoader
 				},
 				{
