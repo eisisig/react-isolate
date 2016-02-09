@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
+import PureComponent from 'react-pure-render/component';
 
 import ui from '../../_styles/ui.less';
 import styles from '../../_styles/components/SideBar.less';
@@ -11,9 +12,7 @@ import styles from '../../_styles/components/SideBar.less';
  * SideBar
  * @class SideBar
  */
-//import analyzeRender from '../_lib/analyzeRender';
-//@analyzeRender
-export default class SideBar extends React.Component {
+export default class SideBar extends PureComponent {
 
 	state = {
 		filteredList: null

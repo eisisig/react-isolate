@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from 'react';
 import orderBy from 'lodash/orderBy';
+import PureComponent from 'react-pure-render/component';
 import styles from '../../_styles/components/PropList.less';
 import ui from '../../_styles/ui.less';
 
@@ -9,7 +10,7 @@ import ui from '../../_styles/ui.less';
  * # PropList
  * @class PropList
  */
-export default class PropList extends React.Component {
+export default class PropList extends PureComponent {
 
 	static propTypes = {
 		docs: PropTypes.object

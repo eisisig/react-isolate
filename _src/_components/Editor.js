@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+import PureComponent from 'react-pure-render/component';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
@@ -21,7 +22,7 @@ import styles from '../../_styles/components/Editor.less';
  */
 //import analyzeRender from '../_lib/analyzeRender';
 //@analyzeRender
-export default class Editor extends React.Component {
+export default class Editor extends PureComponent {
 
 	static propTypes = {
 		className: React.PropTypes.string,

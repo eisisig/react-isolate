@@ -1,6 +1,5 @@
 'use strict';
 
-import _ from 'lodash';
 import omit from 'lodash/omit';
 import flowRight from 'lodash/flowRight';
 import merge from 'lodash/merge';
@@ -8,7 +7,6 @@ import includes from 'lodash/includes';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Perf from '!!expose?Perf!react-addons-perf';
-import ReactTestUtils from 'react-addons-test-utils';
 import {createHistory, useBasename} from 'history';
 import {Router, Route, IndexRoute} from 'react-router';
 import {removeExtension} from './utils';
@@ -16,6 +14,8 @@ import {removeExtension} from './utils';
 import App from './_components/App';
 import Preview from './_components/Preview';
 import Documentation from './_components/Documentation';
+
+Perf.start();
 
 /**
  * Components

@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+import PureComponent from 'react-pure-render/component';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import { AllHtmlEntities } from 'html-entities';
@@ -25,7 +26,7 @@ marked.setOptions({
 /**
  * # Docs
  */
-export default class Docs extends React.Component {
+export default class Docs extends PureComponent {
 
 	componentDidMount () {
 		this.highlightSyntax();

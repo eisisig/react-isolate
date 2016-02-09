@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-
+import PureComponent from 'react-pure-render/component';
 import PropList from './PropList';
 import Docs from './Docs';
 
@@ -14,7 +14,7 @@ import styles from '../../_styles/components/Documentation.less';
  */
 //import analyzeRender from '../_lib/analyzeRender';
 //@analyzeRender
-export default class Documentation extends React.Component {
+export default class Documentation extends PureComponent {
 
 	state = {
 		filteredList: null,

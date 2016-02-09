@@ -2,21 +2,20 @@
 
 import _ from 'lodash';
 import ReactDOM from 'react-dom';
-import React, { PropTypes } from 'react';
-import { renderComponentMarkup } from '../../_lib/utils';
+import React, {PropTypes} from 'react';
+import PureComponent from 'react-pure-render/component';
+import {renderComponentMarkup} from '../../_lib/utils';
 
 import Editor from './Editor';
 import Markup from './Markup';
 
-import styles from '../../_styles/components/Preview.less';
 import ui from '../../_styles/ui.less';
+import styles from '../../_styles/components/Preview.less';
 
 /**
  * # PreviewPanel
  */
-//import analyzeRender from '../_lib/analyzeRender';
-//@analyzeRender
-export default class Preview extends React.Component {
+export default class Preview extends PureComponent {
 
 	static contextTypes = {
 		router: PropTypes.object
@@ -111,7 +110,6 @@ export default class Preview extends React.Component {
 	render () {
 		const { currentData: { currentComponent, currentFixture }, showMarkup, showState } = this.props;
 		const showMarkupState = showState || showMarkup;
-
 		const { code } = this.state;
 		return (
 			<div className={ styles.wrapper }>
@@ -119,20 +117,20 @@ export default class Preview extends React.Component {
 					<h3 className={ ui.header }>{ `Preview (${currentFixture.name})` }</h3>
 					<div ref="preview"></div>
 				</div>
-				{ showMarkup ? 
-				<div className={ styles.markup }>
-					<h3 className={ ui.header }>Markup</h3>
-					
-					<Markup
-						codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' || !_.isEqual(code, currentFixture.props) ? code : null )  } />					
-				</div>
-				: null }
-				{ showState ? 
-				<div className={ styles.editor }>
-					<h3 className={ ui.header }>Props / state</h3>
-					<div ref="editor"></div>
-				</div>
-				: null }
+				{ showMarkup ?
+					<div className={ styles.markup }>
+						<h3 className={ ui.header }>Markup</h3>
+
+						<Markup
+							codeText={ renderComponentMarkup(currentComponent.name, currentFixture.name !== 'defaultProps' || !_.isEqual(code, currentFixture.props) ? code : null )  } />
+					</div>
+					: null }
+				{ showState ?
+					<div className={ styles.editor }>
+						<h3 className={ ui.header }>Props / state</h3>
+						<div ref="editor"></div>
+					</div>
+					: null }
 			</div>
 		);
 	}

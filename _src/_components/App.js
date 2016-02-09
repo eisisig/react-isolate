@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-
+import PureComponent from 'react-pure-render/component';
 import SideBar from './SideBar';
 
 import styles from '../../_styles/components/App.less';
@@ -9,7 +9,7 @@ import styles from '../../_styles/components/App.less';
 /**
  * # App
  */
-export default class App extends React.Component {
+export default class App extends PureComponent {
 
 	state = {
 		currentFixture: null,

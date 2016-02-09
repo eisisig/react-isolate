@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import CodeMirror from 'codemirror';
+import PureComponent from 'react-pure-render/component';
 import 'codemirror/mode/javascript/javascript';
 
 //import styles from '../_styles/components/Markup.less';
@@ -10,7 +11,7 @@ import 'codemirror/mode/javascript/javascript';
  * Markup
  * @class Markup
  */
-export default class Markup extends React.Component {
+export default class Markup extends PureComponent {
 
 	static propTypes = {
 		className: React.PropTypes.string,
