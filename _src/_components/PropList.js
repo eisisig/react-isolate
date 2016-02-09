@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
+import orderBy from 'lodash/orderBy';
 import styles from '../../_styles/components/PropList.less';
 import ui from '../../_styles/ui.less';
 
@@ -19,10 +20,10 @@ export default class PropList extends React.Component {
 	};
 
 	sortProps = ( props ) => {
-		return _.sortByOrder(Object.keys(props).map(( prop ) => ({
+		return orderBy(Object.keys(props).map(( prop ) => ({
 			name: prop,
 			...props[prop]
-		})), ['required', 'name'], false);
+		})), ['required', 'name'], ['desc']);
 	};
 
 	getType = ( prop ) => {
@@ -79,12 +80,12 @@ export default class PropList extends React.Component {
 		return (
 			<div className={ styles.wrapper }>
 				{/*
-					<div>
-						<h3 className={ ui.header }>Description</h3>
-						<div dangerouslySetInnerHTML={{ __html: currentDocs.description }}></div>
-					</div>
-				<h1>{ currentComponent.name }</h1>
-				*/}
+				 <div>
+				 <h3 className={ ui.header }>Description</h3>
+				 <div dangerouslySetInnerHTML={{ __html: currentDocs.description }}></div>
+				 </div>
+				 <h1>{ currentComponent.name }</h1>
+				 */}
 				{ currentDocs.props ? (
 					<div>
 						<h3 className={ ui.header }>Props</h3>

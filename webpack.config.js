@@ -94,7 +94,9 @@ module.exports = function ( customConfig ) {
 				FIXTURES_PATH: resolvePath(isolateConfig.fixturesPath),
 				COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
 				RAW_COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
-				RAW: resolvePath(isolateConfig.componentsPath)
+				RAW: resolvePath(isolateConfig.componentsPath),
+				'lodash/object/assign': 'lodash/assign',
+				'lodash/array/difference': 'lodash/difference'
 			},
 			extensions: ['', '.js', '.jsx']
 		},

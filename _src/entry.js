@@ -1,12 +1,17 @@
 'use strict';
 
 import _ from 'lodash';
+import omit from 'lodash/omit';
+import flowRight from 'lodash/flowRight';
+import merge from 'lodash/merge';
+import includes from 'lodash/includes';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Perf from 'expose?ReactPerf!react-addons-perf';
 import ReactTestUtils from 'react-addons-test-utils';
-import { createHistory, useBasename } from 'history';
-import { Router, Route } from 'react-router';
-import { removeExtension } from './utils';
+import {createHistory, useBasename} from 'history';
+import {Router, Route, IndexRoute} from 'react-router';
+import {removeExtension} from './utils';
 
 import App from './_components/App';
 import Preview from './_components/Preview';
@@ -27,9 +32,9 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
 		Component = Component.default;
 	}
 
-	if ( !_.contains(fileArr, 'index') && typeof Component === 'function' ) {
+	if ( !includes(fileArr, 'index') && typeof Component === 'function' ) {
 		const name = fileArr.length > 1 ? fileArr[1] : fileArr[0];
-		return _.merge(results, {
+		return merge(results, {
 			[mainComponentName]: {
 				name: mainComponentName,
 				components: {
@@ -64,7 +69,7 @@ const docsMap = docsContext.keys().reduce(( results, filePath ) => {
 	const name = fileArr.length > 2 ? fileArr[1] : fileArr[0];
 	const docName = fileArr[fileArr.length - 1];
 
-	return _.merge(results, {
+	return merge(results, {
 		[mainComponentName]: {
 			name: mainComponentName,
 			components: {
@@ -97,7 +102,7 @@ const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
 	const mainComponentName = fileArr[0];
 	const subName = fileArr.length > 2 ? fileArr[1] : fileArr[0];
 	const name = fileArr.pop();
-	return _.merge(results, {
+	return merge(results, {
 		[mainComponentName]: {
 			components: {
 				[subName]: {
@@ -114,9 +119,9 @@ const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
 	});
 }, {});
 
-const merge = ( componentsMap, fixturesMap, docsMap ) => _.merge(componentsMap, fixturesMap, docsMap);
-const clean = ( data ) => _.omit(data, ( item ) => !item.name);
-const prepareData = _.compose(clean, merge);
+const mergeAll = ( componentsMap, fixturesMap, docsMap ) => merge(componentsMap, fixturesMap, docsMap);
+const clean = ( data ) => omit(data, ( item ) => !item.name);
+const prepareData = flowRight(clean, mergeAll);
 
 /**
  * Merge all data together
