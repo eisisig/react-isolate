@@ -34,6 +34,7 @@ var babelQuery = {
 		'node_modules\/@cosmic'
 	],
 	ignore: [
+		"src/node-app/**/nod_modules",
 		"node_modules"
 	]
 };
@@ -120,7 +121,10 @@ module.exports = function ( customConfig ) {
 				/jsonlint/
 			],
 			loaders: [
-				{ test: /\.md$/, loader: 'raw!markdown' },
+				{
+					test: /\.md$/,
+					loader: 'raw!markdown'
+				},
 				{
 					test: /\.js$/,
 					loader: jsLoader
