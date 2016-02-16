@@ -112,6 +112,9 @@ module.exports = function ( customConfig ) {
 		},
 		module: {
 			noParse: [
+				/autoit/,
+				/sanitizer/,
+				/sanitizer\-bundle/,
 				/autoit.js/,
 				/marked/,
 				/jsonlint/
