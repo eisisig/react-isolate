@@ -3,12 +3,13 @@
 var path = require('path');
 var webpack = require('webpack');
 var _ = require('lodash');
+var globby = require('globby');
 var argv = require('yargs').argv;
 var cwd = process.cwd();
 
 var isolateConfig = require('./config')(argv);
 
-var resolvePath = function ( userPath ) {
+var resolvePath = function (userPath) {
 	return cwd + '/' + userPath;
 };
 
@@ -20,13 +21,6 @@ var babelQuery = {
 		'transform-decorators-legacy'
 	],
 	env: {},
-	//only: [
-	//	"demo/**/*.js",
-	//	"src/**/*.js",
-	//	"fixtures/**/*.js",
-	//	"*/ui/lib/index.js",
-	//	"*/ui/lib/**/*.{js,less}"
-	//],
 	only: [
 		'demo/**/*.js',
 		'src/**/*.js',
@@ -34,7 +28,6 @@ var babelQuery = {
 		'node_modules\/@cosmic'
 	],
 	ignore: [
-		"src/node-app/**/nod_modules",
 		"node_modules"
 	]
 };
@@ -65,7 +58,9 @@ if ( isolateConfig.autoImportStyle ) {
 	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
 }
 
-module.exports = function ( customConfig ) {
+const componentMap = require('./_src/componentMap');
+
+module.exports = function (customConfig) {
 	var defaultConfig = {
 		context: __dirname,
 		debug: true,
@@ -75,8 +70,9 @@ module.exports = function ( customConfig ) {
 			path.resolve(__dirname, '_vendor', 'highlight.default.min.css'),
 			path.resolve(__dirname, '_vendor', 'highlight.github.min.css'),
 			//path.resolve(__dirname, '_vendor', 'jsonlint-1.6.0.min.js'),
-			path.resolve(__dirname, '_lib', 'entry.js'),
-			path.resolve(__dirname, '_styles', 'global.less')
+
+			path.resolve(__dirname, '_src', 'components', 'Root.js'),
+			// path.resolve(__dirname, '_styles', 'global.less')
 		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: path.resolve(cwd, isolateConfig.outputPath),
@@ -166,11 +162,15 @@ module.exports = function ( customConfig ) {
 			]
 		},
 		plugins: [
-			new webpack.NoErrorsPlugin()
+			new webpack.NoErrorsPlugin(),
+
+			new webpack.DefinePlugin({
+				__COMPONENT_MAP__: JSON.stringify(componentMap)
+			})
 		].concat(argv.static ? [] : new webpack.HotModuleReplacementPlugin())
 	};
 
-	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
+	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, (a, b) => {
 		if ( _.isArray(a) ) return a.concat(b);
 	});
 

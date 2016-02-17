@@ -53,6 +53,7 @@
     "expose-loader": "^0.7.1",
     "express": "^4.13.3",
     "file-loader": "^0.8.5",
+    "globby": "^4.0.0",
     "highlight.js": "^9.0.0",
     "history": "^1.13.1",
     "html-entities": "^1.2.0",

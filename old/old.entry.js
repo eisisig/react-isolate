@@ -15,8 +15,6 @@ import App from './_components/App';
 import Preview from './_components/Preview';
 import Documentation from './_components/Documentation';
 
-Perf.start();
-
 /**
  * Components
  * @type {*}

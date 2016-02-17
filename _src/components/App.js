@@ -2,13 +2,16 @@
 
 import React, { PropTypes } from 'react';
 
-/**
- * # Tooltip
- */
-export default class Tooltip extends React.Component {
+console.log('__COMPONENT_MAP__', __COMPONENT_MAP__);
 
-	//static propTypes = {};
+/**
+ * @class App
+ * @module *
+ */
+export class App extends React.Component {
+
 	//static defaultProps = {};
+	//static propTypes = {};
 	//state = {};
 
 	//componentWillMount () {}
@@ -18,7 +21,9 @@ export default class Tooltip extends React.Component {
 
 	render () {
 		return (
-			<div className="Tooltip">Tooltip</div>
+			<div className="App">App</div>
 		);
 	}
 }
+
+export default App;
