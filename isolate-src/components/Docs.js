@@ -9,8 +9,8 @@ import { AllHtmlEntities } from 'html-entities';
 
 const entities = new AllHtmlEntities();
 
-import ui from '../../_styles/ui.less';
-import styles from '../../_styles/components/Docs.less';
+import ui from '../../isolate-styles/ui.less';
+import styles from '../../isolate-styles/components/Docs.less';
 
 marked.setOptions({
 	renderer: new marked.Renderer(),

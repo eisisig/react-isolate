@@ -8,9 +8,11 @@ var cwd = process.cwd();
 
 var isolateConfig = require('./config')(argv);
 
-var resolvePath = function ( userPath ) {
+var resolvePath = function (userPath) {
 	return cwd + '/' + userPath;
 };
+
+var ignore = new webpack.IgnorePlugin(/\/_.+\//);
 
 var babelQuery = {
 	babelrc: false,
@@ -20,20 +22,15 @@ var babelQuery = {
 		'transform-decorators-legacy'
 	],
 	env: {},
-	//only: [
-	//	"demo/**/*.js",
-	//	"src/**/*.js",
-	//	"fixtures/**/*.js",
-	//	"*/ui/lib/index.js",
-	//	"*/ui/lib/**/*.{js,less}"
-	//],
 	only: [
 		'demo/**/*.js',
+		'isolate-src/**/*.js',
 		'src/**/*.js',
 		'fixtures/**/*.js',
 		'node_modules\/@cosmic'
 	],
 	ignore: [
+		"**/_*/**",
 		"src/node-app/**/nod_modules",
 		"node_modules"
 	]
@@ -65,18 +62,18 @@ if ( isolateConfig.autoImportStyle ) {
 	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
 }
 
-module.exports = function ( customConfig ) {
+module.exports = function (customConfig) {
 	var defaultConfig = {
 		context: __dirname,
 		debug: true,
 		cache: true,
 		devtool: 'eval',
 		entry: [
-			path.resolve(__dirname, '_vendor', 'highlight.default.min.css'),
-			path.resolve(__dirname, '_vendor', 'highlight.github.min.css'),
+			path.resolve(__dirname, 'isolate-vendor', 'highlight.default.min.css'),
+			path.resolve(__dirname, 'isolate-vendor', 'highlight.github.min.css'),
 			//path.resolve(__dirname, '_vendor', 'jsonlint-1.6.0.min.js'),
-			path.resolve(__dirname, '_lib', 'entry.js'),
-			path.resolve(__dirname, '_styles', 'global.less')
+			path.resolve(__dirname, 'isolate-lib', 'entry.js'),
+			path.resolve(__dirname, 'isolate-styles', 'global.less')
 		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
 		output: {
 			path: path.resolve(cwd, isolateConfig.outputPath),
@@ -127,7 +124,16 @@ module.exports = function ( customConfig ) {
 				},
 				{
 					test: /\.js$/,
-					loader: jsLoader
+					loader: jsLoader,
+					include: [
+						'isolate-src',
+						'src',
+						'demo',
+						'fixtures',
+					],
+					exclude: [
+						/_.+?\//
+					]
 				},
 				{
 					test: /\.json$/,
@@ -151,26 +157,27 @@ module.exports = function ( customConfig ) {
 				{
 					test: /\.less$/,
 					loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
-					include: /_styles/
+					include: /isolate-styles/
 				},
 				{
 					test: /\.css$/,
 					loader: 'style!css',
-					exclude: /_styles/
+					exclude: /isolate-styles/
 				},
 				{
 					test: /\.less$/,
 					loader: 'style!css!less',
-					exclude: /_styles/
+					exclude: /isolate-styles/
 				}
 			]
 		},
 		plugins: [
+			ignore,
 			new webpack.NoErrorsPlugin()
 		].concat(argv.static ? [] : new webpack.HotModuleReplacementPlugin())
 	};
 
-	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, ( a, b ) => {
+	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, (a, b) => {
 		if ( _.isArray(a) ) return a.concat(b);
 	});
 

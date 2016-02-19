@@ -3,8 +3,8 @@
 import React, {PropTypes} from 'react';
 import orderBy from 'lodash/orderBy';
 import PureComponent from 'react-pure-render/component';
-import styles from '../../_styles/components/PropList.less';
-import ui from '../../_styles/ui.less';
+import styles from '../../isolate-styles/components/PropList.less';
+import ui from '../../isolate-styles/ui.less';
 
 /**
  * # PropList

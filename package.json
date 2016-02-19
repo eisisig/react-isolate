@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrent \"npm run watch\" \"node .bin/start\" ",
-    "build": "babel _src --out-dir _lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc",
-    "watch": "babel _src --out-dir _lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc --watch",
+    "build": "babel isolate-src --out-dir isolate-lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc",
+    "watch": "babel isolate-src --out-dir isolate-lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc --watch",
     "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures",
     "styles": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures --autoImportLess",
-    "lint": "eslint _components _lib",
+    "lint": "eslint _components isolate-lib",
     "prepublish": "in-publish && npm run build",
     "test": "echo \"Run tests\" && exit 0"
   },
