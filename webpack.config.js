@@ -126,10 +126,10 @@ module.exports = function (customConfig) {
 					test: /\.js$/,
 					loader: jsLoader,
 					include: [
-						'isolate-src',
-						'src',
-						'demo',
-						'fixtures',
+						path.resolve(__dirname, 'isolate-src'),
+						path.resolve(process.cwd(), 'src'),
+						path.resolve(process.cwd(), 'demo'),
+						path.resolve(process.cwd(), 'fixtures')
 					],
 					exclude: [
 						/_.+?\//
