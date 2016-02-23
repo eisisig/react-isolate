@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import PureComponent from 'react-pure-render/component';
 
-import ui from '../../_styles/ui.less';
-import styles from '../../_styles/components/SideBar.less';
+import ui from '../../isolate-styles/ui.less';
+import styles from '../../isolate-styles/components/SideBar.less';
 
 /**
  * SideBar

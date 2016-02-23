@@ -4,7 +4,7 @@ import React from 'react';
 import PureComponent from 'react-pure-render/component';
 import SideBar from './SideBar';
 
-import styles from '../../_styles/components/App.less';
+import styles from '../../isolate-styles/components/App.less';
 
 /**
  * # App

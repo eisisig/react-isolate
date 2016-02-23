@@ -11,16 +11,18 @@ import {createHistory, useBasename} from 'history';
 import {Router, Route, IndexRoute} from 'react-router';
 import {removeExtension} from './utils';
 
-import App from './_components/App';
-import Preview from './_components/Preview';
-import Documentation from './_components/Documentation';
+import App from './components/App';
+import Preview from './components/Preview';
+import Documentation from './components/Documentation';
+
+Perf.start();
 
 /**
  * Components
  * @type {*}
  */
 const componentsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$/);
-const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
+const componentsMap = componentsContext.keys().reduce((results, filePath) => {
 
 	const fileArr = removeExtension(filePath).split('/').splice(1);
 	let Component = componentsContext(filePath);
@@ -60,7 +62,7 @@ const componentsMap = componentsContext.keys().reduce(( results, filePath ) => {
  * @type {*}
  */
 const docsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.md$/);
-const docsMap = docsContext.keys().reduce(( results, filePath ) => {
+const docsMap = docsContext.keys().reduce((results, filePath) => {
 
 	const fileArr = removeExtension(filePath, '.md').split('/').splice(1);
 	const mainComponentName = fileArr[0];
@@ -91,7 +93,7 @@ const docsMap = docsContext.keys().reduce(( results, filePath ) => {
  * @type {*}
  */
 const fixturesContext = require.context('FIXTURES_PATH', true, /^\.\/.*\.js$/);
-const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
+const fixturesMap = fixturesContext.keys().reduce((results, filePath) => {
 	let props = fixturesContext(filePath);
 
 	if ( 'default' in props ) props = props.default;
@@ -117,8 +119,8 @@ const fixturesMap = fixturesContext.keys().reduce(( results, filePath ) => {
 	});
 }, {});
 
-const mergeAll = ( componentsMap, fixturesMap, docsMap ) => merge(componentsMap, fixturesMap, docsMap);
-const clean = ( data ) => omit(data, ( item ) => !item.name);
+const mergeAll = (componentsMap, fixturesMap, docsMap) => merge(componentsMap, fixturesMap, docsMap);
+const clean = (data) => omit(data, (item) => !item.name);
 const prepareData = flowRight(clean, mergeAll);
 
 /**
@@ -127,7 +129,7 @@ const prepareData = flowRight(clean, mergeAll);
 const appData = prepareData(componentsMap, fixturesMap, docsMap);
 
 console.groupCollapsed('Components total:', Object.keys(appData).length);
-Object.keys(appData).forEach(( key ) => {
+Object.keys(appData).forEach((key) => {
 	console.groupCollapsed(key, (appData[key].components) ? Object.keys(appData[key].components).length : '');
 	console.log(appData[key]);
 	console.groupEnd();

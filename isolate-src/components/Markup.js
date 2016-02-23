@@ -5,7 +5,7 @@ import CodeMirror from 'codemirror';
 import PureComponent from 'react-pure-render/component';
 import 'codemirror/mode/javascript/javascript';
 
-//import styles from '../_styles/components/Markup.less';
+//import styles from '../isolate-styles/components/Markup.less';
 
 /**
  * Markup

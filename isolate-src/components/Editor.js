@@ -14,7 +14,7 @@ import 'codemirror/addon/lint/lint.css';
 import 'codemirror/addon/lint/json-lint';
 
 
-import styles from '../../_styles/components/Editor.less';
+import styles from '../../isolate-styles/components/Editor.less';
 
 /**
  * Editor

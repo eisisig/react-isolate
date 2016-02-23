@@ -4,13 +4,13 @@ import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import React, {PropTypes} from 'react';
 import PureComponent from 'react-pure-render/component';
-import {renderComponentMarkup} from '../../_lib/utils';
+import {renderComponentMarkup} from '../utils';
 
 import Editor from './Editor';
 import Markup from './Markup';
 
-import ui from '../../_styles/ui.less';
-import styles from '../../_styles/components/Preview.less';
+import ui from '../../isolate-styles/ui.less';
+import styles from '../../isolate-styles/components/Preview.less';
 
 /**
  * # PreviewPanel

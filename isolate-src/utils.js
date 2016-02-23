@@ -1,12 +1,14 @@
 'use strict';
 
-export const removeExtension = ( subject, ext = '.js' ) => {
+import omit from 'lodash/omit';
+
+export const removeExtension = (subject, ext = '.js') => {
 	return ( Array.isArray(subject) )
-		? subject.map(( part ) => part.replace(ext, ''))
+		? subject.map((part) => part.replace(ext, ''))
 		: subject.replace(ext, '');
 };
 
-export const renderComponentMarkup = ( componentName, props, multiLine = false ) => {
+export const renderComponentMarkup = (componentName, props, multiLine = false) => {
 
 	if ( typeof props === 'string' ) {
 		props = JSON.parse(props);
@@ -15,9 +17,9 @@ export const renderComponentMarkup = ( componentName, props, multiLine = false )
 	const start = `<${componentName}`;
 
 	// Remove state
-	props = _.omit(props, 'state');
+	props = omit(props, 'state');
 
-	const propList = Object.keys(props).map(( key ) => {
+	const propList = Object.keys(props).map((key) => {
 
 		let value = props[key];
 

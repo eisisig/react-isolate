@@ -6,8 +6,8 @@ import PureComponent from 'react-pure-render/component';
 import PropList from './PropList';
 import Docs from './Docs';
 
-import ui from '../../_styles/ui.less';
-import styles from '../../_styles/components/Documentation.less';
+import ui from '../../isolate-styles/ui.less';
+import styles from '../../isolate-styles/components/Documentation.less';
 
 /**
  * # Documentation
