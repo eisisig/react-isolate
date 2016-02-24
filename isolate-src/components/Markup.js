@@ -2,23 +2,25 @@
 
 import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
-
-const getInitialState = () => ({});
+import {PrismCode} from "react-prism";
+import renderMarkup from '../utils/renderMarkup';
 
 const getDefaultProps = () => ({});
-
-const componentWillUpdate = () => {};
-
-const componentDidUpdate = () => {};
 
 const shouldComponentUpdate = () => true;
 
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props, state, setState }) => {
+const render = pipe(resolutionMap, ({ props: { selectedComponent, selectedFixture } }) => {
 	return (
-		<div>Markup</div>
+		<code>
+			<If condition={ selectedComponent }>
+				 <PrismCode className="language-jsx">
+					{ renderMarkup(selectedComponent.name, selectedFixture) }
+				 </PrismCode>
+			</If>
+		</code>
 	)
 });
 
@@ -26,10 +28,7 @@ const render = pipe(resolutionMap, ({ props, state, setState }) => {
  * Export
  */
 export default stitch({
-	getInitialState,
 	getDefaultProps,
-	componentWillUpdate,
-	componentDidUpdate,
 	shouldComponentUpdate,
 	render
 });

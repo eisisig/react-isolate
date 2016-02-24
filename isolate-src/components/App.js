@@ -2,16 +2,18 @@
 
 import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
+import get from 'lodash.get';
 import SplitPane from 'react-split-pane';
 
 import Sidebar from './Sidebar';
 import Markup from './Markup';
-import PreviewComponent from './PreviewComponent';
+import Preview from './Preview';
+import Editor from './Editor';
 import Panel from './UI';
 
 const getInitialState = () => ({
 	selectedComponent: null,
-	selectedFixture: null,
+	selectedFixture: null
 });
 
 const getDefaultProps = () => ({
@@ -23,19 +25,15 @@ const getDefaultProps = () => ({
  */
 const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state, setState }) => {
 
-	// console.log(JSON.stringify(state, null, 4));
-
-	/**
-	 * Handlers
-	 * @param {object} component
-	 */
-	const onSetComponent = (component) => setState({
-		...state,
-		selectedComponent: component
+	/* Handlers
+	 ------------------------------------------------------------ */
+	const onSetComponent = (component, fixture = null) => setState({
+		selectedComponent: component,
+		selectedFixture: fixture || get(component, 'fixtures.defaultProps') || null
 	});
 
-	console.log('state', state);
-
+	/* Return
+	 ------------------------------------------------------------ */
 	return (
 		<SplitPane split="vertical" minSize="220" defaultSize="220">
 
@@ -49,19 +47,19 @@ const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state,
 
 					{/* Preview */}
 					<Panel title="Preview">
-						<PreviewComponent { ...state } />
+						<Preview { ...state } />
 					</Panel>
 
 					<SplitPane split="horizontal">
 
 						{/* Editor */}
 						<Panel title="Editor">
-							Editor
+							<Editor { ...state } />
 						</Panel>
 
 						{/* Markup */}
 						<Panel title="Markup">
-							<Markup />
+							<Markup { ...state } />
 						</Panel>
 					</SplitPane>
 				</SplitPane>

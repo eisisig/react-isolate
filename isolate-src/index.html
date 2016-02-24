@@ -3,6 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>React Isolate</title>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
+	<link rel="stylesheet" href="styles/prism-gh-theme.css">
+	<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism-tomorrow.css">-->
 	<style>
 
 		body {
@@ -30,6 +33,14 @@
 		a:hover {
 			color: #333333;
 		}
+
+		ul, li { margin: 0; padding: 0; list-style: none; }
+
+		li { color: #999999; }
+
+		li li { margin-left: 15px; }
+
+		li a { font-size: 14px; }
 
 		.Panel { }
 
@@ -91,6 +102,11 @@
 </head>
 <body>
 <div id="root"></div>
+<script src="//cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
+<script src="//cdn.jsdelivr.net/prism/1.4.1/components/prism-javascript.min.js"></script>
+<script src="//cdn.jsdelivr.net/prism/1.4.1/components/prism-json.min.js"></script>
+<script src="//cdn.jsdelivr.net/prism/1.4.1/components/prism-jsx.min.js"></script>
+<script src="//cdn.jsdelivr.net/prism/1.4.1/components/prism-markdown.min.js"></script>
 <script src="/bundle.js"></script>
 </body>
 </html>

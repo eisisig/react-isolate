@@ -2,7 +2,7 @@
 
 import omit from 'lodash.omit';
 
-export const renderMarkup = (componentName, props, multiLine = false) => {
+export default function renderMarkup (componentName, props, multiLine = false) {
 
 	if ( typeof props === 'string' ) {
 		props = JSON.parse(props);

@@ -18,20 +18,10 @@ const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, prop
  * @returns {*}
  */
 export const renderComponent = ({ selectedComponent, selectedFixture }) => {
-
 	if ( !selectedComponent ) return null;
-
-	console.log('selectedComponent', selectedComponent);
-
 	const { Component } = selectedComponent;
-	let props = {};
-
-	if ( !selectedFixture ) {
-		props = get(selectedComponent, 'fixtures.defaultProps') || {};
-	}
-
 	if ( typeof Component === 'function' ) {
-		return React.cloneElement(<Component />, { ...props });
+		return React.cloneElement(<Component />, { ...selectedFixture });
 	}
 };
 
