@@ -29,15 +29,26 @@ const render = pipe(resolutionMap, ({ props: { componentMap }, setState }) => {
 
 	return (
 		<SplitPane split="vertical" minSize="220" defaultSize="220">
+
+			{/* Sidebar */}
 			<Sidebar componentMap={ componentMap } onSetComponent={ onSetComponent } />
-			<SplitPane split="vertical" minSize="500" defaultSize="50%">
+
+			<SplitPane split="vertical" minSize="400" defaultSize="50%">
+
+				{/* Left */}
 				<SplitPane split="horizontal">
-					<div>1.1</div>
-					<div>1.2</div>
+					<div><h1>Preview</h1></div>
+
+					<SplitPane split="horizontal">
+						<div><h1>Editor</h1></div>
+						<div><h1>Markup</h1></div>
+					</SplitPane>
 				</SplitPane>
+
+				{/* Right */}
 				<SplitPane split="horizontal">
-					<div>2.1</div>
-					<div>2.2</div>
+					<div><h1>Spec</h1></div>
+					<div><h1>Docs</h1></div>
 				</SplitPane>
 			</SplitPane>
 		</SplitPane>
