@@ -5,12 +5,15 @@ import {render} from 'react-dom';
 
 import App from './components/App';
 import componentMap from 'tojson!./componentMap';
+import appConfig from '../isolate.config';
+
+console.log('componentMap', componentMap);
 
 /**
  * Render App Component
  */
 render(
-	<App componentMap={ componentMap } />,
+	<App componentMap={ componentMap } appConfig={ appConfig } />,
 	document.getElementById('root')
 );
 

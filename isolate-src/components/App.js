@@ -5,9 +5,14 @@ import {pipe, resolutionMap, stitch} from 'keo';
 import SplitPane from 'react-split-pane';
 
 import Sidebar from './Sidebar';
+import Markup from './Markup';
+import PreviewComponent from './PreviewComponent';
+import Panel from './UI';
 
 const getInitialState = () => ({
-	selectedComponent: null
+	selectedComponent: null,
+	selectedComponentFixtures: null,
+	selectedFixture: null,
 });
 
 const getDefaultProps = () => ({
@@ -17,7 +22,9 @@ const getDefaultProps = () => ({
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props: { componentMap }, setState }) => {
+const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state, setState }) => {
+
+	console.log(JSON.stringify(state, null, 4));
 
 	/**
 	 * Handlers
@@ -31,24 +38,44 @@ const render = pipe(resolutionMap, ({ props: { componentMap }, setState }) => {
 		<SplitPane split="vertical" minSize="220" defaultSize="220">
 
 			{/* Sidebar */}
-			<Sidebar componentMap={ componentMap } onSetComponent={ onSetComponent } />
+			<Sidebar componentMap={ componentMap } appConfig={ appConfig } onSetComponent={ onSetComponent } />
 
 			<SplitPane split="vertical" minSize="400" defaultSize="50%">
 
 				{/* Left */}
 				<SplitPane split="horizontal">
-					<div><h1>Preview</h1></div>
+
+					{/* Preview */}
+					<Panel title="Preview">
+						<PreviewComponent component={ state.selectedComponent } />
+					</Panel>
 
 					<SplitPane split="horizontal">
-						<div><h1>Editor</h1></div>
-						<div><h1>Markup</h1></div>
+
+						{/* Editor */}
+						<Panel title="Editor">
+							Editor
+						</Panel>
+
+						{/* Markup */}
+						<Panel title="Markup">
+							<Markup />
+						</Panel>
 					</SplitPane>
 				</SplitPane>
 
 				{/* Right */}
 				<SplitPane split="horizontal">
-					<div><h1>Spec</h1></div>
-					<div><h1>Docs</h1></div>
+
+					{/* Spec */}
+					<Panel title="Spec">
+						Spec
+					</Panel>
+
+					{/* Docs */}
+					<Panel title="Docs">
+						Docs
+					</Panel>
 				</SplitPane>
 			</SplitPane>
 		</SplitPane>

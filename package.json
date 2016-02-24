@@ -4,12 +4,8 @@
   "description": "A React workbench to work/view react component in isolated environment",
   "main": "index.js",
   "scripts": {
-    "server": "node .bin/server",
-    "dev": "concurrently \"npm run watch\" \"node .bin/start\" ",
-    "build": "babel isolate-src --out-dir isolate-lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc",
-    "watch": "babel isolate-src --out-dir isolate-lib --presets es2015,stage-0,react --plugins jsx-control-statements --no-babelrc --watch",
-    "demo": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures",
-    "styles": "./.bin/start.js --componentsPath=demo/components --fixturesPath=demo/fixtures --autoImportLess",
+    "dev": "node .bin/server",
+    "demo": "node .bin/server --componentsPath=demo/components --fixturesPath=demo/fixtures",
     "lint": "eslint _components isolate-lib",
     "prepublish": "in-publish && npm run build",
     "test": "echo \"Run tests\" && exit 0"
@@ -56,7 +52,11 @@
     "json5-loader": "^0.6.0",
     "jsx-control-statements": "^3.1.0",
     "keo": "^2.0.9",
-    "lodash": "^4.5.1",
+    "lodash.clone": "^4.3.0",
+    "lodash.forown": "^4.0.1",
+    "lodash.includes": "^4.1.0",
+    "lodash.map": "^4.2.0",
+    "lodash.omit": "^4.1.0",
     "markdown-loader": "^0.1.7",
     "marked": "^0.3.5",
     "raw-loader": "^0.5.1",
@@ -73,11 +73,12 @@
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^2.0.0-beta",
     "webpack-hot-middleware": "^2.7.1",
-    "webpack-sources": "^0.1.1",
-    "yargs": "^4.1.0"
+    "webpack-merge": "^0.7.3",
+    "webpack-sources": "^0.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
+    "babel-preset-es2015-webpack": "^6.3.14",
     "babel-tape-runner": "^2.0.1",
     "concurrently": "^2.0.0",
     "eslint": "^2.2.0",

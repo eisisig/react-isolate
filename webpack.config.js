@@ -1,172 +1,90 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var _ = require('lodash');
-var argv = require('yargs').argv;
-var cwd = process.cwd();
+const path = require('path');
+const webpack = require('webpack');
 
-var isolateConfig = require('./config')(argv);
+const cwd = process.cwd();
+const merge = require('webpack-merge');
+const config = require('./config');
 
-var resolvePath = function (userPath) {
-	return cwd + '/' + userPath;
-};
+const TARGET = process.env.npm_lifecycle_event;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const PORT = process.env.PORT || 9999;
 
-// var ignore = new webpack.IgnorePlugin(/\/_.+\//);
-
-var babelQuery = {
-	babelrc: false,
-	presets: ['es2015', 'stage-0', 'react'],
-	plugins: [
-		'jsx-control-statements',
-		'transform-decorators-legacy'
+let common = {
+	entry: [
+		path.resolve(__dirname, 'isolate-src', 'index.js')
 	],
-	env: {},
-	// only: [
-	// 'demo/**/*.js',
-	// 'isolate-src/**/*.js',
-	// 'src/**/*.js',
-	// 'fixtures/**/*.js',
-	// 'node_modules\/@cosmic'
-	// ],
-	// ignore: [
-	// 	"**/_*/**",
-	// 	"src/node-app/**/nod_modules",
-	// 	"node_modules"
-	// ]
+	output: {
+		filename: 'bundle.js',
+		publicPath: '/'
+	},
+	resolve: {
+		modulesDirectories: [
+			path.resolve(__dirname, 'node_modules'),
+			path.resolve(process.cwd(), 'node_modules')
+		],
+		extensions: ['', '.js', '.jsx']
+	},
+	resolveLoader: {
+		modulesDirectories: [
+			path.resolve(process.cwd(), 'node_modules')
+		]
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.md$/,
+				loader: 'raw!markdown'
+			},
+			{
+				test: /\.js$/,
+				loader: 'babel?' + JSON.stringify(Object.assign({
+					babelrc: false,
+					presets: ['es2015-webpack', 'stage-0', 'react'],
+					plugins: [
+						'jsx-control-statements',
+						'transform-decorators-legacy'
+					],
+					env: {
+						development: {
+							plugins: [
+								['react-transform', {
+									transforms: [
+										{
+											transform: 'react-transform-hmr',
+											imports: ['react'],
+											locals: ['module']
+										}
+									]
+								}]
+							]
+						}
+					},
+				})),
+				include: [
+					path.resolve(__dirname, 'isolate-src'),
+					path.resolve(process.cwd(), 'src'),
+					path.resolve(process.cwd(), 'demo'),
+				],
+				// exclude: [
+				// 	/_.+?\//
+				// ]
+			},
+		]
+	},
+	plugins: [
+		new webpack.IgnorePlugin(/\/_.+\//),
+		new webpack.NoErrorsPlugin()
+	]
 };
 
-babelQuery.env.development = {
-	plugins: [
-		['react-transform', {
-			transforms: [
-				{
-					transform: 'react-transform-hmr',
-					imports: ['react'],
-					locals: ['module']
-				}
-			]
-		}]
-	]
+if ( TARGET === 'build' ) {
+	common = merge(common, {});
 }
 
-var jsLoader = 'babel?' + JSON.stringify(babelQuery);
+if ( 'webpack' in config ) {
+	common = merge(common, config.webpack);
+}
 
-module.exports = function (customConfig) {
-	var defaultConfig = {
-		context: path.resolve(__dirname, 'isolate-src'),
-		debug: true,
-		cache: true,
-		devtool: 'eval',
-		entry: [
-			// path.resolve(__dirname, 'isolate-vendor', 'highlight.default.min.css'),
-			// path.resolve(__dirname, 'isolate-vendor', 'highlight.github.min.css'),
-			path.resolve(__dirname, 'isolate-src', 'index.js')
-		],
-		output: {
-			// path: path.resolve(cwd, isolateConfig.outputPath),
-			filename: 'bundle.js',
-			publicPath: '/'
-		},
-		resolve: {
-			modulesDirectories: [
-				path.resolve(__dirname, 'node_modules'),
-				path.resolve(process.cwd(), 'node_modules')
-			],
-			alias: {
-				LIB_PATH: path.resolve(__dirname, '_lib'),
-				FIXTURES_PATH: resolvePath(isolateConfig.fixturesPath),
-				COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
-				RAW_COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
-				RAW: resolvePath(isolateConfig.componentsPath),
-				'lodash/object/assign': 'lodash/assign',
-				'lodash/array/difference': 'lodash/difference'
-			},
-			extensions: ['', '.js', '.jsx']
-		},
-		resolveLoader: {
-			modulesDirectories: [
-				//path.resolve('node_modules'),
-				//path.resolve(__dirname, '..', 'node_modules'),
-				path.resolve(process.cwd(), 'node_modules')
-			]
-		},
-		node: {
-			fs: 'empty'
-		},
-		module: {
-			noParse: [
-				// /autoit/,
-				// /sanitizer/,
-				// /sanitizer\-bundle/,
-				// /autoit.js/,
-				// /marked/,
-				// /jsonlint/
-			],
-			loaders: [
-				{
-					test: /\.md$/,
-					loader: 'raw!markdown'
-				},
-				{
-					test: /\.js$/,
-					loader: jsLoader,
-					include: [
-						path.resolve(__dirname, 'isolate-src'),
-						path.resolve(process.cwd(), 'src'),
-						path.resolve(process.cwd(), 'demo'),
-						// path.resolve(process.cwd(), 'fixtures')
-					],
-					exclude: [
-						/_.+?\//
-					]
-				},
-				// {
-				// 	test: /\.json$/,
-				// 	loaders: ['json5']
-				// },
-				// {
-				// 	test: /\.gif$/,
-				// 	loaders: ['file'],
-				// 	exclude: /node_modules/
-				// },
-				// {
-				// 	test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				// 	loader: 'file-loader?name=fonts/[name].[ext]',
-				// 	exclude: /images/
-				// },
-				// {
-				// 	test: /\.(woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				// 	loader: 'file-loader?name=fonts/[name].[ext]',
-				// 	exclude: /css/
-				// },
-				// {
-				// 	test: /\.less$/,
-				// 	loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
-				// 	include: /isolate-styles/
-				// },
-				// {
-				// 	test: /\.css$/,
-				// 	loader: 'style!css',
-				// 	exclude: /isolate-styles/
-				// },
-				// {
-				// 	test: /\.less$/,
-				// 	loader: 'style!css!less',
-				// 	exclude: /isolate-styles/
-				// }
-			]
-		},
-		plugins: [
-			// ignore,
-			new webpack.NoErrorsPlugin()
-		]
-	};
-
-	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, (a, b) => {
-		if ( _.isArray(a) ) return a.concat(b);
-	});
-
-	return webpackConfig;
-
-};
+module.exports = common;

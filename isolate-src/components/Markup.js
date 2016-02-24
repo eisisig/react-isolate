@@ -11,14 +11,14 @@ const componentWillUpdate = () => {};
 
 const componentDidUpdate = () => {};
 
-const componentShouldUpdate = () => {};
+const shouldComponentUpdate = () => true;
 
 /**
  * Render
  */
 const render = pipe(resolutionMap, ({ props, state, setState }) => {
 	return (
-		<div>Main</div>
+		<div>Markup</div>
 	)
 });
 
@@ -30,6 +30,6 @@ export default stitch({
 	getDefaultProps,
 	componentWillUpdate,
 	componentDidUpdate,
-	componentShouldUpdate,
+	shouldComponentUpdate,
 	render
 });

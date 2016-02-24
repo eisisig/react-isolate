@@ -19,7 +19,8 @@ const ALLOWED_FOLDER_NAMES = ['components', 'fixturesw', 'tests'];
 
 const componentFiles = globby.sync([
 	COMPONENT_PATH,
-	'!' + FIXTURE_PATH
+	'!' + FIXTURE_PATH,
+	'!**/_*/**'
 ]);
 
 const fixtureFiles = globby.sync([
@@ -41,7 +42,7 @@ function createMap (type) {
 function createPathTree (pathArr, type) {
 	return reduceRight(pathArr, (results, part) => {
 
-		if ( part === 'fixtures' || part === 'index.js' ) { return results; }
+		if ( part === 'fixtures' || part === 'index.js' || part.startsWith('_') ) { return results; }
 
 		if ( includes(part, '.js') ) {
 			return {
@@ -64,14 +65,4 @@ function removeExt (file) {
 	return file.replace('.js', '');
 }
 
-// console.log('componentFiles', componentFiles);
-// console.log('componentMap', JSON.stringify(componentMap, null, 4));
-// console.log('fixtureMap', JSON.stringify(fixtureMap, null, 4));
-
-// console.log('map', JSON.stringify(merge(fixtureMap, componentMap), null, 4));
-
 module.exports = merge(fixtureMap, componentMap);
-
-// console.log('fixtureFiles', fixtureFiles);
-
-// console.log('componentMap', componentMap);
