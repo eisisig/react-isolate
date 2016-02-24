@@ -5,13 +5,16 @@ const webpack = require('webpack');
 
 const cwd = process.cwd();
 const merge = require('webpack-merge');
-const config = require('./config');
+const config = require('./isolate.config');
 
 const TARGET = process.env.npm_lifecycle_event;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PORT = process.env.PORT || 9999;
 
+const resolvePath = (userPath) => cwd + '/' + userPath;
+
 let common = {
+	devtool: 'eval',
 	entry: [
 		path.resolve(__dirname, 'isolate-src', 'index.js')
 	],
@@ -20,6 +23,9 @@ let common = {
 		publicPath: '/'
 	},
 	resolve: {
+		alias: {
+			COMPONENTS_PATH: resolvePath(config.componentsPath)
+		},
 		modulesDirectories: [
 			path.resolve(__dirname, 'node_modules'),
 			path.resolve(process.cwd(), 'node_modules')

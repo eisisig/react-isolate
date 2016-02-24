@@ -4,10 +4,10 @@ import React, {PropTypes} from 'react';
 import {render} from 'react-dom';
 
 import App from './components/App';
-import componentMap from 'tojson!./componentMap';
+import componentMap from './componentMap';
 import appConfig from '../isolate.config';
 
-console.log('componentMap', componentMap);
+// console.log(JSON.stringify(componentMap, null, 4));
 
 /**
  * Render App Component

@@ -24,15 +24,12 @@ const renderMenu = (components, onSetComponent) => {
 			{ map(components, (component, name, index) => {
 				return (
 					<li key={ `${name}-key` }>
-
-						<a onClick={ () => onSetComponent(component) }>{ name }</a>
-
-						{/*
+						
 						<If condition={ 'fileName' in component }>
+							<a onClick={ () => onSetComponent(component) }>{ name }</a>
 							<Else />
 							<div>{ name }</div>
 						</If>
-						*/}
 
 						<If condition={ 'components' in component }>
 							{ renderMenu(component.components, onSetComponent) }

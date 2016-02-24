@@ -1,60 +1,79 @@
 'use strict';
 
 const path = require('path');
-const globby = require('globby');
-const merge = require('lodash/merge');
-const reduce = require('lodash/reduce');
-const reduceRight = require('lodash/reduceRight');
-const assign = require('lodash/assign');
-const includes = require('lodash/includes');
+// const globby = require('globby');
+const merge = require('lodash.merge');
+const reduce = require('lodash.reduce');
+const reduceRight = require('lodash.reduceright');
+const assign = require('lodash.assign');
+const includes = require('lodash.includes');
 
-const BASE_PATH = 'demo/components';
+const appConfig = require('../isolate.config');
+
+const BASE_PATH = appConfig.componentsPath;
 const BASE_ABS_PATH = path.resolve(BASE_PATH);
 
 const COMPONENT_PATH = path.resolve(BASE_PATH, '**/*.js');
 const FIXTURE_PATH = path.resolve(BASE_PATH, '**/fixtures/**');
-const TEST_PATH = path.resolve(BASE_PATH, '**/tests/**');
 
-const ALLOWED_FOLDER_NAMES = ['components', 'fixturesw', 'tests'];
+// const componentFiles = globby.sync([
+// 	COMPONENT_PATH,
+// 	'!' + FIXTURE_PATH,
+// 	'!**/_*/**'
+// ]);
 
-const componentFiles = globby.sync([
-	COMPONENT_PATH,
-	'!' + FIXTURE_PATH,
-	'!**/_*/**'
-]);
+// const componentsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$/);
+const componentsContext = require.context('COMPONENTS_PATH', true, /^\.\/(?!.*fixtures).*\.js$/);
 
-const fixtureFiles = globby.sync([
-	'!' + COMPONENT_PATH,
-	FIXTURE_PATH
-]);
+const componentMap = componentsContext.keys().reduce(createMap, {})
 
-const componentMap = reduce(componentFiles, createMap('components'), {});
-const fixtureMap = reduce(fixtureFiles, createMap('fixtures'), {});
+// const componentMap = reduce(componentFiles, createMap('components'), {});
 
-function createMap (type) {
-	return function (results, path) {
-		const cleanPath = path.replace(BASE_ABS_PATH + '/', '');
-		const pathArr = cleanPath.split('/');
-		return merge(results, createPathTree(pathArr, type));
-	}
+function createMap (results, path) {
+	return merge(results, createPathTree(path));
 }
 
-function createPathTree (pathArr, type) {
+function createPathTree (path) {
+
+	const pathArr = path.split('/');
+
 	return reduceRight(pathArr, (results, part) => {
 
-		if ( part === 'fixtures' || part === 'index.js' || part.startsWith('_') ) { return results; }
+		if ( part === '.' || part === 'fixtures' || part === 'index.js' || part.startsWith('_') ) { return results; }
 
 		if ( includes(part, '.js') ) {
+
+			// let componentFolder = [...pathArr];
+			//
+			// componentFolder.pop();
+			// componentFolder = componentFolder.join('/');
+			//
+			// const fixtures = globby.sync([
+			// 	path.resolve(BASE_PATH, componentFolder, 'fixtures', '**', '*.js')
+			// ]);
+			//
+
+			const name = removeExt(part);
+			const fixtures = {};
+			let Component = componentsContext(path);
+
+			Component = 'default' in Component ? Component.default : Component;
+
+			fixtures.defaultProps = Component.defaultProps;
+
 			return {
-				[removeExt(part)]: {
+				[name]: {
+					name,
+					fixtures,
 					fileName: part,
-					filePath: path.resolve(BASE_PATH, pathArr.join('/'))
+					filePath: path,
+					Component: Component
 				}
 			}
 		} else {
 			return assign({}, {
 				[part]: {
-					[type]: results
+					['components']: results
 				}
 			})
 		}
@@ -65,4 +84,6 @@ function removeExt (file) {
 	return file.replace('.js', '');
 }
 
-module.exports = merge(fixtureMap, componentMap);
+// module.exports = merge(fixtureMap, componentMap);
+module.exports = componentMap;
+// module.exports = {};

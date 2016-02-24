@@ -11,7 +11,6 @@ import Panel from './UI';
 
 const getInitialState = () => ({
 	selectedComponent: null,
-	selectedComponentFixtures: null,
 	selectedFixture: null,
 });
 
@@ -24,15 +23,18 @@ const getDefaultProps = () => ({
  */
 const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state, setState }) => {
 
-	console.log(JSON.stringify(state, null, 4));
+	// console.log(JSON.stringify(state, null, 4));
 
 	/**
 	 * Handlers
 	 * @param {object} component
 	 */
 	const onSetComponent = (component) => setState({
+		...state,
 		selectedComponent: component
 	});
+
+	console.log('state', state);
 
 	return (
 		<SplitPane split="vertical" minSize="220" defaultSize="220">
@@ -47,7 +49,7 @@ const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state,
 
 					{/* Preview */}
 					<Panel title="Preview">
-						<PreviewComponent component={ state.selectedComponent } />
+						<PreviewComponent { ...state } />
 					</Panel>
 
 					<SplitPane split="horizontal">

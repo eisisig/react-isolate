@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 
-import './Button3.less';
+// import './Button3.less';
 
 /**
  * # Button

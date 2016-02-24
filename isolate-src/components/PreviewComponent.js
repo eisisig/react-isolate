@@ -1,31 +1,46 @@
 'use strict';
 
+'use strict';
+
 import React, {PropTypes} from 'react';
+import {pipe, resolutionMap, stitch} from 'keo';
+import isEqual from 'lodash.isequal';
+import get from 'lodash.get';
 
 /**
- * @class PreviewComponent
+ * Should component update
  */
-export class PreviewComponent extends React.Component {
+const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, props);
 
-	static propTypes = {};
+/**
+ * Render component
+ * @param {object} component
+ * @returns {*}
+ */
+export const renderComponent = ({ selectedComponent, selectedFixture }) => {
 
-	static defaultProps = {};
+	if ( !selectedComponent ) return null;
 
-	//componentWillMount () {}
-	//componentDidMount () {}
-	//componentWillUnmount () {}
-	//shouldComponentMount () { return true; }
+	console.log('selectedComponent', selectedComponent);
 
-	render () {
-		const { component } = this.props;
-		return (
-			<div className="PreviewComponent">
-				<pre>
-				{ JSON.stringify(component, null, 4) }
-				</pre>
-			</div>
-		);
+	const { Component } = selectedComponent;
+	let props = {};
+
+	if ( !selectedFixture ) {
+		props = get(selectedComponent, 'fixtures.defaultProps') || {};
 	}
-}
 
-export default PreviewComponent;
+	if ( typeof Component === 'function' ) {
+		return React.cloneElement(<Component />, { ...props });
+	}
+};
+
+/**
+ * Render
+ */
+const render = pipe(resolutionMap, ({ props }) => <div className="PreviewComponent">{ renderComponent(props) }</div>);
+
+/**
+ * Export
+ */
+export default stitch({ shouldComponentUpdate, render });
