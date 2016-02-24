@@ -3,9 +3,7 @@
 module.exports = {
 	host: 'localhost',
 	port: 9999,
-	outputPath: 'bundles',
+	outputPath: '/bundles/',
 	fixturesPath: 'demo/fixtures',
-	componentsPath: 'demo/components',
-	autoImportStyle: true,
-	autoImportStyleExt: 'less'
+	componentsPath: 'demo/components'
 };

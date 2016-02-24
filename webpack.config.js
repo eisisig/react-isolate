@@ -12,7 +12,7 @@ var resolvePath = function (userPath) {
 	return cwd + '/' + userPath;
 };
 
-var ignore = new webpack.IgnorePlugin(/\/_.+\//);
+// var ignore = new webpack.IgnorePlugin(/\/_.+\//);
 
 var babelQuery = {
 	babelrc: false,
@@ -22,73 +22,59 @@ var babelQuery = {
 		'transform-decorators-legacy'
 	],
 	env: {},
-	only: [
-		'demo/**/*.js',
-		'isolate-src/**/*.js',
-		'src/**/*.js',
-		'fixtures/**/*.js',
-		'node_modules\/@cosmic'
-	],
-	ignore: [
-		"**/_*/**",
-		"src/node-app/**/nod_modules",
-		"node_modules"
-	]
+	// only: [
+	// 'demo/**/*.js',
+	// 'isolate-src/**/*.js',
+	// 'src/**/*.js',
+	// 'fixtures/**/*.js',
+	// 'node_modules\/@cosmic'
+	// ],
+	// ignore: [
+	// 	"**/_*/**",
+	// 	"src/node-app/**/nod_modules",
+	// 	"node_modules"
+	// ]
 };
 
-if ( !argv.static ) {
-	babelQuery.env.development = {
-		plugins: [
-			['react-transform', {
-				transforms: [
-					{
-						transform: 'react-transform-hmr',
-						imports: ['react'],
-						locals: ['module']
-					},
-					{
-						transform: 'react-transform-catch-errors',
-						imports: ['react', 'redbox-react']
-					}
-				]
-			}]
-		]
-	}
+babelQuery.env.development = {
+	plugins: [
+		['react-transform', {
+			transforms: [
+				{
+					transform: 'react-transform-hmr',
+					imports: ['react'],
+					locals: ['module']
+				}
+			]
+		}]
+	]
 }
 
 var jsLoader = 'babel?' + JSON.stringify(babelQuery);
 
-if ( isolateConfig.autoImportStyle ) {
-	jsLoader = 'component-css?ext=' + isolateConfig.autoImportStyleExt + '!' + jsLoader;
-}
-
 module.exports = function (customConfig) {
 	var defaultConfig = {
-		context: __dirname,
+		context: path.resolve(__dirname, 'isolate-src'),
 		debug: true,
 		cache: true,
 		devtool: 'eval',
 		entry: [
-			path.resolve(__dirname, 'isolate-vendor', 'highlight.default.min.css'),
-			path.resolve(__dirname, 'isolate-vendor', 'highlight.github.min.css'),
-			//path.resolve(__dirname, '_vendor', 'jsonlint-1.6.0.min.js'),
-			path.resolve(__dirname, 'isolate-lib', 'entry.js'),
-			path.resolve(__dirname, 'isolate-styles', 'global.less')
-		].concat(argv.static ? [] : 'webpack-hot-middleware/client'),
+			// path.resolve(__dirname, 'isolate-vendor', 'highlight.default.min.css'),
+			// path.resolve(__dirname, 'isolate-vendor', 'highlight.github.min.css'),
+			path.resolve(__dirname, 'isolate-src', 'index.js')
+		],
 		output: {
-			path: path.resolve(cwd, isolateConfig.outputPath),
+			// path: path.resolve(cwd, isolateConfig.outputPath),
 			filename: 'bundle.js',
 			publicPath: '/'
 		},
 		resolve: {
 			modulesDirectories: [
 				path.resolve(__dirname, 'node_modules'),
-				//path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			],
 			alias: {
 				LIB_PATH: path.resolve(__dirname, '_lib'),
-				TESTS_PATH: resolvePath(isolateConfig.testsPath),
 				FIXTURES_PATH: resolvePath(isolateConfig.fixturesPath),
 				COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
 				RAW_COMPONENTS_PATH: resolvePath(isolateConfig.componentsPath),
@@ -110,12 +96,12 @@ module.exports = function (customConfig) {
 		},
 		module: {
 			noParse: [
-				/autoit/,
-				/sanitizer/,
-				/sanitizer\-bundle/,
-				/autoit.js/,
-				/marked/,
-				/jsonlint/
+				// /autoit/,
+				// /sanitizer/,
+				// /sanitizer\-bundle/,
+				// /autoit.js/,
+				// /marked/,
+				// /jsonlint/
 			],
 			loaders: [
 				{
@@ -129,52 +115,52 @@ module.exports = function (customConfig) {
 						path.resolve(__dirname, 'isolate-src'),
 						path.resolve(process.cwd(), 'src'),
 						path.resolve(process.cwd(), 'demo'),
-						path.resolve(process.cwd(), 'fixtures')
+						// path.resolve(process.cwd(), 'fixtures')
 					],
 					exclude: [
 						/_.+?\//
 					]
 				},
-				{
-					test: /\.json$/,
-					loaders: ['json5']
-				},
-				{
-					test: /\.gif$/,
-					loaders: ['file'],
-					exclude: /node_modules/
-				},
-				{
-					test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /images/
-				},
-				{
-					test: /\.(woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-					loader: 'file-loader?name=fonts/[name].[ext]',
-					exclude: /css/
-				},
-				{
-					test: /\.less$/,
-					loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
-					include: /isolate-styles/
-				},
-				{
-					test: /\.css$/,
-					loader: 'style!css',
-					exclude: /isolate-styles/
-				},
-				{
-					test: /\.less$/,
-					loader: 'style!css!less',
-					exclude: /isolate-styles/
-				}
+				// {
+				// 	test: /\.json$/,
+				// 	loaders: ['json5']
+				// },
+				// {
+				// 	test: /\.gif$/,
+				// 	loaders: ['file'],
+				// 	exclude: /node_modules/
+				// },
+				// {
+				// 	test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				// 	loader: 'file-loader?name=fonts/[name].[ext]',
+				// 	exclude: /images/
+				// },
+				// {
+				// 	test: /\.(woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				// 	loader: 'file-loader?name=fonts/[name].[ext]',
+				// 	exclude: /css/
+				// },
+				// {
+				// 	test: /\.less$/,
+				// 	loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less',
+				// 	include: /isolate-styles/
+				// },
+				// {
+				// 	test: /\.css$/,
+				// 	loader: 'style!css',
+				// 	exclude: /isolate-styles/
+				// },
+				// {
+				// 	test: /\.less$/,
+				// 	loader: 'style!css!less',
+				// 	exclude: /isolate-styles/
+				// }
 			]
 		},
 		plugins: [
-			ignore,
+			// ignore,
 			new webpack.NoErrorsPlugin()
-		].concat(argv.static ? [] : new webpack.HotModuleReplacementPlugin())
+		]
 	};
 
 	var webpackConfig = _.merge(defaultConfig, customConfig.webpackConfig, (a, b) => {

@@ -1,61 +1,50 @@
 'use strict';
 
-import React from 'react';
-import PureComponent from 'react-pure-render/component';
-import SideBar from './SideBar';
+import React, {PropTypes} from 'react';
+import {pipe, resolutionMap, stitch} from 'keo';
+import SplitPane from 'react-split-pane';
 
-import styles from '../../isolate-styles/components/App.less';
+import Sidebar from './Sidebar';
+
+const getInitialState = () => ({
+	selectedComponent: null
+});
+
+const getDefaultProps = () => ({
+	componentMap: null
+});
 
 /**
- * # App
+ * Render
  */
-export default class App extends PureComponent {
+const render = pipe(resolutionMap, ({ props: { componentMap }, setState }) => {
 
-	state = {
-		currentFixture: null,
-		currentComponent: null
-	};
+	/**
+	 * Handlers
+	 * @param {object} component
+	 */
+	const onSetComponent = (component) => setState({
+		selectedComponent: component
+	});
 
-	render () {
+	return (
+		<SplitPane split="vertical" minSize="220" defaultSize="220">
+			<Sidebar componentMap={ componentMap } onSetComponent={ onSetComponent } />
+			<SplitPane split="vertical" minSize="500" defaultSize="50%">
+				<SplitPane split="horizontal">
+					<div>1.1</div>
+					<div>1.2</div>
+				</SplitPane>
+				<SplitPane split="horizontal">
+					<div>2.1</div>
+					<div>2.2</div>
+				</SplitPane>
+			</SplitPane>
+		</SplitPane>
+	)
+});
 
-		const { params, children, location, history, route: { appData } } = this.props;
-
-		const currentData = {
-			currentDocs: null,
-			currentFixture: null,
-			currentComponent: null
-		};
-
-		const currentComponent = _.get(appData, [params.component, 'components', params.sub]);
-
-		if ( currentComponent ) {
-			currentData.currentComponent = currentComponent;
-			try {
-				currentData.currentDocs = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + currentComponent.filePath.slice(2));
-
-				if ( Array.isArray(currentData.currentDocs) ) {
-					currentData.currentDocs = currentData.currentDocs[0];
-				}
-			} catch ( e ) {
-				//console.log('App.requireDocs', e);
-			}
-		}
-
-		const currentFixture = _.get(currentComponent, ['fixtures', params.fixture]);
-
-		if ( currentComponent && currentFixture ) {
-			currentData.currentFixture = currentFixture;
-		}
-
-		return (
-			<div className={ styles.wrapper }>
-				<div className={ styles.sidebar }>
-					<SideBar components={ appData } location={ location } history={ history } currentData={ currentData } />
-				</div>
-				<div className={ styles.main }>
-					{ React.Children.map(children, ( el ) => React.cloneElement(el, { currentData })) }
-				</div>
-			</div>
-		);
-	}
-}
+/**
+ * Export
+ */
+export default stitch({ getInitialState, getDefaultProps, render });

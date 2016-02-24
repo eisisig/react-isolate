@@ -3,12 +3,16 @@
 import React, {PropTypes} from 'react';
 import {render} from 'react-dom';
 
-import App from './App';
+import App from './components/App';
+import componentMap from 'tojson!./componentMap';
 
 /**
  * Render App Component
  */
-render(<App />, document.getElementById('root'));
+render(
+	<App componentMap={ componentMap } />,
+	document.getElementById('root')
+);
 
 /*
  <Router history={ history }>
