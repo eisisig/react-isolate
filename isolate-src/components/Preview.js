@@ -103,8 +103,12 @@ export default class Preview extends PureComponent {
 
 	handleEditorRender = () => {
 		const { editor } = this.refs;
-		ReactDOM.unmountComponentAtNode(editor);
-		ReactDOM.render(<Editor onChange={ this.handleCodeChange } codeText={ this.state.code } />, editor);
+
+		//Only unmount if editor is visible
+		if(editor) {
+			ReactDOM.unmountComponentAtNode(editor);		
+			ReactDOM.render(<Editor onChange={ this.handleCodeChange } codeText={ this.state.code } />, editor);
+		}
 	};
 
 	render () {

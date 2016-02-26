@@ -1,3 +1,3 @@
 export default {
-	value: 'Demo Test'
+	value: 'Test'
 };
