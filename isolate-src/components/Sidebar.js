@@ -3,7 +3,8 @@
 import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
 
-import SidebarComponentMenu from './SidebarComponentMenu';
+import ComponentMenu from './ComponentMenu';
+import SearchInput from './SearchInput';
 
 /**
  * Render
@@ -11,11 +12,10 @@ import SidebarComponentMenu from './SidebarComponentMenu';
 const render = pipe(resolutionMap, ({ props }) => {
 	return (
 		<aside className="Sidebar">
-			{/* <header>react isolate</header> */}
-			{/* <section>Search</section> */}
-			<SidebarComponentMenu { ...props } />
+			<SearchInput onSearch={ props.onSearch } onSearchClear={ props.onSearchClear } />
+			<ComponentMenu { ...props } />
 		</aside>
-	)
+	);
 });
 
 /**

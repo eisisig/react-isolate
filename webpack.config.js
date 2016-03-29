@@ -2,19 +2,20 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const omit = require('lodash/omit');
+const argv = require('minimist')(process.argv.slice(2));
 
 const cwd = process.cwd();
 const merge = require('webpack-merge');
 const config = require('./isolate.config');
 
-const TARGET = process.env.npm_lifecycle_event;
-const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = process.env.PORT || 9999;
+const NODE_ENV = process.env.NODE_ENV || argv.env || 'development';
+const PORT = process.env.PORT || argv.port || 9999;
 
-const resolvePath = (userPath) => cwd + '/' + userPath;
+const resolvePath = (userPath) => cwd + '/' + userPath || '';
 
 let common = {
-	devtool: 'eval',
+	devtool: '#@eval',
 	entry: [
 		path.resolve(__dirname, 'isolate-src', 'index.js')
 	],
@@ -24,7 +25,9 @@ let common = {
 	},
 	resolve: {
 		alias: {
-			COMPONENTS_PATH: resolvePath(config.componentsPath)
+			CUSTOM_CONFIG: resolvePath('isolate.config.js'),
+			COMPONENTS_PATH: resolvePath(config.componentsPath),
+			FIXTURES_PATH: resolvePath(config.fixturesPath),
 		},
 		modulesDirectories: [
 			path.resolve(__dirname, 'node_modules'),
@@ -70,8 +73,7 @@ let common = {
 				})),
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
-					path.resolve(process.cwd(), 'src'),
-					path.resolve(process.cwd(), 'demo'),
+					resolvePath(config.componentsPath)
 				],
 				// exclude: [
 				// 	/_.+?\//
@@ -81,15 +83,17 @@ let common = {
 	},
 	plugins: [
 		new webpack.IgnorePlugin(/\/_.+\//),
-		new webpack.NoErrorsPlugin()
+		new webpack.NoErrorsPlugin(),
+		new webpack.DefinePlugin({
+			__ISOLATE__: JSON.stringify(omit(config, ['webpackConfig'])),
+			'process.env': {
+				'NODE_ENV': JSON.stringify(NODE_ENV)
+			}
+		})
 	]
 };
 
-if ( TARGET === 'build' ) {
-	common = merge(common, {});
-}
-
-if ( 'webpack' in config ) {
+if ( 'webpackConfig' in config ) {
 	common = merge(common, config.webpack);
 }
 

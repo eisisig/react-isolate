@@ -5,32 +5,29 @@
 import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
 import isEqual from 'lodash.isequal';
-import get from 'lodash.get';
 
-/**
- * Should component update
- */
+/* ------------------------------------------------------------
+ Should Component Update
+ ----------------------------------------------------------- */
 const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, props);
 
-/**
- * Render component
- * @param {object} component
- * @returns {*}
- */
+/* ------------------------------------------------------------
+ Render component
+ ----------------------------------------------------------- */
 export const renderComponent = ({ selectedComponent, selectedFixture }) => {
 	if ( !selectedComponent ) return null;
 	const { Component } = selectedComponent;
+
+	const props = selectedFixture || {};
+
 	if ( typeof Component === 'function' ) {
-		return React.cloneElement(<Component />, { ...selectedFixture });
+		return React.cloneElement(<Component />, { ...props });
 	}
 };
 
-/**
- * Render
- */
+/* ------------------------------------------------------------
+ Render
+ ----------------------------------------------------------- */
 const render = pipe(resolutionMap, ({ props }) => <div className="PreviewComponent">{ renderComponent(props) }</div>);
 
-/**
- * Export
- */
 export default stitch({ shouldComponentUpdate, render });

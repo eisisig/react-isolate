@@ -1,6 +1,12 @@
 'use strict';
 
-module.exports = {
+const path = require('path');
+const omit = require('lodash/omit');
+const merge = require('lodash/merge');
+const assign = require('lodash/assign');
+const argv = require('minimist')(process.argv.slice(2));
+
+const defaultConfig = {
 	title: 'React Isolate',
 	showSearch: true,
 	showPropDocs: true,
@@ -14,3 +20,13 @@ module.exports = {
 	fixturesPath: 'demo/fixtures',
 	componentsPath: 'demo/components'
 };
+
+let config = assign({}, defaultConfig, omit(argv, ['_']));
+
+if ( process.cwd() !== __dirname ) {
+	try {
+		merge(config, require('CUSTOM_CONFIG'), omit(argv, ['_']));
+	} catch ( e ) {}
+}
+
+module.exports = config;

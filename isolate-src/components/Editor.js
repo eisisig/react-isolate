@@ -2,47 +2,44 @@
 
 import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
-
-import ace from 'brace';
 import AceEditor from 'react-ace';
-import 'brace/mode/javascript';
-import 'brace/theme/github';
-
-/**
- * React
- */
-const getInitialState = () => ({});
-const getDefaultProps = () => ({});
-const componentDidMount = () => {};
-const shouldComponentUpdate = () => true;
+import serialize from 'serialize-javascript';
+import stringify from 'node-stringify';
 
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props, props: { selectedFixture }, state, setState }) => {
+const render = pipe(resolutionMap, ({ props: { selectedFixture, onSetFixture } }) => {
 
 	const handleChange = (value) => {
-		console.log('value', value);
+			onSetFixture(value);
+		// try {
+			// const toJS = JSON.parse(value);
+		// } catch ( e ) {
+		// 	console.log('JSON.parse error', e);
+		// }
 	};
+
+	const value = stringify(selectedFixture);
 
 	return (
 		<If condition={ selectedFixture }>
 			<AceEditor
-				value={ JSON.stringify(selectedFixture, null, 4) }
-				onChange={ handleChange }
 				mode="javascript"
-				theme="github" />
+				name="preview"
+				theme="github"
+				width="100%"
+				value={ value }
+				showGutter={ true }
+				showPrintMargin={ false }
+				highlightActiveLine={ false }
+				editorProps={{ $blockScrolling: true }}
+				onChange={ handleChange } />
 		</If>
-	)
+	);
 });
 
 /**
  * Export
  */
-export default stitch({
-	getInitialState,
-	getDefaultProps,
-	componentDidMount,
-	shouldComponentUpdate,
-	render
-});
+export default stitch({ render });

@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>React Isolate</title>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
-	<link rel="stylesheet" href="styles/prism-gh-theme.css">
+	<link rel="stylesheet" href="/styles/prism-gh-theme.css">
 	<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism-tomorrow.css">-->
 	<style>
 
@@ -42,6 +42,22 @@
 
 		li a { font-size: 14px; }
 
+		.Arrow-down {
+			width:        0;
+			height:       0;
+			border-left:  10px solid transparent;
+			border-right: 10px solid transparent;
+			border-top:   10px solid #999999;
+		}
+
+		.Arrow-right {
+			width:         0;
+			height:        0;
+			border-top:    10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-left:   10px solid #999999;
+		}
+
 		.Panel { }
 
 		.Panel-header { }
@@ -50,9 +66,59 @@
 			padding: 0 10px 10px;
 		}
 
-		.SplitPane.horizontal .Pane { background: white; }
+		.SearchInput {
+			position:      relative;
+			padding:       10px;
+			border-bottom: 1px solid #E3E3E3;
+		}
 
-		.SplitPane.vertical > .Pane.vertical { background: #F8F8F8; }
+		.SearchInput-input {
+			box-sizing:  border-box;
+			padding:     0 10px;
+			height:      27px;
+			line-height: 27px;;
+			border:      1px solid #E3E3E3;
+			width:       100%;
+			z-index:     1;
+		}
+
+		.SearchInput-button {
+			position:    absolute;
+			top:         15px;
+			right:       16px;
+			width:       17px;
+			height:      17px;
+			padding:     0;
+			margin:      0;
+			font-weight: bold;
+			border:      none;
+			font-size:   10px;
+			color:       white;
+			background:  #CCCCCC;
+			z-index:     2;
+		}
+
+		.SplitPane.vertical:first-child { background: #FFFFFF; }
+
+		.SplitPane.vertical { background: #F8F8F8; }
+
+		.Topbar {
+			background:    #F8F8F8;
+			height:        40px;
+			line-height:   40px;
+			border-bottom: 1px solid #E3E3E3;
+			padding:       0 15px;
+		}
+
+		.Topbar-toggles {
+			float:     right;
+			color:     #999999;
+			font-size: 11px;
+		}
+
+		.Topbar-toggles > span { color: #CCCCCC; }
+
+		.Topbar-toggles label { margin-left: 10px; }
 
 		.Resizer {
 			-moz-box-sizing:         border-box;

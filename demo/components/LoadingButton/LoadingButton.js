@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 /**
  * # Button
@@ -11,12 +11,14 @@ export default class LoadingButton extends React.Component {
 		value: PropTypes.string.isRequired,
 		loadingText: PropTypes.string,
 		initialLoading: PropTypes.bool,
+		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
 		value: null,
 		loadingText: 'Loading...',
-		initialLoading: false
+		initialLoading: false,
+		onClick: () => {},
 	};
 
 	state = {
@@ -26,11 +28,10 @@ export default class LoadingButton extends React.Component {
 	handleClick = () => {
 		this.setState({
 			loading: !this.state.loading
-		});
+		}, this.props.onClick);
 	};
 
 	render () {
-		console.log('this.state', this.state);
 		const { loading } = this.state;
 		const { value, loadingText } = this.props;
 		return (

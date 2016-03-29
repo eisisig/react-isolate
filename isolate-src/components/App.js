@@ -4,85 +4,146 @@ import React, {PropTypes} from 'react';
 import {pipe, resolutionMap, stitch} from 'keo';
 import get from 'lodash.get';
 import SplitPane from 'react-split-pane';
+import {createHistory, useBasename} from 'history';
+import ace from 'brace';
+import 'brace/mode/javascript';
+import 'brace/mode/json';
+import 'brace/mode/jsx';
+import 'brace/theme/github';
 
-import Sidebar from './Sidebar';
-import Markup from './Markup';
-import Preview from './Preview';
-import Editor from './Editor';
-import Panel from './UI';
+import findComponents from '../utils/findCompoennts';
+import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index';
 
+const history = useBasename(createHistory)({ basename: '/' });
+
+/* ------------------------------------------------------------
+ React
+ ----------------------------------------------------------- */
 const getInitialState = () => ({
-	selectedComponent: null,
-	selectedFixture: null
+	visiblePanels: {
+		docs: true,
+		spec: true,
+		editor: false,
+		markup: false,
+		preview: false
+	},
+	searchResults: null,
+	selectedFixture: null,
+	selectedComponent: null
 });
 
 const getDefaultProps = () => ({
 	componentMap: null
 });
 
-/**
- * Render
- */
-const render = pipe(resolutionMap, ({ props: { componentMap, appConfig }, state, setState }) => {
-
-	/* Handlers
-	 ------------------------------------------------------------ */
-	const onSetComponent = (component, fixture = null) => setState({
+/* ------------------------------------------------------------
+ Methods
+ ----------------------------------------------------------- */
+export const setComponent = (component, fixture) => {
+	// TODO: Work urls
+	return {
 		selectedComponent: component,
 		selectedFixture: fixture || get(component, 'fixtures.defaultProps') || null
+	};
+};
+
+export const setFixture = (fixture) => {
+
+	fixture = JSON.parse(fixture, (key, val) => {
+		console.log('val', val);
+	});
+	console.log('fixture', fixture);
+
+	return {
+		selectedFixture: fixture
+	};
+};
+
+export const clearSearch = () => ({ searchResults: null });
+
+export const search = (query, components, setState, clear) => query ? setState({ searchResults: findComponents(query, components) }) : clear();
+
+const setUrl = (path, query, components, onSetComponent) => {
+
+	history.push({
+		pathname: path,
+		search: query ? path.format({ query: query }) : null
 	});
 
-	/* Return
-	 ------------------------------------------------------------ */
+	let pathArr = path.split('/').slice(1);
+	let fixturePath, selectedFixtures;
+
+	const fixtureIndex = pathArr.indexOf('fixtures');
+
+	if ( ~fixtureIndex ) { fixturePath = pathArr.splice(fixtureIndex, 2); }
+
+	const selectedComponent = get(components, pathArr);
+
+	if ( selectedComponent ) { selectedFixtures = get(selectedComponent, fixturePath); }
+
+	onSetComponent(selectedComponent, selectedFixtures);
+};
+
+const componentDidMount = () => {
+	console.log(': componentDidMount');
+};
+
+/* ------------------------------------------------------------
+ Render
+ ----------------------------------------------------------- */
+const render = pipe(resolutionMap, ({ props, state, setState }) => {
+
+	/* ------------------------------------------------------------
+	 Handlers
+	 ----------------------------------------------------------- */
+	// const showPanel = (name) => !!state.visiblePanels[name];
+	const onSearchClear = () => setState(clearSearch());
+	const onSetFixture = (fixture) => setState(setFixture(fixture));
+	const onSetComponent = (component, fixture = null) => setState(setComponent(component, fixture));
+	const onSearch = (e) => search(e.currentTarget.value, props.componentMap, setState, onSearchClear);
+	const onSetUrl = (url, query) => setUrl(url, query, props.componentMap, onSetComponent);
+
+	/* ------------------------------------------------------------
+	 Return
+	 ----------------------------------------------------------- */
 	return (
-		<SplitPane split="vertical" minSize="220" defaultSize="220">
+		<div>
 
-			{/* Sidebar */}
-			<Sidebar componentMap={ componentMap } appConfig={ appConfig } onSetComponent={ onSetComponent } />
+			<Topbar />
 
-			<SplitPane split="vertical" minSize="400" defaultSize="50%">
+			<SplitPane split="vertical" minSize="220" defaultSize="220">
 
-				{/* Left */}
-				<SplitPane split="horizontal">
+				<Sidebar
+					componentMap={ state.searchResults || props.componentMap }
+					appConfig={ props.appConfig }
+					onSearch={ onSearch }
+					onSetUrl={ onSetUrl }
+					onSearchClear={ onSearchClear }
+					onSetComponent={ onSetComponent }
+					onSetFixture={ onSetFixture } />
 
-					{/* Preview */}
-					<Panel title="Preview">
-						<Preview { ...state } />
-					</Panel>
+				<SplitPane split="vertical" minSize="400" defaultSize="50%">
 
 					<SplitPane split="horizontal">
-
-						{/* Editor */}
-						<Panel title="Editor">
-							<Editor { ...state } />
-						</Panel>
-
-						{/* Markup */}
-						<Panel title="Markup">
-							<Markup { ...state } />
-						</Panel>
+						<Panel title="Preview"><Preview { ...state } /></Panel>
+						<SplitPane split="horizontal">
+							<Panel title="Editor"><Editor { ...state } onSetFixture={ onSetFixture } /></Panel>
+							<Panel title="Markup"><Markup { ...state } /></Panel>
+						</SplitPane>
 					</SplitPane>
+
+					<SplitPane split="horizontal">
+						<Panel title="Spec"><Spec { ...state } /></Panel>
+						<Panel title="Docs" />
+					</SplitPane>
+
 				</SplitPane>
 
-				{/* Right */}
-				<SplitPane split="horizontal">
-
-					{/* Spec */}
-					<Panel title="Spec">
-						Spec
-					</Panel>
-
-					{/* Docs */}
-					<Panel title="Docs">
-						Docs
-					</Panel>
-				</SplitPane>
 			</SplitPane>
-		</SplitPane>
+
+		</div>
 	)
 });
 
-/**
- * Export
- */
-export default stitch({ getInitialState, getDefaultProps, render });
+export default stitch({ getInitialState, getDefaultProps, componentDidMount, render });
+

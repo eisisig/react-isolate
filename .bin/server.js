@@ -1,23 +1,33 @@
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const path = require("path");
+const pkg = require("../package.json");
 
+// const isolateConfig = require('../isolate.config');
 const webpackConfig = require('../webpack.config');
 
 webpackConfig.entry.unshift(
-	'webpack-dev-server/client?http://localhost:9999/',
+	'webpack-dev-server/client',
 	'webpack/hot/dev-server'
 );
 
 webpackConfig.plugins.unshift(new webpack.HotModuleReplacementPlugin());
+
+var banner = function () {
+	console.log(`
+		                                         _
+	  ,_   _  __,   __  -/-     .  ,    _,_ // __,  -/- _
+	_/ (__(/_(_/(__(_,__/_    _/__/_)__(_/_(/_(_/(__/__(/_     v${pkg.version} ...starting
+`);
+};
 
 const compiler = webpack(webpackConfig);
 
 const server = new WebpackDevServer(compiler, {
 	contentBase: path.resolve(__dirname, '..', 'isolate-src'),
 	hot: true,
-	historyApiFallback: true,
 	inline: true,
+	historyApiFallback: true,
 	publicPath: webpackConfig.output.publicPath,
 	stats: {
 		colors: true,
@@ -30,4 +40,4 @@ const server = new WebpackDevServer(compiler, {
 	}
 });
 
-server.listen(9999, () => console.log('Server started'));
+server.listen(9999, () => banner());
