@@ -10,19 +10,19 @@ export default class LoadingButton extends React.Component {
 	static propTypes = {
 		value: PropTypes.string.isRequired,
 		loadingText: PropTypes.string,
-		initialLoading: PropTypes.bool,
+		loading: PropTypes.bool,
 		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
 		value: null,
 		loadingText: 'Loading...',
-		initialLoading: false,
+		loading: false,
 		onClick: () => {},
 	};
 
 	state = {
-		loading: this.props.initialLoading
+		loading: this.props.loading
 	};
 
 	handleClick = () => {

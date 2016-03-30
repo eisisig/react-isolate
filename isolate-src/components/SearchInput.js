@@ -1,28 +1,42 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {pipe, resolutionMap, stitch} from 'keo';
+import {connect} from 'react-redux';
+import {stitch} from 'keo';
+import {search, searchClear} from '../redux/actions';
 
-/**
- * Render
- */
-const render = pipe(resolutionMap, ({ props, refs }) => {
+const mapStateToProps = state => ({ searchQuery: state.searchQuery });
 
-	const clearInput = () => {
-		refs.search.value = null;
-		refs.search.focus();
-		props.onSearchClear();
+const propTypes = {
+	searchQuery: PropTypes.string
+};
+
+const render = ({ props }) => {
+
+	// console.log('props', props);
+
+	const onSearch = (e) => {
+		const value = e.target.value;
+		if ( value ) {
+			props.dispatch(search(value));
+		} else {
+			props.dispatch(searchClear());
+		}
+	};
+
+	const onClear = () => {
+		props.dispatch(searchClear());
 	};
 
 	return (
 		<div className="SearchInput">
-			<input className="SearchInput-input" ref="search" onChange={ props.onSearch } type="text" placeholder="Search components/fixtures..." />
-			<button className="SearchInput-button" onClick={ clearInput }>X</button>
+			<input className="SearchInput-input" value={ props.searchQuery } onChange={ onSearch } type="text" placeholder="Search components/fixtures..." />
+			<button className="SearchInput-button" onClick={ onClear }>X</button>
 		</div>
-	)
-});
+	);
+};
 
 /**
  * Export
  */
-export default stitch({ render });
+export default connect(mapStateToProps)(stitch({ propTypes, render }));

@@ -1,14 +1,14 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {pipe, resolutionMap, stitch} from 'keo';
+import {stitch} from 'keo';
 import renderMarkup from '../utils/renderMarkup';
 import AceEditor from 'react-ace';
 
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props }) => {
+const render = ({ props }) => {
 	return (
 		<code>
 			<If condition={ props.selectedComponent && props.selectedFixture }>
@@ -25,8 +25,8 @@ const render = pipe(resolutionMap, ({ props }) => {
 					highlightActiveLine={ false } />
 			</If>
 		</code>
-	)
-});
+	);
+};
 
 /**
  * Export

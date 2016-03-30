@@ -6,7 +6,7 @@ import {pipe, resolutionMap, stitch} from 'keo';
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props, state, setState }) => {
+const render = ({ props }) => {
 	return (
 		<div className="Topbar">
 			<span className="Topbar-logo">{ __ISOLATE__.title }</span>
@@ -20,7 +20,7 @@ const render = pipe(resolutionMap, ({ props, state, setState }) => {
 			</span>
 		</div>
 	)
-});
+};
 
 /**
  * Export

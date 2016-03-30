@@ -58,7 +58,7 @@ const getTypeValues = (prop) => {
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props: { selectedComponent } }) => {
+const render = ({ props: { selectedComponent } }) => {
 
 	if ( !selectedComponent ) return null;
 
@@ -105,7 +105,7 @@ const render = pipe(resolutionMap, ({ props: { selectedComponent } }) => {
 			</table>
 		</div>
 	)
-});
+};
 
 /**
  * Export

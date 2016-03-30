@@ -1,26 +1,27 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
-import {pipe, resolutionMap, stitch} from 'keo';
+import {connect} from 'react-redux';
+import {stitch} from 'keo';
 import map from 'lodash.map';
 
-/**
- * Initial props
- */
-const getDefaultProps = () => ({
-	componentMap: null
+import {navigate} from '../redux/actions';
+
+const mapStateToProps = state => ({
+	componentMap: state.componentMap,
+	searchResults: state.searchResults
 });
 
-const getInitialState = () => ({
-	selectedFixtureName: null,
-	selectedComponentName: null
-});
+const propTypes = {
+	componentMap: PropTypes.object,
+	searchResults: PropTypes.object
+};
 
 /**
  * Render
  */
-const render = pipe(resolutionMap, ({ props }) => {
-	const renderMenu = (components = props.componentMap, prevUrl = '') => {
+const render = ({ props }) => {
+	const renderMenu = (components, prevUrl = '') => {
 		return (
 			<ul key={ prevUrl }>
 				{ map(components, (component, name) => {
@@ -35,7 +36,7 @@ const render = pipe(resolutionMap, ({ props }) => {
 						<li key={ `${name}-key` }>
 
 							<If condition={ isComponent }>
-								<a onClick={ () => props.onSetUrl(url) }>
+								<a onClick={ () => props.dispatch(navigate(url)) }>
 									<span>{ name }</span>
 									<If condition={ hasFixtures }>
 										<span>{ totalFixtures }</span>
@@ -43,7 +44,7 @@ const render = pipe(resolutionMap, ({ props }) => {
 								</a>
 								<Else />
 								<div>
-									<a onClick={ () => props.onSetUrl(url) }>
+									<a onClick={ () => props.dispatch(navigate(url)) }>
 										<span>{ name }</span>
 									</a>
 									{ renderMenu(component.components, url + '/components') }
@@ -55,7 +56,7 @@ const render = pipe(resolutionMap, ({ props }) => {
 									{ map(component.fixtures, (fixture, key) => {
 										return (
 											<li key={ `${key}-fixture` }>
-												<a onClick={ () => props.onSetUrl(`${url}/fixtures/${key}`) }>{ key }</a>
+												<a onClick={ () => props.dispatch(navigate(`${url}/fixtures/${key}`)) }>{ key }</a>
 											</li>
 										);
 									}) }
@@ -95,15 +96,8 @@ const render = pipe(resolutionMap, ({ props }) => {
 	};
 
 	return (
-		<div>{ props.componentMap ? renderMenu() : <div>No components</div> }</div>
+		<div>{ props.searchResults || props.componentMap ? renderMenu(props.searchResults || props.componentMap) : <div>No components</div> }</div>
 	);
-});
+};
 
-/**
- * Export
- */
-export default stitch({
-	getInitialState,
-	getDefaultProps,
-	render
-});
+export default connect(mapStateToProps)(stitch({ propTypes, render }));
