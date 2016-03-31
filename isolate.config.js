@@ -7,5 +7,6 @@ module.exports = {
 	fixturesPath: 'demo/fixtures',
 	componentsPath: 'demo/components',
 	autoImportStyle: true,
+	babelIncludePaths: null,
 	autoImportStyleExt: 'less'
 };

@@ -21,19 +21,7 @@ var babelQuery = {
 		'jsx-control-statements',
 		'transform-decorators-legacy'
 	],
-	env: {},
-	only: [
-		'demo/**/*.js',
-		'isolate-src/**/*.js',
-		'src/**/*.js',
-		'fixtures/**/*.js',
-		'node_modules\/@cosmic'
-	],
-	ignore: [
-		"**/_*/**",
-		"src/node-app/**/nod_modules",
-		"node_modules"
-	]
+	env: {}
 };
 
 if ( !argv.static ) {
@@ -83,7 +71,6 @@ module.exports = function (customConfig) {
 		resolve: {
 			modulesDirectories: [
 				path.resolve(__dirname, 'node_modules'),
-				//path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			],
 			alias: {
@@ -100,8 +87,6 @@ module.exports = function (customConfig) {
 		},
 		resolveLoader: {
 			modulesDirectories: [
-				//path.resolve('node_modules'),
-				//path.resolve(__dirname, '..', 'node_modules'),
 				path.resolve(process.cwd(), 'node_modules')
 			]
 		},
@@ -126,14 +111,13 @@ module.exports = function (customConfig) {
 					test: /\.js$/,
 					loader: jsLoader,
 					include: [
+						path.resolve(__dirname, 'demo'),
 						path.resolve(__dirname, 'isolate-src'),
-						path.resolve(process.cwd(), 'src'),
-						path.resolve(process.cwd(), 'demo'),
-						path.resolve(process.cwd(), 'fixtures')
-					],
-					exclude: [
-						/_.+?\//
-					]
+						path.resolve(isolateConfig.componentsPath),
+						path.resolve(isolateConfig.fixturesPath),
+						// path.resolve(process.cwd(), 'src'),
+						// path.resolve(process.cwd(), 'fixtures')
+					].concat(isolateConfig.babelIncludePaths ? isolateConfig.babelIncludePaths : [])
 				},
 				{
 					test: /\.json$/,
