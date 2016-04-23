@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {stitch} from 'keo';
-import map from 'lodash.map';
+import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {stitch} from 'keo'
+import map from 'lodash.map'
 
-import {navigate} from '../redux/actions';
+import {navigate} from 'isolate/actions'
 
 const mapStateToProps = state => ({
 	componentMap: state.componentMap,
 	searchResults: state.searchResults
-});
+})
 
 const propTypes = {
 	componentMap: PropTypes.object,
 	searchResults: PropTypes.object
-};
+}
 
 /**
  * Render
@@ -26,11 +26,11 @@ const render = ({ props }) => {
 			<ul key={ prevUrl }>
 				{ map(components, (component, name) => {
 
-					const isComponent = 'name' in component;
-					const hasFixtures = 'fixtures' in component;
-					const hasComponents = 'components' in component;
-					const totalFixtures = hasFixtures ? Object.keys(component.fixtures).length : 0;
-					const url = prevUrl + '/' + name;
+					const isComponent = 'name' in component
+					const hasFixtures = 'fixtures' in component
+					const hasComponents = 'components' in component
+					const totalFixtures = hasFixtures ? Object.keys(component.fixtures).length : 0
+					const url = prevUrl + '/' + name
 
 					return (
 						<li key={ `${name}-key` }>
@@ -58,7 +58,7 @@ const render = ({ props }) => {
 											<li key={ `${key}-fixture` }>
 												<a onClick={ () => props.dispatch(navigate(`${url}/fixtures/${key}`)) }>{ key }</a>
 											</li>
-										);
+										)
 									}) }
 								</ul>
 							</If>
@@ -83,21 +83,21 @@ const render = ({ props }) => {
 							 <li key={ `${key}-fixture` }>
 							 <a onClick={ () => props.onSetUrl(`${url}/fixtures/${fixture.name}`) }>{ key }</a>
 							 </li>
-							 );
+							 )
 							 }) }
 							 </ul>
 							 </If>
 							 */}
 						</li>
-					);
+					)
 				}) }
 			</ul>
-		);
-	};
+		)
+	}
 
 	return (
 		<div>{ props.searchResults || props.componentMap ? renderMenu(props.searchResults || props.componentMap) : <div>No components</div> }</div>
-	);
-};
+	)
+}
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }));
+export default connect(mapStateToProps)(stitch({ propTypes, render }))

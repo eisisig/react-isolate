@@ -25,6 +25,7 @@ let common = {
 	},
 	resolve: {
 		alias: {
+			isolate: path.resolve(__dirname, 'isolate-src'),
 			CUSTOM_CONFIG: resolvePath('isolate.config.js'),
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
 			FIXTURES_PATH: resolvePath(config.fixturesPath),

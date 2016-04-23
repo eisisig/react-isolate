@@ -11,26 +11,27 @@ import SplitPane from 'react-split-pane';
 import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index';
 
 const render = ({ props }) => {
-	console.log('props', props);
 	return (
 		<div>
+
 			<Topbar />
-			<SplitPane split="vertical" minSize="220" defaultSize="220">
+
+			<SplitPane split="vertical" minSize="220px" defaultSize="220px">
 
 				<Sidebar />
 
-				<SplitPane split="vertical" minSize="400" defaultSize="50%">
+				<SplitPane split="vertical" minSize="400px" defaultSize="50%">
 
 					<SplitPane split="horizontal">
-						<Panel title="Preview"><Preview { ...props } /></Panel>
+						<Panel title="Preview"><Preview /></Panel>
 						<SplitPane split="horizontal">
-							<Panel title="Editor"><Editor { ...props } /></Panel>
-							<Panel title="Markup"><Markup { ...props } /></Panel>
+							<Panel title="Editor"><Editor /></Panel>
+							<Panel title="Markup"><Markup /></Panel>
 						</SplitPane>
 					</SplitPane>
 
 					<SplitPane split="horizontal">
-						<Panel title="Spec"><Spec { ...props } /></Panel>
+						<Panel title="Spec"><Spec /></Panel>
 						<Panel title="Docs" />
 					</SplitPane>
 

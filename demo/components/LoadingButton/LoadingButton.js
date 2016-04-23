@@ -15,7 +15,7 @@ export default class LoadingButton extends React.Component {
 	};
 
 	static defaultProps = {
-		value: null,
+		value: '',
 		loadingText: 'Loading...',
 		loading: false,
 		onClick: () => {},

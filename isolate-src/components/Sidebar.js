@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-import React, {PropTypes} from 'react';
-import {stitch} from 'keo';
+import React, {PropTypes} from 'react'
+import {stitch} from 'keo'
 
-import ComponentMenu from './ComponentMenu';
-import SearchInput from './SearchInput';
+import ComponentMenu from './ComponentMenu'
+import SearchInput from './SearchInput'
 
 const render = () => {
 	return (
@@ -12,10 +12,10 @@ const render = () => {
 			<SearchInput />
 			<ComponentMenu />
 		</aside>
-	);
-};
+	)
+}
 
 /**
  * Export
  */
-export default stitch({ render });
+export default stitch({ render })

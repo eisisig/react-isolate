@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-import React, {PropTypes} from 'react';
-import {stitch} from 'keo';
-import renderMarkup from '../utils/renderMarkup';
-import AceEditor from 'react-ace';
+import React, {PropTypes} from 'react'
+import {stitch} from 'keo'
+import renderMarkup from '../utils/renderMarkup'
+import AceEditor from 'react-ace'
 
 /**
  * Render
@@ -25,10 +25,10 @@ const render = ({ props }) => {
 					highlightActiveLine={ false } />
 			</If>
 		</code>
-	);
-};
+	)
+}
 
 /**
  * Export
  */
-export default stitch({ render });
+export default stitch({ render })

@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import React, {PropTypes} from 'react';
-import {pipe, resolutionMap, stitch} from 'keo';
+import React, {PropTypes} from 'react'
+import {pipe, resolutionMap, stitch} from 'keo'
 
 /**
  * Render
@@ -20,9 +20,9 @@ const render = ({ props }) => {
 			</span>
 		</div>
 	)
-};
+}
 
 /**
  * Export
  */
-export default stitch({ render });
+export default stitch({ render })
