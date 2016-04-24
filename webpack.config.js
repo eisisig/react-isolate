@@ -1,31 +1,37 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const omit = require('lodash/omit');
-const argv = require('minimist')(process.argv.slice(2));
+const path = require('path')
+const webpack = require('webpack')
+const omit = require('lodash/omit')
+const argv = require('minimist')(process.argv.slice(2))
+const SplitByPathPlugin = require('webpack-split-by-path')
 
-const cwd = process.cwd();
-const merge = require('webpack-merge');
-const config = require('./isolate.config');
+const cwd = process.cwd()
+const merge = require('webpack-merge')
+const config = require('./isolate.config')
 
-const NODE_ENV = process.env.NODE_ENV || argv.env || 'development';
-const PORT = process.env.PORT || argv.port || 9999;
+const NODE_ENV = process.env.NODE_ENV || argv.env || 'development'
+const PORT = process.env.PORT || argv.port || 9999
 
-const resolvePath = (userPath) => cwd + '/' + userPath || '';
+const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
-	devtool: '#@eval',
-	entry: [
-		path.resolve(__dirname, 'isolate-src', 'index.js')
-	],
+	// devtool: '#@eval',
+	devtool: 'cheap-source-map',
+	entry: {
+		app: [
+			path.resolve(__dirname, 'isolate-src', 'index.js'),
+			'webpack-dev-server/client',
+			'webpack/hot/dev-server',
+		]
+	},
 	output: {
-		filename: 'bundle.js',
+		path: path.resolve(__dirname, 'isolate-bundles'),
+		filename: '[name].bundle.js',
 		publicPath: '/'
 	},
 	resolve: {
 		alias: {
-			isolate: path.resolve(__dirname, 'isolate-src'),
 			CUSTOM_CONFIG: resolvePath('isolate.config.js'),
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
 			FIXTURES_PATH: resolvePath(config.fixturesPath),
@@ -49,40 +55,46 @@ let common = {
 			},
 			{
 				test: /\.js$/,
-				loader: 'babel?' + JSON.stringify(Object.assign({
-					babelrc: false,
-					presets: ['es2015-webpack', 'stage-0', 'react'],
-					plugins: [
-						'jsx-control-statements',
-						'transform-decorators-legacy'
-					],
-					env: {
-						development: {
-							plugins: [
-								['react-transform', {
-									transforms: [
-										{
-											transform: 'react-transform-hmr',
-											imports: ['react'],
-											locals: ['module']
-										}
-									]
-								}]
-							]
-						}
-					},
-				})),
+				loader: 'babel',
+				// loader: 'babel?' + JSON.stringify({
+				// 	babelrc: false,
+				// 	presets: ['es2015-webpack', 'stage-0', 'react'],
+				// 	plugins: [
+				// 		'jsx-control-statements',
+				// 		'transform-decorators-legacy'
+				// 	],
+				// 	env: {
+				// 		development: {
+				// 			plugins: [
+				// 				['react-transform', {
+				// 					transforms: [
+				// 						{
+				// 							transform: 'react-transform-hmr',
+				// 							imports: ['react'],
+				// 							locals: ['module']
+				// 						}
+				// 					]
+				// 				}]
+				// 			]
+				// 		}
+				// 	},
+				// }),
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
 					resolvePath(config.componentsPath)
 				],
-				// exclude: [
-				// 	/_.+?\//
-				// ]
 			},
 		]
 	},
+	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM',
+	},
 	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
+		new SplitByPathPlugin([
+			{ name: 'isolate', path: path.join(__dirname) }
+		]),
 		new webpack.IgnorePlugin(/\/_.+\//),
 		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
@@ -92,10 +104,14 @@ let common = {
 			}
 		})
 	]
-};
-
-if ( 'webpackConfig' in config ) {
-	common = merge(common, config.webpack);
 }
 
-module.exports = common;
+if ( 'webpackConfig' in config ) {
+	const webpackConfig = config.webpackConfig
+	common = merge(common, webpackConfig)
+	if ( 'smart' in webpackConfig ) {
+		common = merge.smart(common.module.loaders, webpackConfig.smart)
+	}
+}
+
+module.exports = common

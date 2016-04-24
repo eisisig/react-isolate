@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "node .bin/server",
     "demo": "node .bin/server --componentsPath=demo/components --fixturesPath=demo/fixtures",
-    "lint": "eslint _components isolate-lib",
-    "test": "echo \"Run tests\" && exit 0"
+    "build": "webpack",
+    "lint": "eslint --format=node_modules/eslint-formatter-pretty isolate-src",
+    "test": "cross-env BABEL_ENV=test ava isolate-tests/**"
   },
   "contributors": [
     "Eisi Sig <im.eisisig@gmail.com>"
@@ -31,13 +32,15 @@
   ],
   "author": "Eisi Sig @eisisig",
   "dependencies": {
-    "JASON": "^0.1.3",
+    "ansi-styles": "^2.2.1",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
+    "babel-plugin-module-alias": "^1.3.0",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.7.4",
     "babel-preset-es2015": "^6.6.0",
+    "babel-preset-es2015-webpack": "^6.4.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-types": "^6.7.7",
@@ -70,7 +73,6 @@
     "marked": "^0.3.5",
     "minimist": "^1.2.0",
     "node-stringify": "0.0.19",
-    "pathway": "^1.0.1",
     "prismjs": "^1.4.1",
     "raw-loader": "^0.5.1",
     "react": "^15.0.1",
@@ -81,7 +83,6 @@
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.4.5",
     "react-split-pane": "^0.1.37",
-    "react-split-panel": "^2.0.1",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redux": "^3.5.1",
@@ -93,24 +94,31 @@
     "webpack-dev-server": "^2.0.0-beta",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.12.0",
-    "webpack-sources": "^0.1.2"
+    "webpack-sources": "^0.1.2",
+    "webpack-split-by-path": "0.0.8"
   },
   "devDependencies": {
+    "ava": "^0.14.0",
+    "ava-spec": "^1.0.0",
     "babel-cli": "^6.7.7",
-    "babel-preset-es2015-webpack": "^6.4.1",
-    "babel-tape-runner": "^2.0.1",
-    "concurrently": "^2.0.0",
+    "babel-eslint": "^6.0.3",
+    "babel-plugin-webpack-alias": "^1.1.1",
+    "cross-env": "^1.0.7",
     "eslint": "^2.8.0",
+    "eslint-formatter-pretty": "^0.2.0",
     "eslint-plugin-react": "^5.0.1",
-    "react-addons-test-utils": "^15.0.1",
-    "tape": "^4.5.1",
-    "tape-bdd": "0.0.1"
+    "proxyquire": "^1.7.4",
+    "react-addons-test-utils": "^15.0.1"
   },
   "license": "MIT",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+  "ava": {
+    "files": [
+      "isolate-tests/**"
+    ],
+    "failFast": true,
+    "tap": false,
+    "require": "babel-register",
+    "babel": "inherit"
   },
   "publishConfig": {
     "tag": "next",

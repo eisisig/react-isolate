@@ -1,0 +1,38 @@
+{
+  "presets": [
+    "es2015-webpack",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "jsx-control-statements",
+    "transform-decorators-legacy"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "es2015"
+      ]
+    },
+    "development": {
+      "plugins": [
+        [
+          "react-transform",
+          {
+            "transforms": [
+              {
+                "transform": "react-transform-hmr",
+                "imports": [
+                  "react"
+                ],
+                "locals": [
+                  "module"
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  }
+}
