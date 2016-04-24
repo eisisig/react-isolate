@@ -1,13 +1,21 @@
 'use strict'
 
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import renderMarkup from '../utils/renderMarkup'
 import AceEditor from 'react-ace'
 
-/**
- * Render
- */
+const mapStateToProps = state => ({
+	selectedFixture: state.selectedFixture,
+	selectedComponent: state.selectedComponent,
+})
+
+const propTypes = {
+	selectedFixture: PropTypes.object,
+	selectedComponent: PropTypes.object,
+}
+
 const render = ({ props }) => {
 	return (
 		<code>
@@ -28,7 +36,4 @@ const render = ({ props }) => {
 	)
 }
 
-/**
- * Export
- */
-export default stitch({ render })
+export default connect(mapStateToProps)(stitch({ propTypes, render }))

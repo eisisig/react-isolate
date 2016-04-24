@@ -7,7 +7,7 @@ export function PanelHeader ({ title }) {
 }
 
 PanelHeader.propTypes = {
-	value: PropTypes.string,
+	title: PropTypes.string,
 }
 
 export function PanelBody ({ children }) {

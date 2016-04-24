@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {stitch} from 'keo';
 import ace from 'brace';
 import 'brace/mode/javascript';
@@ -10,7 +10,7 @@ import 'brace/theme/github';
 import SplitPane from 'react-split-pane';
 import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index';
 
-const render = ({ props }) => {
+const render = () => {
 	return (
 		<div>
 

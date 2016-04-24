@@ -5,16 +5,16 @@ import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import map from 'lodash.map'
 
-import {navigate} from 'isolate/actions'
+import {navigate} from '../actions'
 
 const mapStateToProps = state => ({
 	componentMap: state.componentMap,
-	searchResults: state.searchResults
+	searchResults: state.searchResults,
 })
 
 const propTypes = {
 	componentMap: PropTypes.object,
-	searchResults: PropTypes.object
+	searchResults: PropTypes.object,
 }
 
 /**
@@ -28,7 +28,7 @@ const render = ({ props }) => {
 
 					const isComponent = 'name' in component
 					const hasFixtures = 'fixtures' in component
-					const hasComponents = 'components' in component
+					// const hasComponents = 'components' in component
 					const totalFixtures = hasFixtures ? Object.keys(component.fixtures).length : 0
 					const url = prevUrl + '/' + name
 
@@ -96,7 +96,9 @@ const render = ({ props }) => {
 	}
 
 	return (
+		/*eslint-disable */
 		<div>{ props.searchResults || props.componentMap ? renderMenu(props.searchResults || props.componentMap) : <div>No components</div> }</div>
+		/*eslint-enable */
 	)
 }
 

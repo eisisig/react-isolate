@@ -4,23 +4,23 @@ import React, {PropTypes} from 'react'
 import {pipe, resolutionMap, stitch} from 'keo'
 import orderBy from 'lodash.orderby'
 
-const sortProps = (props) => {
+const sortProps = props => {
 	return orderBy(Object.keys(props).map((prop) => ({
 		name: prop,
 		...props[prop]
 	})), ['required', 'name'], ['desc'])
 }
 
-const getType = (prop) => {
+const getType = prop => {
 	return prop.type ? prop.type.name : null
 }
 
-const getDefault = (prop) => {
+const getDefault = prop => {
 	if ( !prop.defaultValue ) return null
 	return <span className="code">{ prop.defaultValue.value }</span>
 }
 
-const getTypeValues = (prop) => {
+const getTypeValues = prop => {
 
 	if ( !prop.hasOwnProperty('value') && !prop.hasOwnProperty('type') ) return null
 

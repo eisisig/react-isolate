@@ -1,8 +1,8 @@
 'use strict'
 
-import history from 'isolate/utils/history'
-import store from 'isolate/stores'
-import {setComponent} from 'isolate/actions'
+import history from './history'
+import store from '../stores'
+import {setComponent} from '../actions'
 
 let url
 

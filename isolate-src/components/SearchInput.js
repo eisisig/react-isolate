@@ -3,7 +3,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
-import {search, searchClear} from 'isolate/actions'
+import {search, searchClear} from '../actions'
 
 const mapStateToProps = state => ({
 	searchQuery: state.searchQuery

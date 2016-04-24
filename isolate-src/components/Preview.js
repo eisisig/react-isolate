@@ -3,20 +3,21 @@
 import React, {PropTypes} from 'react'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
-import isEqual from 'lodash.isequal'
 
 const mapStateToProps = state => ({
+	selectedFixture: state.selectedFixture,
 	selectedComponent: state.selectedComponent,
 })
 
 const propTypes = {
-	selectedComponent: PropTypes.object
+	selectedFixture: PropTypes.object,
+	selectedComponent: PropTypes.object,
 }
 
 /* ------------------------------------------------------------
  Should Component Update
  ----------------------------------------------------------- */
-const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, props)
+// const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, props)
 
 /* ------------------------------------------------------------
  Render component
@@ -43,4 +44,4 @@ const render = ({ props }) => {
 	return <div className="PreviewComponent">{ renderComponent(props) }</div>
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, shouldComponentUpdate, render }))
+export default connect(mapStateToProps)(stitch({ propTypes, render }))

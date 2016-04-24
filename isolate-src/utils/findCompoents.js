@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-import filter from 'lodash.filter';
-import assign from 'lodash.assign';
-import reduce from 'lodash.reduce';
+import filter from 'lodash.filter'
+// import assign from 'lodash.assign'
+// import reduce from 'lodash.reduce'
 
 export default function findComponents (q, list, results = []) {
 
@@ -13,26 +13,26 @@ export default function findComponents (q, list, results = []) {
 		} else {
 			results.push({
 				[item.name]: item
-			});
+			})
 		}
 
-	});
+	})
 
 	// return reduce(list, (res, item,) => {
 	// 	if ( 'name' in item ) {
 	// 		if ( find(q, item.name) ) {
-	// 			assign(res, { [item.name]: item });
+	// 			assign(res, { [item.name]: item })
 	// 		}
 	// 	}
 	// 	if ( 'components' in item ) {
-	// 		return assign(res, findComponents(q, item.components));
+	// 		return assign(res, findComponents(q, item.components))
 	// 	}
-	// 	return res;
-	// }, {});
+	// 	return res
+	// }, {})
 
-	console.log('found', found(q, list));
+	console.log('found', found(q, list))
 }
 
 function find (q, name) {
-	return ~name.toUpperCase().indexOf(q.toUpperCase());
+	return ~name.toUpperCase().indexOf(q.toUpperCase())
 }

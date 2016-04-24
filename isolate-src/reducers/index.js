@@ -2,10 +2,10 @@
 
 import {handleActions} from 'redux-actions'
 import assign from 'lodash.assign'
-import componentMap from 'isolate/componentMap'
+import componentMap from '../componentMap'
+import urlToComponent from '../utils/urlToComponent'
 import appConfig from '../../isolate.config'
-import * as c from 'isolate/constants'
-import urlToComponent from 'isolate/utils/urlToComponent'
+import * as c from '../constants'
 
 const initialState = {
 	appConfig: appConfig,
@@ -14,7 +14,7 @@ const initialState = {
 	searchResults: null,
 	selectedComponent: null,
 	selectedFixture: null,
-	url: window.location.pathname
+	url: typeof window !== 'undefined' ? window.location.pathname : ''
 }
 
 export default handleActions({
