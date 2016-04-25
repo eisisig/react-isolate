@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const path = require("path")
