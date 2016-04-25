@@ -17,7 +17,7 @@ const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
 	// devtool: '#@eval',
-	devtool: 'cheap-source-map',
+	devtool: 'eval',
 	entry: {
 		app: [
 			path.resolve(__dirname, 'isolate-src', 'index.js'),
@@ -56,29 +56,6 @@ let common = {
 			{
 				test: /\.js$/,
 				loader: 'babel',
-				// loader: 'babel?' + JSON.stringify({
-				// 	babelrc: false,
-				// 	presets: ['es2015-webpack', 'stage-0', 'react'],
-				// 	plugins: [
-				// 		'jsx-control-statements',
-				// 		'transform-decorators-legacy'
-				// 	],
-				// 	env: {
-				// 		development: {
-				// 			plugins: [
-				// 				['react-transform', {
-				// 					transforms: [
-				// 						{
-				// 							transform: 'react-transform-hmr',
-				// 							imports: ['react'],
-				// 							locals: ['module']
-				// 						}
-				// 					]
-				// 				}]
-				// 			]
-				// 		}
-				// 	},
-				// }),
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
 					resolvePath(config.componentsPath)

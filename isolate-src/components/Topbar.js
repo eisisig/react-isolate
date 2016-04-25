@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PropTypes} from 'react'
-import {pipe, resolutionMap, stitch} from 'keo'
+import {stitch} from 'keo'
 
 /**
  * Render

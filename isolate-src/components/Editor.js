@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import AceEditor from 'react-ace'
-// import beautify from 'js-beautify'
+import beautify from 'js-beautify'
 
 /**
  * map state to props
@@ -31,8 +31,6 @@ const propTypes = {
  */
 const render = ({ props }) => {
 
-	console.log('props', props)
-
 	if ( !props.selectedFixture ) return null
 
 	const handleChange = (value) => {
@@ -46,9 +44,6 @@ const render = ({ props }) => {
 	}
 
 	const value = beautify(JSON.stringify(props.selectedFixture))
-
-	// console.log('value', value)
-	// const value = serialize(selectedFixture)
 
 	return (
 		<If condition={ props.selectedFixture }>

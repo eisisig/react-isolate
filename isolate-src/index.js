@@ -8,8 +8,6 @@ import store from './stores';
 
 import './utils/subscribe';
 
-console.log(store.getState())
-
 render(
 	<Provider store={ store }>
 		<App />

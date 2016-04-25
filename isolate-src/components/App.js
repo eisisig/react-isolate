@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {stitch} from 'keo';
-import ace from 'brace';
+import 'brace';
 import 'brace/mode/javascript';
 import 'brace/mode/json';
 import 'brace/mode/jsx';
@@ -25,7 +25,10 @@ const render = () => {
 					<SplitPane split="horizontal">
 						<Panel title="Preview"><Preview /></Panel>
 						<SplitPane split="horizontal">
+							{/*
 							<Panel title="Editor"><Editor /></Panel>
+							*/}
+							<Panel title="Markup"><Markup /></Panel>
 							<Panel title="Markup"><Markup /></Panel>
 						</SplitPane>
 					</SplitPane>
