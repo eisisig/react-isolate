@@ -1,4 +1,5 @@
 {
+  "babelrc": false,
   "presets": [
     "es2015-webpack",
     "stage-0",
