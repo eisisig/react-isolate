@@ -3,9 +3,11 @@
 import {handleActions} from 'redux-actions'
 import assign from 'lodash.assign'
 import componentMap from '../componentMap'
-import urlToComponent from '../utils/urlToComponent'
+import {urlToComponent} from '../utils/urlToComponent'
 import appConfig from '../../isolate.config'
 import * as c from '../constants'
+
+console.log('urlToComponent', urlToComponent)
 
 const initialState = {
 	appConfig: appConfig,
@@ -40,6 +42,7 @@ export default handleActions({
 	},
 	// Set component
 	[c.SET_COMPONENT]: (state, { payload }) => {
+		console.log('payload', payload)
 		const data = urlToComponent(payload, state.componentMap)
 		return assign({}, state, data)
 	},

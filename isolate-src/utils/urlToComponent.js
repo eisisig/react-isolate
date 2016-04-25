@@ -2,7 +2,7 @@
 
 import get from 'lodash.get'
 
-export default function urlToComponent (url, components) {
+export function urlToComponent (url, components) {
 
 	let pathArr = url.split('/').slice(1)
 
