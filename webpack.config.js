@@ -17,12 +17,13 @@ const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
 	// devtool: '#@eval',
-	devtool: 'eval',
+	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		app: [
+			'webpack-dev-server/client?http://localhost:9999',
+			'webpack/hot/only-dev-server',
+			'react-hot-loader/patch',
 			path.resolve(__dirname, 'isolate-src', 'index.js'),
-			'webpack-dev-server/client',
-			'webpack/hot/dev-server',
 		]
 	},
 	output: {
@@ -69,11 +70,11 @@ let common = {
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin(),
 		new SplitByPathPlugin([
 			{ name: 'isolate', path: path.join(__dirname) }
 		]),
 		new webpack.IgnorePlugin(/\/_.+\//),
-		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
 			__ISOLATE__: JSON.stringify(omit(config, ['webpackConfig'])),
 			'process.env': {
@@ -92,3 +93,4 @@ if ( 'webpackConfig' in config ) {
 }
 
 module.exports = common
+module.exports.PORT = PORT
