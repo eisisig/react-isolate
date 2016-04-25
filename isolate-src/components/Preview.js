@@ -1,6 +1,7 @@
 'use strict'
 
 import React, {PropTypes} from 'react'
+import ReactDOM from 'react-dom'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
 
@@ -14,34 +15,24 @@ const propTypes = {
 	selectedComponent: PropTypes.object,
 }
 
-/* ------------------------------------------------------------
- Should Component Update
- ----------------------------------------------------------- */
-// const shouldComponentUpdate = ({ nextProps, props }) => !isEqual(nextProps, props)
+export const renderComponent = ({ selectedFixture, selectedComponent }) => {
 
-/* ------------------------------------------------------------
- Render component
- ----------------------------------------------------------- */
-export const renderComponent = (props) => {
+	const container = document.getElementById('preview-container')
 
-	console.info('Preview: renderComponent', props)
+	ReactDOM.unmountComponentAtNode(container)
 
-	// if ( !selectedComponent ) return null
-	// const { Component } = selectedComponent
-
-	// const props = selectedFixture || {}
-
-	// if ( typeof Component === 'function' ) {
-	// 	console.log('props', props)
-	// 	return React.cloneElement(<Component />, { ...props })
-	// }
+	if ( !selectedFixture && !selectedComponent ) {
+		ReactDOM.render(<div></div>, container)
+	} else {
+		ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
+	}
 }
 
-/* ------------------------------------------------------------
- Render
- ----------------------------------------------------------- */
-const render = ({ props }) => {
-	return <div className="PreviewComponent">{ renderComponent(props) }</div>
+const componentDidMount = ({ props }) => renderComponent(props)
+const componentDidUpdate = ({ props }) => renderComponent(props)
+
+const render = () => {
+	return <div id="preview-container" className="PreviewComponent"></div>
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default connect(mapStateToProps)(stitch({ propTypes, componentDidMount, componentDidUpdate, render }))

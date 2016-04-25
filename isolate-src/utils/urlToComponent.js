@@ -6,7 +6,7 @@ export default function urlToComponent (url, components) {
 
 	let pathArr = url.split('/').slice(1)
 
-	let fixturePath, selectedFixtures
+	let fixturePath, selectedFixture
 
 	const fixtureIndex = pathArr.indexOf('fixtures')
 
@@ -14,14 +14,18 @@ export default function urlToComponent (url, components) {
 		fixturePath = pathArr.splice(fixtureIndex, 2)
 	}
 
-	const selectedComponent = get(components, pathArr)
+	let selectedComponent = get(components, pathArr)
+
+	if ( selectedComponent && 'components' in selectedComponent ) {
+		selectedComponent = null
+	}
 
 	if ( selectedComponent ) {
-		selectedFixtures = get(selectedComponent, fixturePath)
+		selectedFixture = get(selectedComponent, fixturePath)
 	}
 
 	return {
-		component: selectedComponent,
-		fixture: selectedFixtures,
+		selectedFixture,
+		selectedComponent,
 	}
 }

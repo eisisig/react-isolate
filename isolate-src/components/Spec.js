@@ -1,8 +1,17 @@
 'use strict'
 
 import React, {PropTypes} from 'react'
-import {pipe, resolutionMap, stitch} from 'keo'
+import {stitch} from 'keo'
+import {connect} from 'react-redux'
 import orderBy from 'lodash.orderby'
+
+const mapStateToProps = state => ({
+	selectedComponent: state.selectedComponent
+})
+
+const propTypes = {
+	selectedComponent: PropTypes.object
+}
 
 const sortProps = props => {
 	return orderBy(Object.keys(props).map((prop) => ({
@@ -58,14 +67,14 @@ const getTypeValues = prop => {
 /**
  * Render
  */
-const render = ({ props: { selectedComponent } }) => {
+const render = ({ props }) => {
 
-	if ( !selectedComponent ) return null
+	if ( !props.selectedComponent ) return null
 
 	let spec = null
 
 	try {
-		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + selectedComponent.filePath.slice(2))
+		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + props.selectedComponent.filePath.slice(2))
 	} catch ( e ) {
 		// console.log('e', e)
 	}
@@ -107,7 +116,4 @@ const render = ({ props: { selectedComponent } }) => {
 	)
 }
 
-/**
- * Export
- */
-export default stitch({ render })
+export default connect(mapStateToProps)(stitch({ propTypes, render }))

@@ -40,10 +40,7 @@ export default handleActions({
 	},
 	// Set component
 	[c.SET_COMPONENT]: (state, { payload }) => {
-		const { component, fixture } = urlToComponent(payload, state.componentMap)
-		return assign({}, state, {
-			selectedFixture: fixture,
-			selectedComponent: component,
-		})
+		const data = urlToComponent(payload, state.componentMap)
+		return assign({}, state, data)
 	},
 }, initialState)

@@ -3,10 +3,6 @@
 import {compose, createStore} from 'redux';
 import reducer from '../reducers';
 
-console.log('reducer', reducer)
-
-console.log('process.env.BABEL_ENV', process.env.BABEL_ENV)
-
 let configureStore
 
 if ( process.env.BABEL_ENV === 'test' ) {
@@ -17,6 +13,4 @@ if ( process.env.BABEL_ENV === 'test' ) {
 	));
 }
 
-
 export default configureStore();
-
