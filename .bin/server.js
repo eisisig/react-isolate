@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+'use strict';
 
 const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
@@ -6,8 +7,14 @@ const path = require("path")
 const style = require('ansi-styles')
 const pkg = require("../package.json")
 
-const isolateConfig = require('../isolate.config')
+const config = require('../config')
 const webpackConfig = require('../webpack.config')
+
+console.log('--------')
+console.log(JSON.stringify(config, null, 4))
+console.log('--------')
+console.log(JSON.stringify(webpackConfig, null, 4))
+console.log('--------')
 
 var banner = function () {
 	console.log(`${style.blue.open}
@@ -18,9 +25,6 @@ var banner = function () {
 
 v${pkg.version} ...starting
 ${style.blue.close}
----
-${JSON.stringify(isolateConfig, null, 4)}
----
 `)
 }
 

@@ -8,7 +8,7 @@ const SplitByPathPlugin = require('webpack-split-by-path')
 
 const cwd = process.cwd()
 const merge = require('webpack-merge')
-const config = require('./isolate.config')
+const config = require('./config')
 
 const NODE_ENV = process.env.NODE_ENV || argv.env || 'development'
 const PORT = process.env.PORT || argv.port || 9999
@@ -19,10 +19,10 @@ let common = {
 	// devtool: '#@eval',
 	devtool: 'cheap-module-eval-source-map',
 	entry: {
-		app: [
+		isolate: [
+			'react-hot-loader/patch',
 			'webpack-dev-server/client?http://localhost:9999',
 			'webpack/hot/only-dev-server',
-			'react-hot-loader/patch',
 			path.resolve(__dirname, 'isolate-src', 'index.js'),
 		]
 	},
@@ -32,20 +32,25 @@ let common = {
 		publicPath: '/'
 	},
 	resolve: {
+		modules: [
+			path.resolve(__dirname, 'node_modules'),
+			path.resolve(process.cwd(), 'node_modules'),
+			'node_modules',
+			config.componentsPath,
+			config.fixturesPath,
+		],
 		alias: {
-			CUSTOM_CONFIG: resolvePath('isolate.config.js'),
+			'lodash/object/assign': 'lodash/assign',
+			'lodash/array/difference': 'lodash/difference',
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
 			FIXTURES_PATH: resolvePath(config.fixturesPath),
 		},
-		modulesDirectories: [
-			path.resolve(__dirname, 'node_modules'),
-			path.resolve(process.cwd(), 'node_modules')
-		],
 		extensions: ['', '.js', '.jsx']
 	},
 	resolveLoader: {
 		modulesDirectories: [
-			path.resolve(process.cwd(), 'node_modules')
+			path.resolve(process.cwd(), 'node_modules'),
+			path.resolve(__dirname, 'node_modules'),
 		]
 	},
 	module: {
@@ -71,9 +76,9 @@ let common = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
-		new SplitByPathPlugin([
-			{ name: 'isolate', path: path.join(__dirname) }
-		]),
+		// new SplitByPathPlugin([
+		// 	{ name: 'app', path: path.join(process.cwd()) }
+		// ]),
 		new webpack.IgnorePlugin(/\/_.+\//),
 		new webpack.DefinePlugin({
 			__ISOLATE__: JSON.stringify(omit(config, ['webpackConfig'])),
@@ -84,13 +89,15 @@ let common = {
 	]
 }
 
-// if ( 'webpackConfig' in config ) {
-// 	const webpackConfig = config.webpackConfig
-// 	common = merge(common, webpackConfig)
-// 	if ( 'smart' in webpackConfig ) {
-// 		common = merge.smart(common.module.loaders, webpackConfig.smart)
-// 	}
-// }
+if ( 'webpackConfig' in config ) {
+	const webpackConfig = config.webpackConfig
+	common = merge(common, webpackConfig)
+	if ( 'smart' in webpackConfig ) {
+		common = merge.smart(common.module.loaders, webpackConfig.smart)
+	}
+}
+
+// console.log(JSON.stringify(common, null, 4))
 
 module.exports = common
 module.exports.PORT = PORT
