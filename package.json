@@ -17,7 +17,7 @@
     "url": "https://github.com/eisisig/react-isolate/issues"
   },
   "bin": {
-    "react-isolate": ".bin/start.js"
+    "react-isolate": ".bin/server.js"
   },
   "repository": {
     "type": "git",
