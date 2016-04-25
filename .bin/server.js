@@ -19,14 +19,11 @@ ${style.blue.close}
 `)
 }
 
-const compiler = webpack(webpackConfig)
-
-const server = new WebpackDevServer(compiler, {
+new WebpackDevServer(webpack(webpackConfig), {
 	contentBase: path.resolve(__dirname, '..', 'isolate-src'),
-	hot: true,
-	inline: true,
-	historyApiFallback: true,
 	publicPath: webpackConfig.output.publicPath,
+	hot: true,
+	historyApiFallback: true,
 	stats: {
 		colors: true,
 		timings: true,
@@ -34,8 +31,11 @@ const server = new WebpackDevServer(compiler, {
 		assets: false,
 		version: false,
 		hash: false,
-		chunkModules: false
+		chunkModules: false,
 	}
 })
-
-server.listen(9999, () => banner())
+	.listen(webpackConfig.PORT, 'localhost', function (error) {
+		if ( error ) console.log(error)
+		banner()
+		console.log('Listening at localhost:' + webpackConfig.PORT)
+	})

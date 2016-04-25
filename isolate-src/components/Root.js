@@ -1,19 +1,17 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import {Provider} from 'react-redux';
+import React from 'react'
+import {Provider} from 'react-redux'
 import App from './App'
 
-let hmrKey = Math.random();
+let hmrKey = Math.random()
 
 const Root = ({ store, history }) => (
-	<Provider store={store}>
+	<Provider store={ store }>
 		<App />
 	</Provider>
-);
+)
 
-if ( module.hot ) {
-	hmrKey = Math.random();
-}
+if ( module.hot ) hmrKey = Math.random()
 
-export default Root;
+export default Root
