@@ -1,4 +1,8 @@
 .idea
+demo
 node_modules
-isolate-src
+isolate-tests
 *.log
+.gitignore
+.eslintrc
+profile.json
