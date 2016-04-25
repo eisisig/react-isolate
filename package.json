@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node .bin/server",
-    "demo": "node .bin/server --componentsPath=demo/components --fixturesPath=demo/fixtures",
+    "demo": "node .bin/server",
     "build": "webpack",
     "lint": "eslint --format=node_modules/eslint-formatter-pretty isolate-src",
     "test": "cross-env BABEL_ENV=test ava isolate-tests/**"

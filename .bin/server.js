@@ -6,7 +6,7 @@ const path = require("path")
 const style = require('ansi-styles')
 const pkg = require("../package.json")
 
-// const isolateConfig = require('../isolate.config')
+const isolateConfig = require('../isolate.config')
 const webpackConfig = require('../webpack.config')
 
 var banner = function () {
@@ -18,6 +18,9 @@ var banner = function () {
 
 v${pkg.version} ...starting
 ${style.blue.close}
+---
+${JSON.stringify(isolateConfig, null, 4)}
+---
 `)
 }
 

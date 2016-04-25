@@ -84,13 +84,13 @@ let common = {
 	]
 }
 
-if ( 'webpackConfig' in config ) {
-	const webpackConfig = config.webpackConfig
-	common = merge(common, webpackConfig)
-	if ( 'smart' in webpackConfig ) {
-		common = merge.smart(common.module.loaders, webpackConfig.smart)
-	}
-}
+// if ( 'webpackConfig' in config ) {
+// 	const webpackConfig = config.webpackConfig
+// 	common = merge(common, webpackConfig)
+// 	if ( 'smart' in webpackConfig ) {
+// 		common = merge.smart(common.module.loaders, webpackConfig.smart)
+// 	}
+// }
 
 module.exports = common
 module.exports.PORT = PORT
