@@ -44,14 +44,15 @@ const pathsToObject = (result, path) => {
 		if ( !isFile(part) ) return { [part === 'fixtures' ? `_${part}` : part]: assign(res, { _name: mainComponentName }) }
 
 		const name = removeExt(part)
-		// let Component = components.context(path)
-		// if ( 'default' in Component ) Component = Component.default
+		let Component = components.context(path)
+		
+		if ( 'default' in Component ) Component = Component.default
 
 		if ( isFixture(path) ) {
 			return assign({
 				[name]: {
 					name, path,
-					// props: Component,
+					props: Component,
 					file: part,
 				}
 			}, {
@@ -60,14 +61,14 @@ const pathsToObject = (result, path) => {
 					file: null,
 					name: 'defaultProps',
 					_name: 'defaultProps',
-					// props: Component,
+					props: Component,
 				}
 			})
 		} else {
 			return {
 				[name]: {
 					name, path,
-					// Component: Component,
+					Component: Component,
 					_name: name,
 					file: part,
 				}
