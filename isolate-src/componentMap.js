@@ -1,87 +1,111 @@
-'use strict';
+'use strict'
 
-/**
- * TODO: Optimize this components/fixture fetching
- */
-const merge = require('lodash.merge');
-const reduceRight = require('lodash.reduceright');
-const assign = require('lodash.assign');
-const includes = require('lodash.includes');
-// const appConfig = require('../isolate.config');
+const flow = require('lodash/flow')
+const includes = require('lodash/includes')
+const assign = require('lodash/assign')
+const merge = require('lodash/merge')
+const reduce = require('lodash/reduce')
 
-const componentsContext = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$/);
-const filePaths = componentsContext.keys();
-const componentMap = filePaths.reduce(createComponentMap, {});
-
-function getFixturesPaths () {
-	return filePaths.filter((path) => path.indexOf('/fixtures/') !== -1);
+const getComponents = () => {
+	const context = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$/)
+	return { context, files: context.keys() }
 }
 
-function createComponentMap (results, path) {
-	return merge(results, createComponentPathTree(path));
+const getFixtures = () => {
+	return null
+	// try {
+	// 	const context = require.context('FIXTURES_PATH', true, /^\.\/.*\.js$/)
+	// 	return { context, files: context.keys() }
+	// } catch ( e ) {
+	// 	return null
+	// }
 }
 
-function createComponentPathTree (path) {
+const isFixture = path => !!~path.indexOf('fixtures')
+const isFile = string => !!~string.indexOf('.js')
+const removeExt = string => string.replace('.js', '')
+const createPathArray = flow(path => path.split('/'), arr => arr.slice(1, arr.length), arr => arr.reverse())
 
-	const pathArr = path.split('/');
+const components = getComponents()
+const fixtures = getFixtures()
 
-	// Return if this is a fixture
-	if ( path.indexOf('/fixtures/') !== -1 ) return;
+const pathsToObject = (result, path) => {
 
-	return reduceRight(pathArr, (results, part) => {
+	const pathArr = createPathArray(path)
 
-		if ( part === '.' || part === 'index.js' || part.startsWith('_') ) { return results; }
+	const mainComponentName = pathArr[pathArr.length - 1]
 
-		if ( includes(part, '.js') ) {
+	const arrayToObject = (res, part) => {
 
-			const name = removeExt(part);
-			const fileContent = componentsContext(path);
-			const Component = 'default' in fileContent ? fileContent.default : fileContent;
+		if ( includes(['index.js'], part) ) {
+			return res
+		}
 
-			const fixtures = {
-				defaultProps: Component.defaultProps
-			};
+		if ( !isFile(part) ) return { [part === 'fixtures' ? `_${part}` : part]: assign(res, { _name: mainComponentName }) }
 
-			let folder = path.split('/');
-			folder.pop();
-			folder = folder.join('/').concat('/fixtures/');
+		const name = removeExt(part)
+		// let Component = components.context(path)
+		// if ( 'default' in Component ) Component = Component.default
 
-			const componentsFixtures = getFixturesPaths().filter((fixture) => fixture.indexOf(folder) !== -1);
-
-			if ( componentsFixtures && componentsFixtures.length ) {
-				componentsFixtures.forEach((fixturePath) => {
-					const name = removeExt(fixturePath.split('/').pop());
-					let fileContent = componentsContext(fixturePath);
-					fileContent = 'default' in fileContent ? fileContent.default : fileContent;
-
-					assign(fixtures, {
-						[name]:	fileContent
-					});
-				});
-			}
-
+		if ( isFixture(path) ) {
+			return assign({
+				[name]: {
+					name, path,
+					// props: Component,
+					file: part,
+				}
+			}, {
+				defaultProps: {
+					path: null,
+					file: null,
+					name: 'defaultProps',
+					_name: 'defaultProps',
+					// props: Component,
+				}
+			})
+		} else {
 			return {
 				[name]: {
-					name,
-					fixtures: fixtures,
-					fileName: part,
-					filePath: path,
-					Component: Component
+					name, path,
+					// Component: Component,
+					_name: name,
+					file: part,
 				}
-			};
-
-		} else {
-			return assign({}, {
-				[part]: {
-					components: results
-				}
-			});
+			}
 		}
-	}, {});
+	}
+
+	const componentMap = reduce(pathArr, arrayToObject, {})
+
+	merge(result, componentMap)
+
+	return result
 }
 
-function removeExt (file) {
-	return file.replace('.js', '');
-}
+const componentsMap = reduce(components.files, pathsToObject, {})
 
-module.exports = componentMap;
+const fixturesMap = fixtures ? reduce(fixtures.files, (result, path) => {
+
+	const pathArr = createPathArray(path)
+
+	const fixtureMap = reduce(pathArr, (res, part) => {
+		if ( isFile(part) ) {
+			const name = removeExt(part)
+			return {
+				fixtures: {
+					[name]: {
+						path,
+						name,
+						props: {}
+					},
+				}
+			}
+		} else {
+			return { [part]: res }
+		}
+	}, {})
+
+	return merge(result, fixtureMap)
+}, {}) : {}
+
+module.exports = merge({}, componentsMap, fixturesMap)

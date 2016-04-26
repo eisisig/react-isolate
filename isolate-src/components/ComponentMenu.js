@@ -3,7 +3,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
-import map from 'lodash.map'
+import map from 'lodash/map'
+import filter from 'lodash/filter'
+import isObject from 'lodash/isObject'
 
 import {navigate} from '../actions'
 
@@ -21,75 +23,63 @@ const propTypes = {
  * Render
  */
 const render = ({ props }) => {
-	const renderMenu = (components, prevUrl = '') => {
+
+	const renderMenu = (components, prevUrl = '', level = 1) => {
+
 		return (
-			<ul key={ prevUrl }>
-				{ map(components, (component, name) => {
+			<ul key={ `components-${level}` }>
+				{ map(components, (component) => {
 
-					const isComponent = 'name' in component
-					const hasFixtures = 'fixtures' in component
-					// const hasComponents = 'components' in component
-					const totalFixtures = hasFixtures ? Object.keys(component.fixtures).length : 0
-					const url = prevUrl + '/' + name
+					const getComponents = () => filter(component, (item, key) => !key.startsWith('_'))
+					const hasComponents = Object.keys(getComponents(component)).length
+					const hasFixtures = name => '_fixtures' in component && component._fixtures[name] || component._fixtures
 
-					return (
-						<li key={ `${name}-key` }>
+					if ( component._name === undefined ) return
 
-							<If condition={ isComponent }>
-								<a onClick={ () => props.dispatch(navigate(url)) }>
-									<span>{ name }</span>
-									<If condition={ hasFixtures }>
-										<span>{ totalFixtures }</span>
+					if ( hasComponents ) {
+
+						const url = `${prevUrl}/${component._name}`
+						const subComponents = getComponents()
+
+						const itemBlock = (comp, url) => {
+
+							const fixtures = hasFixtures(comp.name)
+							const key = `${component._name}-${comp.name || component._name}`
+
+							return (
+								<li key={ key }>
+									<a onClick={ () => props.dispatch(navigate(`${url}`)) }>{ comp.name }</a>
+									<If condition={ !!fixtures }>
+										<ul>
+											{ map(fixtures, fixture => {
+												if ( isObject(fixture) ) {
+													return (
+														<li key={`${key}-${fixture.name}`}>
+															<a onClick={ () => props.dispatch(navigate(`${url}/fixtures/${fixture.name}`)) }>{ fixture.name }</a>
+														</li>
+													)
+												}
+												return null
+											}) }
+										</ul>
 									</If>
-								</a>
-								<Else />
-								<div>
-									<a onClick={ () => props.dispatch(navigate(url)) }>
-										<span>{ name }</span>
-									</a>
-									{ renderMenu(component.components, url + '/components') }
-								</div>
-							</If>
+								</li>
+							)
+						}
 
-							<If condition={ hasFixtures }>
-								<ul>
-									{ map(component.fixtures, (fixture, key) => {
-										return (
-											<li key={ `${key}-fixture` }>
-												<a onClick={ () => props.dispatch(navigate(`${url}/fixtures/${key}`)) }>{ key }</a>
-											</li>
-										)
-									}) }
-								</ul>
-							</If>
-
-							{/*
-							 <Choose>
-							 <When condition={ hasFixtures && hasComponent }>
-							 </When>
-							 <When condition={ !hasFixtures && !hasComponent }>
-							 <a onClick={ () => props.onSetUrl(url) }>
-							 <span>{ name }</span>
-							 </a>
-							 <If condition={ Object.keys(component).length }>
-							 { renderMenu(component, url) }
-							 </If>
-							 </When>
-							 </Choose>
-							 <If condition={ hasFixtures }>
-							 <ul>
-							 { map(component.fixtures, (fixture, key) => {
-							 return (
-							 <li key={ `${key}-fixture` }>
-							 <a onClick={ () => props.onSetUrl(`${url}/fixtures/${fixture.name}`) }>{ key }</a>
-							 </li>
-							 )
-							 }) }
-							 </ul>
-							 </If>
-							 */}
-						</li>
-					)
+						if ( subComponents.length === 1 ) {
+							return itemBlock(subComponents[0], url)
+						} else {
+							return (
+								<li key={ `${component._name}` }>
+									<a onClick={ () => props.dispatch(navigate(`${url}`)) }>{ component._name }</a>
+									<ul>
+										{ map(subComponents, (comp) => itemBlock(comp, `${url}/${comp.name}`)) }
+									</ul>
+								</li>
+							)
+						}
+					}
 				}) }
 			</ul>
 		)
