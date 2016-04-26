@@ -10,13 +10,7 @@ const pkg = require("../package.json")
 const config = require('../config')
 const webpackConfig = require('../webpack.config')
 
-console.log('--------')
-console.log(JSON.stringify(config, null, 4))
-console.log('--------')
-console.log(JSON.stringify(webpackConfig, null, 4))
-console.log('--------')
-
-var banner = function () {
+const banner = function () {
 	console.log(`${style.blue.open}
                     |       o          |         |         
 ,---.,---.,---.,---.|---    .,---.,---.|    ,---.|--- ,---.

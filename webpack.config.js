@@ -43,7 +43,7 @@ let common = {
 			'lodash/object/assign': 'lodash/assign',
 			'lodash/array/difference': 'lodash/difference',
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
-			FIXTURES_PATH: resolvePath(config.fixturesPath),
+			// FIXTURES_PATH: resolvePath(config.fixturesPath),
 		},
 		extensions: ['', '.js', '.jsx']
 	},
