@@ -1,0 +1,51 @@
+@import "variables";
+
+.root {
+	height:          @topHeight;
+	display:         flex;
+	align-items:     stretch;
+	justify-content: stretch;
+}
+
+.title {
+	width:         @sidebarWidth;
+	background:    @secondaryBackgroundColor;
+	border-right:  1px solid @mainBorderColor;
+	border-bottom: 1px solid @mainBorderColor;
+	display:       flex;
+	align-items:   center;
+	text-align:    center;
+}
+
+.titleLink {
+	flex:      1;
+	color:     #888888;
+	font-size: 16px;
+}
+
+.actions {
+	margin-right: 15px;
+	flex:         1;
+	display:      flex;
+	align-items:  center;
+	text-align:   right;
+}
+
+.toggles {
+	flex: 1
+}
+
+.togglesLegend {
+	color:          #BBBBBB;
+	font-size:      10px;
+	text-transform: uppercase;
+}
+
+.label {
+	font-size:    12px;
+	padding-left: 5px;
+}
+
+.label--inactive {
+	opacity: .5;
+}

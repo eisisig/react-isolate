@@ -15,7 +15,7 @@ const PORT = process.env.PORT || argv.port || 9999
 const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
-	devtool: 'cheap-module-source-map',
+	devtool: 'eval',
 	entry: {
 		isolate: [
 			'react-hot-loader/patch',
@@ -65,13 +65,13 @@ let common = {
 				],
 			},
 			{
-				test: /\.css$/,
+				test: /\.less$/,
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
 				],
 				loaders: [
 					'style?sourceMap',
-					'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+					'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less?sourceMap'
 				]
 			},
 		]

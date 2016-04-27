@@ -11,7 +11,7 @@ import 'brace/mode/jsx'
 import 'brace/theme/github'
 import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index'
 
-import styles from './App.css'
+import styles from '../styles/App.less'
 
 const mapStateToProps = state => ({
 	viewState: state.viewState
@@ -25,30 +25,32 @@ const render = ({ props }) => {
 
 	const sx = styleclasses(styles)
 
-	console.log(sx('root'))
-
 	return (
-		<div className={ sx('root', null, ['box']) }>
+		<div className={ sx('root') }>
 
 			<div className={ sx('top') }>
 				<Topbar />
 			</div>
 
-			<div className={ styles.bottom }>
-				<div className={ styles.sidebar }>Sidebar</div>
-				<div className={ styles.main }>
+			<div className={ sx('bottom') }>
+
+				<div className={ sx('sidebar') }>
+					<Sidebar />
+				</div>
+
+				<div className={ sx('main') }>
 
 					<If condition={ props.viewState.showPreview || props.viewState.showMarkup || props.viewState.showEditor }>
 
-						<div className={ styles.left }>
+						<div className={ sx('left') }>
 							<If condition={ props.viewState.showPreview }>
 								<div className={ sx(['preview', 'box']) }>preview</div>
 							</If>
 							<If condition={ props.viewState.showMarkup }>
-								<div className={ styles.markup }>markup</div>
+								<div className={ sx('markup') }>markup</div>
 							</If>
 							<If condition={ props.viewState.showEditor }>
-								<div className={ styles.editor }>editor</div>
+								<div className={ sx('editor') }>editor</div>
 							</If>
 						</div>
 
@@ -56,12 +58,12 @@ const render = ({ props }) => {
 
 					<If condition={ props.viewState.showSpec || props.viewState.showDoc }>
 
-						<div className={ styles.right }>
+						<div className={ sx('right') }>
 							<If condition={ props.viewState.showSpec }>
-								<div className={ styles.spec }>spec</div>
+								<div className={ sx('spec') }>spec</div>
 							</If>
 							<If condition={ props.viewState.showDoc }>
-								<div className={ styles.doc }>doc</div>
+								<div className={ sx('doc') }>doc</div>
 							</If>
 						</div>
 
@@ -73,7 +75,7 @@ const render = ({ props }) => {
 
 			{/*
 
-			 <Sidebar />
+
 			 <Panel title="Preview"><Preview /></Panel>
 			 <Panel title="Editor"><Editor /></Panel>
 			 <Panel title="Markup"><Markup /></Panel>

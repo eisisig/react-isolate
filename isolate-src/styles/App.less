@@ -1,3 +1,5 @@
+@import "./variables";
+
 .root {
 	width:           100%;
 	display:         flex;
@@ -6,13 +8,9 @@
 	justify-content: space-between;
 }
 
-.root--is-active {
-	padding: 50px;
-}
-
 .top {
-	height:        60px;
-	border-bottom: 1px solid #E2E2E2;
+	height:        @topHeight;
+	border-bottom: 1px solid @mainBorderColor;
 }
 
 .bottom {
@@ -20,18 +18,22 @@
 	display:         flex;
 	align-content:   stretch;
 	justify-content: space-between;
+	//overflow:        hidden;
+	//height:          100%;
 }
 
 /* inside -> .bottom */
 .sidebar {
-	background:   #F4F4F4;
-	width:        280px;
-	border-right: 1px solid #E2E2E2;
+	background:   @secondaryBackgroundColor;
+	width:        @sidebarWidth;
+	border-right: 1px solid @mainBorderColor;
+	height:       auto;
+	flex:         0 0 auto;
+	overflow:     scroll;
 }
 
 .main {
 	flex:            1;
-	background:      pink;
 	display:         flex;
 	align-content:   stretch;
 	justify-content: space-between;
@@ -40,16 +42,15 @@
 /* inside -> .main */
 .left {
 	flex:            1;
-	background:      lightskyblue;
 	display:         flex;
 	align-content:   stretch;
 	flex-direction:  column;
 	justify-content: space-between;
+	border-right:    1px solid @mainBorderColor;
 }
 
 .right {
 	flex:            1;
-	background:      lightgreen;
 	display:         flex;
 	align-content:   stretch;
 	flex-direction:  column;
@@ -57,27 +58,14 @@
 }
 
 /* inside -> .left */
-.preview {
-	flex: 1;
-}
-
-.markup {
-	flex: 1;
-}
-
+.preview,
+.markup,
 .editor {
 	flex: 1;
 }
 
 /* inside -> .right */
-.spec {
-	flex: 1;
-}
-
+.spec,
 .doc {
 	flex: 1;
-}
-
-.box {
-	border: 1px solid red;
 }

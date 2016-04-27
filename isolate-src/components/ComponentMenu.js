@@ -3,11 +3,13 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
+import styleclasses from 'styleclasses'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 import isObject from 'lodash/isObject'
-
 import {navigate} from '../actions'
+
+import styles from '../styles/ComponentMenu.less'
 
 const mapStateToProps = state => ({
 	componentMap: state.componentMap,
@@ -24,10 +26,12 @@ const propTypes = {
  */
 const render = ({ props }) => {
 
+	const sx = styleclasses(styles)
+
 	const renderMenu = (components, prevUrl = '', level = 1) => {
 
 		return (
-			<ul key={ `components-${level}` }>
+			<ul className={ sx('list', null, ['ul']) } key={ `components-${level}` }>
 				{ map(components, (component) => {
 
 					const getComponents = () => filter(component, (item, key) => !key.startsWith('_'))
@@ -47,15 +51,19 @@ const render = ({ props }) => {
 							const key = `${component._name}-${comp.name || component._name}`
 
 							return (
-								<li key={ key }>
-									<a onClick={ () => props.dispatch(navigate(`${url}`)) }>{ comp.name }</a>
+								<li className={ sx('item') } key={ key }>
+									<a className={ sx('link') } onClick={ () => props.dispatch(navigate(`${url}`)) }>{ comp.name }</a>
 									<If condition={ !!fixtures }>
-										<ul>
+										<ul className={ sx('fixtures', null, ['ul']) }>
 											{ map(fixtures, fixture => {
 												if ( isObject(fixture) ) {
 													return (
-														<li key={`${key}-${fixture.name}`}>
-															<a onClick={ () => props.dispatch(navigate(`${url}/fixtures/${fixture.name}`)) }>{ fixture.name }</a>
+														<li className={ sx('item') } key={`${key}-${fixture.name}`}>
+															<a
+																className={ sx('link') }
+																onClick={ () => props.dispatch(navigate(`${url}/fixtures/${fixture.name}`)) }>
+																{ fixture.name }
+															</a>
 														</li>
 													)
 												}
@@ -71,9 +79,9 @@ const render = ({ props }) => {
 							return itemBlock(subComponents[0], url)
 						} else {
 							return (
-								<li key={ `${component._name}` }>
-									<a onClick={ () => props.dispatch(navigate(`${url}`)) }>{ component._name }</a>
-									<ul>
+								<li className={ sx('item') } key={ `${component._name}` }>
+									<a className={ sx('link') } onClick={ () => props.dispatch(navigate(`${url}`)) }>{ component._name }</a>
+									<ul className={ sx('sublist', null, ['ul']) }>
 										{ map(subComponents, (comp) => itemBlock(comp, `${url}/${comp.name}`)) }
 									</ul>
 								</li>
