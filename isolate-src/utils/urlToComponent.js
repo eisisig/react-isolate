@@ -14,7 +14,9 @@ export function urlToComponent (url, components) {
 
 	let selectedComponent = get(components, pathArr)
 
-	if ( selectedComponent._name in selectedComponent ) {
+	if ( !selectedComponent ) return
+
+	if ( selectedComponent.hasOwnProperty('_name') ) {
 		selectedComponent = selectedComponent[selectedComponent._name]
 	}
 
