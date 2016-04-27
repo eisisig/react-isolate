@@ -13,14 +13,14 @@ export function urlToComponent (url, components) {
 	}
 
 	let selectedComponent = get(components, pathArr)
-
-	if ( !selectedComponent ) return
-
-	if ( selectedComponent.hasOwnProperty('_name') ) {
+	
+	if ( selectedComponent && selectedComponent.hasOwnProperty('_name') ) {
 		selectedComponent = selectedComponent[selectedComponent._name]
 	}
 
-	selectedComponent = selectedComponent.Component
+	if ( selectedComponent && selectedComponent.hasOwnProperty('Component') ) {
+		selectedComponent = selectedComponent.Component
+	}
 
 	const selectedFixture = get(components, [pathArr[0], '_fixtures'].concat(pathArr.length >= 2 ? [pathArr[1], fixtureName] : fixtureName))
 
