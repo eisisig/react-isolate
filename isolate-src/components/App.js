@@ -1,17 +1,29 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import {stitch} from 'keo';
-import 'brace';
-import 'brace/mode/javascript';
-import 'brace/mode/json';
-import 'brace/mode/jsx';
-import 'brace/theme/github';
-import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index';
+import React, {PropTypes} from 'react'
+import {stitch} from 'keo'
+import {connect} from 'react-redux'
+import 'brace'
+import 'brace/mode/javascript'
+import 'brace/mode/json'
+import 'brace/mode/jsx'
+import 'brace/theme/github'
+import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index'
 
 import styles from './App.css'
 
-const render = () => {
+const mapStateToProps = state => ({
+	viewState: state.viewState
+})
+
+const propTypes = {
+	viewState: PropTypes.object
+}
+
+const render = ({ props }) => {
+
+	console.log('props.viewState.showPreview', props.viewState.showPreview)
+
 	return (
 		<div className={ styles.root }>
 
@@ -22,15 +34,36 @@ const render = () => {
 			<div className={ styles.bottom }>
 				<div className={ styles.sidebar }>Sidebar</div>
 				<div className={ styles.main }>
-					<div className={ styles.left }>
-						<div className={ styles.preview }>preview</div>
-						<div className={ styles.markup }>markup</div>
-						<div className={ styles.editor }>editor</div>
-					</div>
-					<div className={ styles.right }>
-						<div className={ styles.spec }>spec</div>
-						<div className={ styles.doc }>doc</div>
-					</div>
+
+					<If condition={ props.viewState.showPreview || props.viewState.showMarkup || props.viewState.showEditor }>
+
+						<div className={ styles.left }>
+							<If condition={ props.viewState.showPreview }>
+								<div className={ styles.preview }>preview</div>
+							</If>
+							<If condition={ props.viewState.showMarkup }>
+								<div className={ styles.markup }>markup</div>
+							</If>
+							<If condition={ props.viewState.showEditor }>
+								<div className={ styles.editor }>editor</div>
+							</If>
+						</div>
+
+					</If>
+
+					<If condition={ props.viewState.showSpec || props.viewState.showDoc }>
+
+						<div className={ styles.right }>
+							<If condition={ props.viewState.showSpec }>
+								<div className={ styles.spec }>spec</div>
+							</If>
+							<If condition={ props.viewState.showDoc }>
+								<div className={ styles.doc }>doc</div>
+							</If>
+						</div>
+
+					</If>
+
 				</div>
 			</div>
 
@@ -46,7 +79,7 @@ const render = () => {
 			 <Panel title="Docs" />
 			 */}
 		</div>
-	);
-};
+	)
+}
 
-export default stitch({ render });
+export default connect(mapStateToProps)(stitch({ propTypes, render }))

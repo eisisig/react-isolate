@@ -19,6 +19,8 @@ const render = ({ props }) => {
 		props.dispatch(setViewState({ [e.target.name]: e.target.checked }))
 	}
 
+	console.log('props', props)
+
 	return (
 		<div className="Topbar">
 			<span className="Topbar-logo">
