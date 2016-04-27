@@ -2,3 +2,4 @@
 node_modules
 *.log
 profile.json
+isolate-bundles
