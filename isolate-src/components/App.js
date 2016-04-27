@@ -3,6 +3,7 @@
 import React, {PropTypes} from 'react'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
+import styleclasses from 'styleclasses'
 import 'brace'
 import 'brace/mode/javascript'
 import 'brace/mode/json'
@@ -22,12 +23,14 @@ const propTypes = {
 
 const render = ({ props }) => {
 
-	console.log('props.viewState.showPreview', props.viewState.showPreview)
+	const sx = styleclasses(styles)
+
+	console.log(sx('root'))
 
 	return (
-		<div className={ styles.root }>
+		<div className={ sx('root', null, ['box']) }>
 
-			<div className={ styles.top }>
+			<div className={ sx('top') }>
 				<Topbar />
 			</div>
 
@@ -39,7 +42,7 @@ const render = ({ props }) => {
 
 						<div className={ styles.left }>
 							<If condition={ props.viewState.showPreview }>
-								<div className={ styles.preview }>preview</div>
+								<div className={ sx(['preview', 'box']) }>preview</div>
 							</If>
 							<If condition={ props.viewState.showMarkup }>
 								<div className={ styles.markup }>markup</div>

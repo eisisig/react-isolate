@@ -31,6 +31,8 @@ const propTypes = {
  */
 const render = ({ props }) => {
 
+	return null
+
 	if ( !props.selectedFixture ) return null
 
 	const handleChange = (value) => {

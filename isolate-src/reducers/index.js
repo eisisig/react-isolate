@@ -12,8 +12,6 @@ import * as c from '../constants'
 console.log(componentMap)
 // console.log(JSON.stringify(componentMap, null, 4))
 
-console.log('localStorage.getItem(showMarkup)', !!localStorage.getItem('showSpec'))
-
 const initialState = {
 	appConfig: appConfig,
 	componentMap: componentMap,

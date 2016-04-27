@@ -17,6 +17,8 @@ const propTypes = {
 }
 
 const render = ({ props }) => {
+
+	return null
 	return (
 		<code>
 			<If condition={ props.selectedComponent && props.selectedFixture }>

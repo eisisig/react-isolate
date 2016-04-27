@@ -69,6 +69,8 @@ const getTypeValues = prop => {
  */
 const render = ({ props }) => {
 
+	return null
+
 	if ( !props.selectedComponent ) return null
 
 	let spec = null

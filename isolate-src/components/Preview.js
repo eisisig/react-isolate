@@ -17,15 +17,23 @@ const propTypes = {
 
 export const renderComponent = ({ selectedFixture, selectedComponent }) => {
 
-	const container = document.getElementById('preview-container')
+	return null
 
-	ReactDOM.unmountComponentAtNode(container)
+	console.log('selectedComponent', selectedComponent)
+	console.log('selectedFixture', selectedFixture)
 
-	if ( !selectedFixture && !selectedComponent ) {
-		ReactDOM.render(<div></div>, container)
-	} else {
-		ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
-	}
+
+	// console.log('selectedFixture', selectedFixture)
+
+	// const container = document.getElementById('preview-container')
+	//
+	// ReactDOM.unmountComponentAtNode(container)
+	//
+	// if ( !selectedFixture && !selectedComponent ) {
+	// 	ReactDOM.render(<div></div>, container)
+	// } else {
+	// 	ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
+	// }
 }
 
 const componentDidMount = ({ props }) => renderComponent(props)

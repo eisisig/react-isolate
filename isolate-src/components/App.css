@@ -6,6 +6,10 @@
 	justify-content: space-between;
 }
 
+.root--is-active {
+	padding: 50px;
+}
+
 .top {
 	height:        60px;
 	border-bottom: 1px solid #E2E2E2;
@@ -72,4 +76,8 @@
 
 .doc {
 	flex: 1;
+}
+
+.box {
+	border: 1px solid red;
 }
