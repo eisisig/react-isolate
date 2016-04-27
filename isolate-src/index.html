@@ -7,164 +7,21 @@
 	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
 	<link rel="stylesheet" href="/styles/prism-gh-theme.css">
-	<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/prism/1.4.1/themes/prism-tomorrow.css">-->
 	<style>
-
 		body {
-			margin:      0;
-			padding:     0;
-			font-size:   14px;
-			color:       #666666;
-			font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, serif;
-		}
-
-		h1 {
-			color:          #DDDDDD;
 			margin:         0;
-			padding:        9px 10px;
-			font-size:      11px;
-			/*font-weight:    normal;*/
-			text-transform: uppercase;
+			padding:        0;
+			font-size:      14px;
+			color:          #666666;
+			font-family:    "Roboto", "Helvetica Neue", Helvetica, Arial, serif;
+			display:        flex;
+			min-height:     100vh;
+			flex-direction: column;
 		}
 
-		a, a:visited {
-			color:  steelblue;
-			cursor: pointer;
-		}
-
-		a:hover { color: #333333; }
-
-		ul, li { margin: 0; padding: 0; list-style: none; }
-
-		ul { margin: 10px; }
-
-		li { color: #999999; }
-
-		li li { margin-left: 15px; }
-
-		li a { font-size: 14px; }
-
-		.Arrow-down {
-			width:        0;
-			height:       0;
-			border-left:  10px solid transparent;
-			border-right: 10px solid transparent;
-			border-top:   10px solid #999999;
-		}
-
-		.Arrow-right {
-			width:         0;
-			height:        0;
-			border-top:    10px solid transparent;
-			border-bottom: 10px solid transparent;
-			border-left:   10px solid #999999;
-		}
-
-		.Panel { }
-
-		.Panel-header { }
-
-		.Panel-body {
-			padding: 0 10px 10px;
-		}
-
-		.SearchInput {
-			position:      relative;
-			padding:       10px;
-			border-bottom: 1px solid #E3E3E3;
-		}
-
-		.SearchInput-input {
-			box-sizing:  border-box;
-			padding:     0 10px;
-			height:      27px;
-			line-height: 27px;;
-			border:      1px solid #E3E3E3;
-			width:       100%;
-			z-index:     1;
-		}
-
-		.SearchInput-button {
-			position:    absolute;
-			top:         15px;
-			right:       16px;
-			width:       17px;
-			height:      17px;
-			padding:     0;
-			margin:      0;
-			font-weight: bold;
-			border:      none;
-			font-size:   10px;
-			color:       white;
-			background:  #CCCCCC;
-			z-index:     2;
-		}
-
-		.SplitPane.vertical:first-child { background: #FFFFFF; }
-
-		.SplitPane.vertical { background: #F8F8F8; }
-
-		.Topbar {
-			background:    #F8F8F8;
-			height:        40px;
-			line-height:   40px;
-			border-bottom: 1px solid #E3E3E3;
-			padding:       0 15px;
-		}
-
-		.Topbar-toggles {
-			float:     right;
-			color:     #999999;
-			font-size: 11px;
-		}
-
-		.Topbar-toggles > span { color: #CCCCCC; }
-
-		.Topbar-toggles label { margin-left: 10px; }
-
-		.Resizer {
-			-moz-box-sizing:         border-box;
-			-webkit-box-sizing:      border-box;
-			box-sizing:              border-box;
-			background:              #000000;
-			opacity:                 .1;
-			z-index:                 1;
-			-moz-background-clip:    padding;
-			-webkit-background-clip: padding;
-			background-clip:         padding-box;
-		}
-
-		.Resizer:hover {
-			-webkit-transition: all 2s ease;
-			transition:         all 2s ease;
-		}
-
-		.Resizer.horizontal {
-			height:        11px;
-			margin:        -5px 0;
-			border-top:    5px solid rgba(255, 255, 255, 0);
-			border-bottom: 5px solid rgba(255, 255, 255, 0);
-			cursor:        row-resize;
-			width:         100%;
-		}
-
-		.Resizer.horizontal:hover {
-			border-top:    5px solid rgba(0, 0, 0, 0.5);
-			border-bottom: 5px solid rgba(0, 0, 0, 0.5);
-		}
-
-		.Resizer.vertical {
-			width:        11px;
-			margin:       0 -5px;
-			border-left:  5px solid rgba(255, 255, 255, 0);
-			border-right: 5px solid rgba(255, 255, 255, 0);
-			cursor:       col-resize;
-			height:       100%;
-		}
-
-		.Resizer.vertical:hover {
-			border-left:  5px solid rgba(0, 0, 0, 0.5);
-			border-right: 5px solid rgba(0, 0, 0, 0.5);
+		#root {
+			display: flex;
+			flex:    1;
 		}
 	</style>
 </head>

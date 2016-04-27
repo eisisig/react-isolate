@@ -4,7 +4,6 @@ const path = require('path')
 const webpack = require('webpack')
 const omit = require('lodash/omit')
 const argv = require('minimist')(process.argv.slice(2))
-const SplitByPathPlugin = require('webpack-split-by-path')
 
 const cwd = process.cwd()
 const merge = require('webpack-merge')
@@ -16,8 +15,7 @@ const PORT = process.env.PORT || argv.port || 9999
 const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
-	// devtool: '#@eval',
-	devtool: 'cheap-module-eval-source-map',
+	devtool: 'cheap-module-source-map',
 	entry: {
 		isolate: [
 			'react-hot-loader/patch',
@@ -43,7 +41,6 @@ let common = {
 			'lodash/object/assign': 'lodash/assign',
 			'lodash/array/difference': 'lodash/difference',
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
-			// FIXTURES_PATH: resolvePath(config.fixturesPath),
 		},
 		extensions: ['', '.js', '.jsx']
 	},
@@ -67,6 +64,16 @@ let common = {
 					resolvePath(config.componentsPath)
 				],
 			},
+			{
+				test: /\.css$/,
+				include: [
+					path.resolve(__dirname, 'isolate-src'),
+				],
+				loaders: [
+					'style?sourceMap',
+					'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+				]
+			},
 		]
 	},
 	externals: {
@@ -76,9 +83,6 @@ let common = {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
-		// new SplitByPathPlugin([
-		// 	{ name: 'app', path: path.join(process.cwd()) }
-		// ]),
 		new webpack.IgnorePlugin(/\/_.+\//),
 		new webpack.DefinePlugin({
 			__ISOLATE__: JSON.stringify(omit(config, ['webpackConfig'])),

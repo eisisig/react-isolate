@@ -1,0 +1,75 @@
+.root {
+	width:           100%;
+	display:         flex;
+	align-content:   stretch;
+	flex-direction:  column;
+	justify-content: space-between;
+}
+
+.top {
+	height:        60px;
+	border-bottom: 1px solid #E2E2E2;
+}
+
+.bottom {
+	flex:            1;
+	display:         flex;
+	align-content:   stretch;
+	justify-content: space-between;
+}
+
+/* inside -> .bottom */
+.sidebar {
+	background:   #F4F4F4;
+	width:        280px;
+	border-right: 1px solid #E2E2E2;
+}
+
+.main {
+	flex:            1;
+	background:      pink;
+	display:         flex;
+	align-content:   stretch;
+	justify-content: space-between;
+}
+
+/* inside -> .main */
+.left {
+	flex:            1;
+	background:      lightskyblue;
+	display:         flex;
+	align-content:   stretch;
+	flex-direction:  column;
+	justify-content: space-between;
+}
+
+.right {
+	flex:            1;
+	background:      lightgreen;
+	display:         flex;
+	align-content:   stretch;
+	flex-direction:  column;
+	justify-content: space-between;
+}
+
+/* inside -> .left */
+.preview {
+	flex: 1;
+}
+
+.markup {
+	flex: 1;
+}
+
+.editor {
+	flex: 1;
+}
+
+/* inside -> .right */
+.spec {
+	flex: 1;
+}
+
+.doc {
+	flex: 1;
+}

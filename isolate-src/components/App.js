@@ -7,40 +7,44 @@ import 'brace/mode/javascript';
 import 'brace/mode/json';
 import 'brace/mode/jsx';
 import 'brace/theme/github';
-import SplitPane from 'react-split-pane';
 import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index';
+
+import styles from './App.css'
 
 const render = () => {
 	return (
-		<div>
+		<div className={ styles.root }>
 
-			<Topbar />
+			<div className={ styles.top }>
+				<Topbar />
+			</div>
 
-			<SplitPane split="vertical" minSize="220px" defaultSize="220px">
+			<div className={ styles.bottom }>
+				<div className={ styles.sidebar }>Sidebar</div>
+				<div className={ styles.main }>
+					<div className={ styles.left }>
+						<div className={ styles.preview }>preview</div>
+						<div className={ styles.markup }>markup</div>
+						<div className={ styles.editor }>editor</div>
+					</div>
+					<div className={ styles.right }>
+						<div className={ styles.spec }>spec</div>
+						<div className={ styles.doc }>doc</div>
+					</div>
+				</div>
+			</div>
 
-				<Sidebar />
 
-				<SplitPane split="vertical" minSize="400px" defaultSize="50%">
+			{/*
 
-					<SplitPane split="horizontal">
-						<Panel title="Preview"><Preview /></Panel>
-						<SplitPane split="horizontal">
-							{/*
-							<Panel title="Editor"><Editor /></Panel>
-							*/}
-							<Panel title="Markup"><Markup /></Panel>
-							<Panel title="Markup"><Markup /></Panel>
-						</SplitPane>
-					</SplitPane>
-
-					<SplitPane split="horizontal">
-						<Panel title="Spec"><Spec /></Panel>
-						<Panel title="Docs" />
-					</SplitPane>
-
-				</SplitPane>
-
-			</SplitPane>
+			 <Sidebar />
+			 <Panel title="Preview"><Preview /></Panel>
+			 <Panel title="Editor"><Editor /></Panel>
+			 <Panel title="Markup"><Markup /></Panel>
+			 <Panel title="Markup"><Markup /></Panel>
+			 <Panel title="Spec"><Spec /></Panel>
+			 <Panel title="Docs" />
+			 */}
 		</div>
 	);
 };
