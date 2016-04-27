@@ -1,13 +1,15 @@
 'use strict'
 
 import {handleActions} from 'redux-actions'
+import merge from 'lodash.merge'
 import assign from 'lodash.assign'
 import componentMap from '../componentMap'
 import {urlToComponent} from '../utils/urlToComponent'
 import appConfig from '../../isolate.config'
 import * as c from '../constants'
 
-console.log('urlToComponent', urlToComponent)
+console.log(componentMap)
+// console.log(JSON.stringify(componentMap, null, 4))
 
 const initialState = {
 	appConfig: appConfig,
@@ -16,6 +18,13 @@ const initialState = {
 	searchResults: null,
 	selectedComponent: null,
 	selectedFixture: null,
+	viewState: {
+		showPreview: true,
+		showMarkup: true,
+		showEditor: true,
+		showSpec: true,
+		showDoc: true,
+	},
 	url: typeof window !== 'undefined' ? window.location.pathname : ''
 }
 
@@ -42,8 +51,11 @@ export default handleActions({
 	},
 	// Set component
 	[c.SET_COMPONENT]: (state, { payload }) => {
-		console.log('payload', payload)
 		const data = urlToComponent(payload, state.componentMap)
 		return assign({}, state, data)
+	},
+	// Set view state
+	[c.SET_VIEW_STATE]: (state, { payload }) => {
+		return merge({}, state, { viewState: payload })
 	},
 }, initialState)
