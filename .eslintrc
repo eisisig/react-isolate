@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "settings": {
-    "ecmascript": 6,
+    "ecmascript": 7,
     "jsx": true
   },
   "globals": {
