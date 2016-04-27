@@ -45,7 +45,7 @@ const pathsToObject = (result, path) => {
 
 		const name = removeExt(part)
 		let Component = components.context(path)
-		
+
 		if ( 'default' in Component ) Component = Component.default
 
 		if ( isFixture(path) ) {
@@ -54,14 +54,6 @@ const pathsToObject = (result, path) => {
 					name, path,
 					props: Component,
 					file: part,
-				}
-			}, {
-				defaultProps: {
-					path: null,
-					file: null,
-					name: 'defaultProps',
-					_name: 'defaultProps',
-					props: Component,
 				}
 			})
 		} else {

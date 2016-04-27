@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
 
+import isEmpty from 'lodash/isEmpty'
+
 const mapStateToProps = state => ({
 	selectedFixture: state.selectedFixture,
 	selectedComponent: state.selectedComponent,
@@ -12,28 +14,29 @@ const mapStateToProps = state => ({
 
 const propTypes = {
 	selectedFixture: PropTypes.object,
-	selectedComponent: PropTypes.object,
+	selectedComponent: PropTypes.func,
 }
 
-export const renderComponent = ({ selectedFixture, selectedComponent }) => {
+export const renderComponent = ({ selectedComponent, selectedFixture }) => {
 
-	return null
+	selectedFixture = selectedFixture && selectedFixture.props || selectedComponent.defaultProps || {}
 
-	console.log('selectedComponent', selectedComponent)
-	console.log('selectedFixture', selectedFixture)
+	if ( selectedComponent ) {
+		const container = document.getElementById('preview-container')
 
+		ReactDOM.unmountComponentAtNode(container)
+
+		if ( !selectedFixture && !selectedComponent ) {
+			ReactDOM.render(<div></div>, container)
+		} else {
+			ReactDOM.render(React.createElement(selectedComponent, { ...selectedFixture }), container)
+		}
+
+	}
 
 	// console.log('selectedFixture', selectedFixture)
 
-	// const container = document.getElementById('preview-container')
-	//
-	// ReactDOM.unmountComponentAtNode(container)
-	//
-	// if ( !selectedFixture && !selectedComponent ) {
-	// 	ReactDOM.render(<div></div>, container)
-	// } else {
-	// 	ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
-	// }
+	return null
 }
 
 const componentDidMount = ({ props }) => renderComponent(props)

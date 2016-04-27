@@ -13,8 +13,8 @@ export function urlToComponent (url, components) {
 	}
 
 	let selectedComponent = get(components, pathArr)
-	
-	if ( selectedComponent && selectedComponent.hasOwnProperty('_name') ) {
+
+	if ( selectedComponent && !selectedComponent.hasOwnProperty('Component') && selectedComponent.hasOwnProperty('_name') ) {
 		selectedComponent = selectedComponent[selectedComponent._name]
 	}
 
