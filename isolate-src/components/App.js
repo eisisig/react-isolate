@@ -50,7 +50,7 @@ const render = ({ props }) => {
 							</If>
 							<If condition={ props.viewState.showMarkup }>
 								<div className={ sx('markup', null, ['box']) }>
-									<Panel title="Markup"></Panel>
+									<Panel title="Markup"><Markup /></Panel>
 								</div>
 							</If>
 							<If condition={ props.viewState.showEditor }>
@@ -67,7 +67,7 @@ const render = ({ props }) => {
 						<div className={ sx('right') }>
 							<If condition={ props.viewState.showSpec }>
 								<div className={ sx('spec', null, ['box']) }>
-									<Panel title="Spec"></Panel>
+									<Panel title="Spec"><Spec /></Panel>
 								</div>
 							</If>
 							<If condition={ props.viewState.showDoc }>

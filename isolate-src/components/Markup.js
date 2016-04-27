@@ -17,18 +17,17 @@ const propTypes = {
 }
 
 const render = ({ props }) => {
-
-	return null
 	return (
 		<code>
-			<If condition={ props.selectedComponent && props.selectedFixture }>
+			<If condition={ props.selectedComponent }>
 				<AceEditor
 					mode="jsx"
 					name="markup"
 					theme="github"
 					width="100%"
-					value={ renderMarkup(props.selectedComponent.name, props.selectedFixture) }
+					value={ renderMarkup(props.selectedComponent.name, props.selectedFixture && props.selectedFixture.props || {}, true) }
 					readOnly={ true }
+					displayIndentGuides={ true }
 					showGutter={ false }
 					showPrintMargin={ false }
 					editorProps={{ $blockScrolling: true }}

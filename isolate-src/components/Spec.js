@@ -69,17 +69,13 @@ const getTypeValues = prop => {
  */
 const render = ({ props }) => {
 
-	return null
-
 	if ( !props.selectedComponent ) return null
 
 	let spec = null
 
 	try {
-		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + props.selectedComponent.filePath.slice(2))
-	} catch ( e ) {
-		// console.log('e', e)
-	}
+		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + props.selectedComponent.path.slice(2))
+	} catch ( e ) {}
 
 	spec = spec.length ? spec[0] : spec
 

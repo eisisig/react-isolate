@@ -14,24 +14,23 @@ const mapStateToProps = state => ({
 
 const propTypes = {
 	selectedFixture: PropTypes.object,
-	selectedComponent: PropTypes.func,
+	selectedComponent: PropTypes.object,
 }
 
 export const renderComponent = ({ selectedComponent, selectedFixture }) => {
 
-	selectedFixture = selectedFixture && selectedFixture.props || selectedComponent.defaultProps || {}
+	if ( !selectedComponent ) return null
 
-	if ( selectedComponent ) {
-		const container = document.getElementById('preview-container')
+	selectedFixture = selectedFixture && selectedFixture.props || selectedComponent.Component.defaultProps || {}
 
-		ReactDOM.unmountComponentAtNode(container)
+	const container = document.getElementById('preview-container')
 
-		if ( !selectedFixture && !selectedComponent ) {
-			ReactDOM.render(<div></div>, container)
-		} else {
-			ReactDOM.render(React.createElement(selectedComponent, { ...selectedFixture }), container)
-		}
+	ReactDOM.unmountComponentAtNode(container)
 
+	if ( !selectedFixture && !selectedComponent ) {
+		ReactDOM.render(<div></div>, container)
+	} else {
+		ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
 	}
 
 	// console.log('selectedFixture', selectedFixture)

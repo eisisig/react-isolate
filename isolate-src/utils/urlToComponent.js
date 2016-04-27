@@ -18,9 +18,9 @@ export function urlToComponent (url, components) {
 		selectedComponent = selectedComponent[selectedComponent._name]
 	}
 
-	if ( selectedComponent && selectedComponent.hasOwnProperty('Component') ) {
-		selectedComponent = selectedComponent.Component
-	}
+	// if ( selectedComponent && selectedComponent.hasOwnProperty('Component') ) {
+	// 	selectedComponent = selectedComponent.Component
+	// }
 
 	const selectedFixture = get(components, [pathArr[0], '_fixtures'].concat(pathArr.length >= 2 ? [pathArr[1], fixtureName] : fixtureName))
 
