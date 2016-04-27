@@ -1,7 +1,7 @@
 'use strict'
 
 import history from './history'
-import store from '../stores'
+import store from '../store'
 import {setComponent} from '../actions'
 
 let url

@@ -1,7 +1,7 @@
 'use strict';
 
 import {createAction} from 'redux-actions';
-import * as c from '../constants';
+import * as c from './constants';
 
 /**
  * Actions

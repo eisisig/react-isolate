@@ -4,7 +4,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
 import Root from './components/Root'
-import store from './stores'
+import store from './store'
 import {AppContainer} from 'react-hot-loader'
 
 import './utils/subscribe'
@@ -31,9 +31,3 @@ if ( module.hot ) {
 	});
 }
 
-// render(
-// 	<Provider store={ store }>
-// 		<App />
-// 	</Provider>,
-//
-// )

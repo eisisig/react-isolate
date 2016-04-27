@@ -4,10 +4,10 @@ import {handleActions} from 'redux-actions'
 import merge from 'lodash/merge'
 import forEach from 'lodash/forEach'
 import assign from 'lodash/assign'
-import componentMap from '../componentMap'
-import {urlToComponent} from '../utils/urlToComponent'
-import appConfig from '../../isolate.config'
-import * as c from '../constants'
+import componentMap from './componentMap'
+import {urlToComponent} from './utils/urlToComponent'
+import appConfig from '.././isolate.config'
+import * as c from './constants'
 
 console.log(componentMap)
 // console.log(JSON.stringify(componentMap, null, 4))
@@ -57,13 +57,7 @@ export default handleActions({
 	},
 	// Set view state
 	[c.SET_VIEW_STATE]: (state, { payload }) => {
-
-		forEach(payload, ( val, key ) => {
-			console.log('key', key)
-			console.log('val', val)
-			localStorage.setItem(key, val)
-		})
-
+		forEach(payload, (val, key) => localStorage.setItem(key, val))
 		return merge({}, state, { viewState: payload })
 	},
 }, initialState)
