@@ -32,6 +32,7 @@ const render = ({ props }) => {
 			<div className={ sx('actions') }>
 				<div className={ sx('toggles') }>
 					<span className={ sx('togglesLegend' ) }>Show:</span>
+					<span className={ sx('sep') }>|</span>
 					<label className={ sx('label', { inactive: !props.viewState.showPreview }) }>
 						<input type="checkbox" name="showPreview" defaultChecked={ props.viewState.showPreview } onChange={ handleChange } />
 						Preview
@@ -44,6 +45,7 @@ const render = ({ props }) => {
 						<input type="checkbox" name="showEditor" defaultChecked={ props.viewState.showEditor } onChange={ handleChange } />
 						Editor
 					</label>
+					<span className={ sx('sep') }>|</span>
 					<label className={ sx('label', { inactive: !props.viewState.showSpec }) }>
 						<input type="checkbox" name="showSpec" defaultChecked={ props.viewState.showSpec } onChange={ handleChange } />
 						Spec

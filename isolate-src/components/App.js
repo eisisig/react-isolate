@@ -44,13 +44,19 @@ const render = ({ props }) => {
 
 						<div className={ sx('left') }>
 							<If condition={ props.viewState.showPreview }>
-								<div className={ sx(['preview', 'box']) }>preview</div>
+								<div className={ sx('preview', null, ['box']) }>
+									<Panel title="Preview"><Preview /></Panel>
+								</div>
 							</If>
 							<If condition={ props.viewState.showMarkup }>
-								<div className={ sx('markup') }>markup</div>
+								<div className={ sx('markup', null, ['box']) }>
+									<Panel title="Markup"></Panel>
+								</div>
 							</If>
 							<If condition={ props.viewState.showEditor }>
-								<div className={ sx('editor') }>editor</div>
+								<div className={ sx('editor', null, ['box']) }>
+									<Panel title="Editor"></Panel>
+								</div>
 							</If>
 						</div>
 
@@ -60,10 +66,14 @@ const render = ({ props }) => {
 
 						<div className={ sx('right') }>
 							<If condition={ props.viewState.showSpec }>
-								<div className={ sx('spec') }>spec</div>
+								<div className={ sx('spec', null, ['box']) }>
+									<Panel title="Spec"></Panel>
+								</div>
 							</If>
 							<If condition={ props.viewState.showDoc }>
-								<div className={ sx('doc') }>doc</div>
+								<div className={ sx('doc', null, ['box']) }>
+									<Panel title="Docs" />
+								</div>
 							</If>
 						</div>
 
@@ -76,7 +86,7 @@ const render = ({ props }) => {
 			{/*
 
 
-			 <Panel title="Preview"><Preview /></Panel>
+
 			 <Panel title="Editor"><Editor /></Panel>
 			 <Panel title="Markup"><Markup /></Panel>
 			 <Panel title="Markup"><Markup /></Panel>

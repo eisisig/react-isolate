@@ -2,8 +2,10 @@
 
 import React, {PropTypes} from 'react'
 
+import styles from '../styles/UI.less'
+
 export function PanelHeader ({ title }) {
-	return <h1 className="Panel-header">{ title }</h1>
+	return <div className={ styles.header }>{ title }</div>
 }
 
 PanelHeader.propTypes = {
@@ -11,7 +13,7 @@ PanelHeader.propTypes = {
 }
 
 export function PanelBody ({ children }) {
-	return <div className="Panel-body">{ children }</div>
+	return <div className={ styles.body }>{ children }</div>
 }
 
 PanelBody.propTypes = {
@@ -20,7 +22,7 @@ PanelBody.propTypes = {
 
 export function Panel ({ title, children }) {
 	return (
-		<div className="Panel">
+		<div className={ styles.root }>
 			<PanelHeader title={ title } />
 			<PanelBody>
 				{ children }
