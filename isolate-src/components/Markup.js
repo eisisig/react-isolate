@@ -25,7 +25,7 @@ const render = ({ props }) => {
 					name="markup"
 					theme="github"
 					width="100%"
-					value={ renderMarkup(props.selectedComponent.name, props.selectedFixture && props.selectedFixture.props || {}, true) }
+					value={ renderMarkup(props.selectedComponent.name, props.selectedFixture && props.selectedFixture.content || {}, true) }
 					readOnly={ true }
 					displayIndentGuides={ true }
 					showGutter={ false }

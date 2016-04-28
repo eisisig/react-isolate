@@ -28,16 +28,14 @@ const renderMenu = (components, prevUrl = '', level = 1, { dispatch }) => {
 
 	const url = `${prevUrl}`
 
-	console.log('url', url)
-
 	components = sortObject(components)
 
 	const itemMap = (value, key) => (
-		<li key={ `${key}-${level}` }>
-			<a onClick={ () => dispatch(navigate(`${url}/${key}`)) }>{ key }</a>
+		<li className={ sx('item') } key={ `${key}-${level}` }>
+			<a className={ sx('link') } onClick={ () => dispatch(navigate(`${url}/${key}`)) }>{ key }</a>
 			{ hasFixtures(value) ? <ul>{ map(value.fixtures, (v, k) => (
-				<li key={ `${key}-${k}-${level}` }>
-					<a onClick={ () => dispatch(navigate(`${url}/${key}/fixtures/${k}`)) }>{ k }</a>
+				<li className={ sx('item') } key={ `${key}-${k}-${level}` }>
+					<a className={ sx('link') } onClick={ () => dispatch(navigate(`${url}/${key}/fixtures/${k}`)) }>{ k }</a>
 				</li>
 			)) }</ul> : null }
 			{ hasComponents(value) ? renderMenu(value.components, `/${prevUrl}${key}`, level += 1, { dispatch }) : null }

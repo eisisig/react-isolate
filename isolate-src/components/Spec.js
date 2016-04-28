@@ -69,6 +69,10 @@ const getTypeValues = prop => {
  */
 const render = ({ props }) => {
 
+	if ( !props.selectedComponent || !props.selectedComponent.hasOwnProperty('Component') ) {
+		return null
+	}
+
 	if ( !props.selectedComponent ) return null
 
 	let spec = null
@@ -77,10 +81,7 @@ const render = ({ props }) => {
 		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + props.selectedComponent.path.slice(2))
 	} catch ( e ) {}
 
-	spec = spec.length ? spec[0] : spec
-
-	// WTF?
-	if ( 'props' in spec ) {} else { return null }
+	spec = spec && spec.length ? spec[0] : spec
 
 	const sortedProps = sortProps(spec.props)
 
@@ -114,4 +115,4 @@ const render = ({ props }) => {
 	)
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default stitch({ propTypes, render }, mapStateToProps)

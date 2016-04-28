@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
 
-import isEmpty from 'lodash/isEmpty'
-
 const mapStateToProps = state => ({
 	selectedFixture: state.selectedFixture,
 	selectedComponent: state.selectedComponent,
@@ -21,7 +19,7 @@ export const renderComponent = ({ selectedComponent, selectedFixture }) => {
 
 	if ( !selectedComponent ) return null
 
-	selectedFixture = selectedFixture && selectedFixture.props || selectedComponent.Component.defaultProps || {}
+	selectedFixture = selectedFixture && selectedFixture.content || selectedComponent.Component && selectedComponent.Component.defaultProps || {}
 
 	const container = document.getElementById('preview-container')
 
