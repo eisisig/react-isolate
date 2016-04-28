@@ -24,7 +24,8 @@ const initialState = {
 		showMarkup: localStorage.getItem('showMarkup') !== 'false',
 		showEditor: localStorage.getItem('showEditor') !== 'false',
 		showSpec: localStorage.getItem('showSpec') !== 'false',
-		showDoc: localStorage.getItem('showDoc') !== 'false',
+		showDoc: false,
+		// showDoc: localStorage.getItem('showDoc') !== 'false',
 	},
 	url: typeof window !== 'undefined' ? window.location.pathname : ''
 }
@@ -54,6 +55,13 @@ export default handleActions({
 	[c.SET_COMPONENT]: (state, { payload }) => {
 		const data = urlToComponent(payload, state.componentMap)
 		return assign({}, state, data)
+	},
+	[c.SET_FIXTURE]: (state, { payload }) => {
+		console.log('payload', payload)
+
+		const newFixtures = assign({}, state.selectedFixture, { props: payload })
+
+		return assign({}, state, { selectedFixture: newFixtures })
 	},
 	// Set view state
 	[c.SET_VIEW_STATE]: (state, { payload }) => {

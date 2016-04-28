@@ -51,7 +51,7 @@ const render = ({ props }) => {
 						Spec
 					</label>
 					<label className={ sx('label', { inactive: !props.viewState.showDoc }) }>
-						<input type="checkbox" name="showDoc" defaultChecked={ props.viewState.showDoc } onChange={ handleChange } />
+						<input disabled type="checkbox" name="showDoc" defaultChecked={ props.viewState.showDoc } onChange={ handleChange } />
 						Docs
 					</label>
 				</div>

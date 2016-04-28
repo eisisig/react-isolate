@@ -107,7 +107,6 @@
     "react/no-deprecated": 1,
     "react/no-direct-mutation-state": 1,
     "react/prefer-stateless-function": 1,
-    "react/require-render-return": 1,
     "react/jsx-curly-spacing": [
       0,
       "always",

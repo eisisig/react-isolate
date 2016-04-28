@@ -2,13 +2,12 @@
 
 import React, {PropTypes} from 'react'
 import {stitch} from 'keo'
-import {connect} from 'react-redux'
 import styleclasses from 'styleclasses'
-import 'brace'
-import 'brace/mode/javascript'
-import 'brace/mode/json'
-import 'brace/mode/jsx'
-import 'brace/theme/github'
+// import 'brace'
+// import 'brace/mode/javascript'
+// import 'brace/mode/json'
+// import 'brace/mode/jsx'
+// import 'brace/theme/github'
 import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index'
 
 import styles from '../styles/App.less'
@@ -55,7 +54,7 @@ const render = ({ props }) => {
 							</If>
 							<If condition={ props.viewState.showEditor }>
 								<div className={ sx('editor', null, ['box']) }>
-									<Panel title="Editor"></Panel>
+									<Panel title="Editor"><Editor /></Panel>
 								</div>
 							</If>
 						</div>
@@ -82,19 +81,8 @@ const render = ({ props }) => {
 				</div>
 			</div>
 
-
-			{/*
-
-
-
-			 <Panel title="Editor"><Editor /></Panel>
-			 <Panel title="Markup"><Markup /></Panel>
-			 <Panel title="Markup"><Markup /></Panel>
-			 <Panel title="Spec"><Spec /></Panel>
-			 <Panel title="Docs" />
-			 */}
 		</div>
 	)
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default stitch({ propTypes, render }, mapStateToProps)

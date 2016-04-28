@@ -5,12 +5,12 @@ import reducer from './reducers';
 
 let configureStore
 
-if ( process.env.BABEL_ENV === 'test' ) {
-	configureStore = initialState => createStore(reducer, initialState);
-} else {
-	configureStore = initialState => createStore(reducer, initialState, compose(
-		window.devToolsExtension ? window.devToolsExtension() : undefined
-	));
-}
+configureStore = initialState => createStore(reducer, initialState);
+// if ( process.env.BABEL_ENV === 'test' ) {
+// } else {
+// 	configureStore = initialState => createStore(reducer, initialState, compose(
+// 		window.devToolsExtension ? window.devToolsExtension() : undefined
+// 	));
+// }
 
 export default configureStore();

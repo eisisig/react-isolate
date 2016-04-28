@@ -15,7 +15,7 @@ const PORT = process.env.PORT || argv.port || 9999
 const resolvePath = (userPath) => cwd + '/' + userPath || ''
 
 let common = {
-	devtool: 'eval',
+	devtool: 'source-map',
 	entry: {
 		isolate: [
 			'react-hot-loader/patch',
@@ -38,8 +38,7 @@ let common = {
 			config.fixturesPath,
 		],
 		alias: {
-			'lodash/object/assign': 'lodash/assign',
-			'lodash/array/difference': 'lodash/difference',
+			'keo': path.resolve(__dirname, 'isolate-vendor', 'keo.js'),
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
 		},
 		extensions: ['', '.js', '.jsx']
@@ -51,7 +50,9 @@ let common = {
 		]
 	},
 	module: {
+		// noParse: [],
 		loaders: [
+			{ test: /\.json$/, loader: 'json5' },
 			{
 				test: /\.md$/,
 				loader: 'raw!markdown'
@@ -89,7 +90,17 @@ let common = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify(NODE_ENV)
 			}
-		})
+		}),
+		new webpack.PrefetchPlugin(path.resolve(__dirname, 'isolate-src'), './componentMap'),
+		new webpack.PrefetchPlugin('keo'),
+		new webpack.PrefetchPlugin('react-hot-loader'),
+		// new webpack.PrefetchPlugin('react-ace'),
+		new webpack.PrefetchPlugin('deep-equal'),
+		new webpack.PrefetchPlugin('history'),
+		new webpack.PrefetchPlugin('ramda'),
+		new webpack.PrefetchPlugin('lodash'),
+		new webpack.PrefetchPlugin('react-proxy'),
+		new webpack.PrefetchPlugin('es6-weak-map'),
 	]
 }
 

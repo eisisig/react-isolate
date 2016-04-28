@@ -57,6 +57,12 @@
 	justify-content: space-between;
 }
 
+.box {
+	flex:          1;
+	overflow:      auto;
+	border-bottom: 1px solid @mainBorderColor;
+}
+
 /* inside -> .left */
 .preview {
 	background-image:        -moz-linear-gradient(45deg, @checkerDark 25%, transparent 5%),
@@ -70,19 +76,22 @@
 	background-size:         @checkerSize @checkerSize;
 	-webkit-background-size: @checkerSize @checkerSize+1; /* override value for shitty webkit */
 	background-position:     0 0, (@checkerSize/2) 0, (@checkerSize/2) -(@checkerSize/2), 0px (@checkerSize/2);
+	flex:                    3;
 }
 
-.markup { }
+.markup {
+	flex: 1;
+}
 
-.editor { }
+.editor {
+	flex: 2;
+}
 
 /* inside -> .right */
-.spec { }
+.spec {
+	flex: 3;
+}
 
-.doc { }
-
-.box {
-	flex:          1;
-	overflow:      auto;
-	border-bottom: 1px solid @mainBorderColor;
+.doc {
+	flex: 3;
 }

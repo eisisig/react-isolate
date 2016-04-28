@@ -3,66 +3,100 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
-import AceEditor from 'react-ace'
-import beautify from 'js-beautify'
+import get from 'lodash/get'
+// import ace from 'brace';
+// import beautify from 'js-beautify'
+import {setFixture} from '../actions'
 
-/**
- * map state to props
- * @param {object} state
- */
 const mapStateToProps = state => ({
-	selectedFixture: state.selectedFixture,
+	selectedFixture: get(state, 'selectedFixture.props'),
 	selectedComponent: state.selectedComponent,
 })
 
-/**
- * validate props
- * @type {{selectedFixture: object, selectedComponent: object}}
- */
 const propTypes = {
 	selectedFixture: PropTypes.object,
 	selectedComponent: PropTypes.object,
 }
 
-/**
- * render component
- * @param {object} props
- * @returns {XML}
- */
-const render = ({ props }) => {
+const shouldComponentUpdate = ({ props, nextProps }) => {
+	// console.log('props', props.selectedFixture)
+	// console.log('nextProps', nextProps.selectedFixture)
+	// console.log(JSON.stringify(props.selectedFixture) !== JSON.stringify(nextProps.selectedFixture))
+	return JSON.stringify(props.selectedFixture) !== JSON.stringify(nextProps.selectedFixture)
+}
+
+const serializeValue = value => beautify(JSON.stringify(value))
+const deserializeValue = value => JSON.parse(value)
+// let editor = null
+
+const handleChange = ({ dispatch }) => {
+	const value = editor.getValue()
+	console.info('handleChange.value', value)
+	try {
+		const toJS = deserializeValue(value)
+		console.log('handleChange.toJS', toJS)
+		dispatch(setFixture(toJS))
+	} catch ( e ) {
+		console.warn('JSON.parse error', e)
+	}
+}
+
+const initEditor = (element, { props }) => {
+
+	console.debug('initEditor')
+
+	const mode = 'json'
+	const theme = 'github'
+	const cursorStart = 1
+
+	editor = ace.edit(element)
+	editor.$blockScrolling = Infinity
+
+	// var pos = editor.session.selection.toJSON()
+	// editor.session.setValue("\n\n" + editor.session.getValue())
+	// editor.session.selection.fromJSON(pos)
+
+	editor.getSession().setMode(`ace/mode/${mode}`)
+	editor.setTheme(`ace/theme/${theme}`)
+
+	const value = serializeValue(props.selectedFixture)
+
+	console.log('initEditor.value', value)
+
+	editor.setValue(value, cursorStart)
+	editor.on('change', handleChange.bind(null, props))
+}
+
+const render = ({ props, args }) => {
 
 	return null
 
 	if ( !props.selectedFixture ) return null
 
-	const handleChange = (value) => {
-
-		try {
-			const toJS = JSON.parse(value)
-			onSetFixture(toJS)
-		} catch ( e ) {
-			console.log('JSON.parse error', e)
-		}
+	const style = {
+		width: '100%',
+		height: '350px',
+		border: '1px solid red',
 	}
 
-	const value = beautify(JSON.stringify(props.selectedFixture))
+	return <div style={ style } ref={ (element) => initEditor(element, args) }></div>
 
-	return (
-		<If condition={ props.selectedFixture }>
-			<AceEditor
-				enableLiveAutocompletion
-				mode="json"
-				name="preview"
-				theme="github"
-				width="100%"
-				value={ value }
-				showGutter={ false }
-				showPrintMargin={ false }
-				highlightActiveLine={ false }
-				editorProps={{ $blockScrolling: true }}
-				onChange={ handleChange } />
-		</If>
-	)
+	// return (
+	// 	<If condition={ props.selectedFixture }>
+	// 		<AceEditor
+	// 			enableLiveAutocompletion
+	// 			mode="json"
+	// 			name="preview"
+	// 			theme="github"
+	// 			width="100%"
+	// 			value={ value }
+	// 			showGutter={ false }
+	// 			showPrintMargin={ false }
+	// 			highlightActiveLine={ false }
+	// 			editorProps={{ $blockScrolling: true }}
+	// 			onChange={ handleChange } />
+	// 	</If>
+	// )
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default connect(mapStateToProps)(stitch({ propTypes, shouldComponentUpdate, render }))
