@@ -1,15 +1,14 @@
 'use strict'
 
+/**
+ * TODO: Handle more levels
+ */
+const some = require('lodash/some')
+const flow = require('lodash/flow')
+const merge = require('lodash/merge')
+const reduce = require('lodash/reduce')
 const slice = require('lodash/fp/slice')
 const split = require('lodash/fp/split')
-const reverse = require('lodash/fp/reverse')
-
-const map = require('lodash/map')
-const merge = require('lodash/merge')
-const flow = require('lodash/flow')
-const reduce = require('lodash/reduce')
-const filter = require('lodash/filter')
-const includes = require('lodash/includes')
 
 const getComponents = () => {
 	const context = require.context('COMPONENTS_PATH', true, /^\.\/.*\.js$/)
@@ -31,6 +30,12 @@ const componentsMap = reduce(components.files, (last, current) => {
 	let fixtureObj = {}
 	let returnObj = {}
 
+	const blacklist = ['index.js', 'rules.js', 'utils.js']
+
+	if ( some(blacklist, part => ~current.indexOf(part)) ) {
+		return last
+	}
+
 	const currentArr = flow(
 		split('/'),
 		slice(1, this.length),
@@ -38,8 +43,8 @@ const componentsMap = reduce(components.files, (last, current) => {
 
 	if ( isFixturePath(current) && isFile(current) ) {
 
+		const fileName = getFile(currentArr)
 		const fixtureParent = getFixtureParent(currentArr)
-		const fixtureName = getFile(currentArr)
 
 		let content = components.context(current)
 
@@ -50,16 +55,25 @@ const componentsMap = reduce(components.files, (last, current) => {
 		Object.assign(fixtureObj, {
 			[fixtureParent]: {
 				fixtures: {
-					[fixtureName]: {
+					[fileName]: {
 						path: current,
 						content: content,
-						name: fixtureName,
+						name: fileName,
 					}
 				}
 			}
 		})
 
+		if ( currentArr.length > 3 && currentArr[0] !== fileName ) {
+			fixtureObj = {
+				[currentArr[0]]: {
+					components: fixtureObj
+				}
+			}
+		}
+
 	} else {
+
 		const fileName = getFile(currentArr)
 
 		let Component = components.context(current)
@@ -76,24 +90,19 @@ const componentsMap = reduce(components.files, (last, current) => {
 					Component: Component,
 				}
 			}
+
 		})
-	}
 
-	returnObj = merge(componentObj, fixtureObj)
-
-	const arrayBeforeFixtures = getBeforeFixtures(currentArr)
-
-	if ( arrayBeforeFixtures.length === 2 ) {
-		returnObj = {
-			[currentArr[0]]: {
-				components: returnObj
+		if ( currentArr.length > 1 && currentArr[0] !== fileName ) {
+			componentObj = {
+				[currentArr[0]]: {
+					components: componentObj,
+				}
 			}
 		}
 	}
 
-	if ( arrayBeforeFixtures.length > 2 ) {
-		// TODO: RECURSE
-	}
+	returnObj = merge(componentObj, fixtureObj)
 
 	merge(last, returnObj)
 
