@@ -1,38 +1,25 @@
 'use strict'
 
-import filter from 'lodash.filter'
+// import filter from 'lodash.filter'
 // import assign from 'lodash.assign'
-// import reduce from 'lodash.reduce'
+import omitBy from 'lodash/omitBy'
+import pickBy from 'lodash/pickBy'
+import indexOf from 'lodash/indexOf'
 
-export default function findComponents (q, list, results = []) {
+export function findComponents (q, components) {
 
-	const found = (q, list) => filter(list, (item) => {
+	console.log('components', components)
 
-		if ( 'components' in item ) {
+	q = normalizeString(q)
 
-		} else {
-			results.push({
-				[item.name]: item
-			})
-		}
+	console.log('q', q)
 
+	return pickBy(components, (value, key) => {
+		return ~normalizeString(key).indexOf(q)
 	})
 
-	// return reduce(list, (res, item,) => {
-	// 	if ( 'name' in item ) {
-	// 		if ( find(q, item.name) ) {
-	// 			assign(res, { [item.name]: item })
-	// 		}
-	// 	}
-	// 	if ( 'components' in item ) {
-	// 		return assign(res, findComponents(q, item.components))
-	// 	}
-	// 	return res
-	// }, {})
-
-	console.log('found', found(q, list))
 }
 
-function find (q, name) {
-	return ~name.toUpperCase().indexOf(q.toUpperCase())
+function normalizeString (string) {
+	return string.toLowerCase().trim()
 }
