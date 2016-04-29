@@ -5,7 +5,7 @@ import merge from 'lodash/merge'
 import forEach from 'lodash/forEach'
 import assign from 'lodash/assign'
 import componentMap from './componentMap'
-import {urlToComponent} from './utils/urlToComponent'
+import {urlToComponent, findComponents} from './utils'
 import appConfig from '.././isolate.config'
 import * as c from './constants'
 
@@ -37,11 +37,10 @@ export default handleActions({
 	},
 	//Search
 	[c.SEARCH]: (state, { payload }) => {
+		const found = findComponents(payload, state.componentMap)
 		return assign({}, state, {
 			searchQuery: payload,
-			searchResults: {
-				'Test': {}
-			}
+			searchResults: found,
 		})
 	},
 	// Clear search

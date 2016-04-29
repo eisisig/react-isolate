@@ -1,23 +1,13 @@
 'use strict'
 
-// import filter from 'lodash.filter'
-// import assign from 'lodash.assign'
-import omitBy from 'lodash/omitBy'
 import pickBy from 'lodash/pickBy'
-import indexOf from 'lodash/indexOf'
 
 export function findComponents (q, components) {
+	return find(normalizeString(q), components)
+}
 
-	console.log('components', components)
-
-	q = normalizeString(q)
-
-	console.log('q', q)
-
-	return pickBy(components, (value, key) => {
-		return ~normalizeString(key).indexOf(q)
-	})
-
+function find (q, components) {
+	return pickBy(components, (value, key) => ~normalizeString(key).indexOf(q))
 }
 
 function normalizeString (string) {
