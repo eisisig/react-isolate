@@ -63,4 +63,4 @@ const render = ({ props }) => {
 /**
  * Export
  */
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default stitch({ propTypes, render }, mapStateToProps)

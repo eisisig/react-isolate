@@ -38,7 +38,6 @@ const render = ({ props }) => {
 				</div>
 
 				<div className={ sx('main') }>
-
 					<If condition={ props.viewState.showPreview || props.viewState.showMarkup || props.viewState.showEditor }>
 
 						<div className={ sx('left') }>

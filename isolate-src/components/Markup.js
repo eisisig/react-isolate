@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import get from 'lodash/get'
 import {stitch} from 'keo'
 import renderMarkup from '../utils/renderMarkup'
 import AceEditor from 'react-ace'
@@ -16,7 +17,28 @@ const propTypes = {
 	selectedComponent: PropTypes.object,
 }
 
-const render = ({ props }) => {
+const render = ( { props } ) => {
+
+	console.log('props', props)
+
+	const currentFixturePath = get(props, 'selectedFixture.path')
+
+	if ( !currentFixturePath ) {
+		return null
+	}
+
+	let fixture
+
+	try {
+		fixture = require('COMPONENTS_PATH/' + props.selectedFixture.path.slice(2))
+		if ( fixture.hasOwnProperty('default') ) {
+			fixture = fixture.default
+		}
+	} catch ( e ) {
+		console.log('e', e)
+		return null
+	}
+
 	return (
 		<code>
 			<If condition={ props.selectedComponent }>
@@ -25,7 +47,7 @@ const render = ({ props }) => {
 					name="markup"
 					theme="github"
 					width="100%"
-					value={ renderMarkup(props.selectedComponent.name, props.selectedFixture && props.selectedFixture.content || {}, true) }
+					value={ renderMarkup(props.selectedComponent.name, fixture, true) }
 					readOnly={ true }
 					displayIndentGuides={ true }
 					showGutter={ false }
@@ -37,4 +59,4 @@ const render = ({ props }) => {
 	)
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, render }))
+export default stitch({ propTypes, render }, mapStateToProps)

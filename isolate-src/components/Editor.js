@@ -4,8 +4,8 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import get from 'lodash/get'
-// import ace from 'brace';
-// import beautify from 'js-beautify'
+import ace from 'brace';
+import beautify from 'js-beautify'
 import {setFixture} from '../actions'
 
 const mapStateToProps = state => ({
@@ -99,4 +99,4 @@ const render = ({ props, args }) => {
 	// )
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, shouldComponentUpdate, render }))
+export default stitch({ propTypes, shouldComponentUpdate, render }, mapStateToProps)

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import cx from 'suit-cx';
 
 /**
@@ -9,34 +9,45 @@ import cx from 'suit-cx';
 export class Alert extends React.Component {
 
 	static defaultProps = {
-		icon: null,
-		message: null,
-		danger: null,
-		warning: null,
-		success: null,
+		icon: 'question',
+		title: '',
+		message: '',
 		disabled: null,
-		help: null,
-		primary: null,
-		secondary: null
+		kind: 'default',
+		child: null,
+		metadata: {},
+		linkedId: [1, 6],
+		accountId: 246,
+		comments: [],
 	};
 
 	static propTypes = {
-		/**
-		 * The alerts message
-		 */
-		message: PropTypes.string,
-		icon: PropTypes.string,
-		primary: PropTypes.bool,
-		secondary: PropTypes.bool,
-		success: PropTypes.bool,
-		danger: PropTypes.bool,
-		warning: PropTypes.bool,
+		/** This is the message */
+		title: PropTypes.string,
+		message: PropTypes.string.isRequired,
+		icon: PropTypes.string.isRequired,
 		disabled: PropTypes.bool,
-		help: PropTypes.bool
+		/** Add branding colors to alert */
+		kind: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'info', 'error']),
+		child: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.bool,
+			PropTypes.func,
+		]),
+		metadata: PropTypes.shape({
+			desc: PropTypes.string,
+			count: PropTypes.number,
+		}),
+		linkedIds: PropTypes.arrayOf(React.PropTypes.number),
+		/** The owners id */
+		accountId: PropTypes.number.isRequired,
+		comments: PropTypes.arrayOf([
+			PropTypes.string
+		]),
 	};
 
 	render () {
-		const { message, icon, className, style, children } = this.props;
+		const { title, message, icon, className, style, children } = this.props;
 
 		const classes = cx({
 			name: 'Alert',
@@ -45,7 +56,9 @@ export class Alert extends React.Component {
 
 		return (
 			<div className={ classes() } style={ style }>
-				<div>Alert:</div>
+				<If condition={ title }>
+					{ title }
+				</If>
 				<If condition={ message }>
 					{ message }
 				</If>

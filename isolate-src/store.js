@@ -1,16 +1,20 @@
-'use strict';
+'use strict'
 
-import {compose, createStore} from 'redux';
-import reducer from './reducers';
+import {compose, createStore} from 'redux'
+import reducer from './reducers'
 
 let configureStore
 
-configureStore = initialState => createStore(reducer, initialState);
-// if ( process.env.BABEL_ENV === 'test' ) {
-// } else {
-// 	configureStore = initialState => createStore(reducer, initialState, compose(
-// 		window.devToolsExtension ? window.devToolsExtension() : undefined
-// 	));
-// }
+configureStore = initialState => createStore(reducer, initialState)
 
-export default configureStore();
+const store = configureStore()
+
+if ( module.hot ) {
+	// Enable Webpack hot module replacement for reducers
+	module.hot.accept('./reducers', function () {
+		const nextRootReducer = require('./reducers').default
+		store.replaceReducer(nextRootReducer)
+	})
+}
+
+export default store

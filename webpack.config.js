@@ -12,14 +12,14 @@ const config = require('./config')
 const NODE_ENV = process.env.NODE_ENV || argv.env || 'development'
 const PORT = process.env.PORT || argv.port || 9999
 
-const resolvePath = (userPath) => cwd + '/' + userPath || ''
+const resolvePath = ( userPath ) => cwd + '/' + userPath || ''
 
 let common = {
 	devtool: 'source-map',
 	entry: {
 		isolate: [
 			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://localhost:9999',
+			'webpack-hot-middleware/client',
 			'webpack/hot/only-dev-server',
 			path.resolve(__dirname, 'isolate-src', 'index.js'),
 		]
@@ -59,7 +59,7 @@ let common = {
 			},
 			{
 				test: /\.js$/,
-				loader: 'babel',
+				loaders: ['babel'],
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
 					resolvePath(config.componentsPath)
@@ -101,7 +101,22 @@ let common = {
 		new webpack.PrefetchPlugin('lodash'),
 		new webpack.PrefetchPlugin('react-proxy'),
 		new webpack.PrefetchPlugin('es6-weak-map'),
-	]
+	],
+	devServer: {
+		contentBase: path.resolve(__dirname, 'isolate-src'),
+		publicPath: '/',
+		hot: true,
+		historyApiFallback: true,
+		stats: {
+			colors: true,
+			timings: true,
+			chunks: true,
+			assets: false,
+			version: false,
+			hash: false,
+			chunkModules: false,
+		}
+	}
 }
 
 if ( 'webpackConfig' in config ) {

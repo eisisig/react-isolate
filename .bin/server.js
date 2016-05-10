@@ -1,14 +1,18 @@
 #!/usr/bin/env node
-'use strict';
+'use strict'
 
 const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const path = require("path")
+const express = require("express")
 const style = require('ansi-styles')
 const pkg = require("../package.json")
 
 const config = require('../config')
 const webpackConfig = require('../webpack.config')
+
+const app = express()
+const compiler = webpack(webpackConfig)
 
 const banner = function () {
 	console.log(`${style.blue.open}
@@ -22,7 +26,7 @@ ${style.blue.close}
 `)
 }
 
-new WebpackDevServer(webpack(webpackConfig), {
+app.use(require('webpack-dev-middleware')(compiler, {
 	contentBase: path.resolve(__dirname, '..', 'isolate-src'),
 	publicPath: webpackConfig.output.publicPath,
 	hot: true,
@@ -36,9 +40,15 @@ new WebpackDevServer(webpack(webpackConfig), {
 		hash: false,
 		chunkModules: false,
 	}
+}))
+
+app.use(require('webpack-hot-middleware')(compiler))
+
+app.get('*', function ( req, res ) {
+	res.sendFile(path.resolve(__dirname, '..', 'isolate-src', 'index.html'))
 })
-	.listen(webpackConfig.PORT, 'localhost', function (error) {
-		if ( error ) console.log(error)
-		banner()
-		console.log('Listening at localhost:' + webpackConfig.PORT)
-	})
+
+app.listen(webpackConfig.PORT, function ( err ) {
+	if ( err ) { return console.error(err) }
+	console.log('Listening at localhost:' + webpackConfig.PORT)
+})

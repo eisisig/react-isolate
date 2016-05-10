@@ -7,6 +7,8 @@ import map from 'lodash/map'
 import sortObject from '../utils/sortObject'
 import {navigate} from '../actions'
 
+import Alert from './../../demo/components/Alert/Alert'
+
 import styles from '../styles/ComponentMenu.less'
 
 const sx = styleclasses(styles)
@@ -21,7 +23,7 @@ const propTypes = {
 	searchResults: PropTypes.object,
 }
 
-const renderMenu = (components, prevUrl = '', level = 1, { dispatch }) => {
+const renderMenu = ( components, prevUrl = '', level = 1, { dispatch } ) => {
 
 	const hasFixtures = value => 'fixtures' in value && Object.keys(value.fixtures).length
 	const hasComponents = value => 'components' in value && Object.keys(value.components).length
@@ -30,12 +32,12 @@ const renderMenu = (components, prevUrl = '', level = 1, { dispatch }) => {
 
 	components = sortObject(components)
 
-	const itemMap = (value, key) => (
+	const itemMap = ( value, key ) => (
 		<li className={ sx('item') } key={ `${key}-${level}` }>
 			<a className={ sx('link') } onClick={ () => dispatch(navigate(`${url}/${key}`)) }>{ key }</a>
-			{ hasFixtures(value) ? <ul>{ map(value.fixtures, (v, k) => (
+			{ hasFixtures(value) ? <ul>{ map(value.fixtures, ( v, k ) => (
 				<li className={ sx('item') } key={ `${key}-${k}-${level}` }>
-					<a className={ sx('link') } onClick={ () => dispatch(navigate(`${url}/${key}/fixtures/${k}`)) }>{ k }</a>
+					<a className={ sx('link') } onClick={ () => dispatch(navigate(`${url}/${key}/fixtures/${k}`)) }>&rarr; { k }</a>
 				</li>
 			)) }</ul> : null }
 			{ hasComponents(value) ? renderMenu(value.components, `/${prevUrl}${key}`, level += 1, { dispatch }) : null }
@@ -49,10 +51,11 @@ const renderMenu = (components, prevUrl = '', level = 1, { dispatch }) => {
 	)
 }
 
-const render = ({ props, args }) => {
+const render = ( { props, args } ) => {
 	const components = props.searchResults || props.componentMap
 	return (
 		<div>
+			<Alert title="This is the title" message="" />
 			<If condition={ !!components }>
 				{ renderMenu(components, '', 1, args) }
 			</If>

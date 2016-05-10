@@ -1,4 +1,5 @@
 'use strict'
+
 import get from 'lodash/get'
 import flow from 'lodash/flow'
 import reduce from 'lodash/reduce'
@@ -6,7 +7,7 @@ import slice from 'lodash/slice'
 import split from 'lodash/split'
 import indexOf from 'lodash/indexOf'
 
-export function urlToComponent (url, components) {
+export function urlToComponent ( url, components ) {
 
 	let fixtureArr
 	let selectedComponent = null
@@ -15,21 +16,23 @@ export function urlToComponent (url, components) {
 	let componentArr = flow(string => split(string, '/'), arr => slice(arr, 1, arr.length),)(url)
 
 	const fixtureIndex = indexOf(componentArr, 'fixtures')
-	const fixComponentsPath = arr => reduce(arr, (l, c, i) => i + 1 < arr.length ? l.concat([c, 'components']) : l.concat([c]), [])
+	const fixComponentsPath = arr => reduce(arr, ( l, c, i ) => i + 1 < arr.length ? l.concat([c, 'components']) : l.concat([c]), [])
 
 	if ( ~fixtureIndex ) {
 		fixtureArr = slice(componentArr, fixtureIndex, componentArr.length)
 		componentArr = slice(componentArr, 0, fixtureIndex)
 	}
 
-	selectedComponent = get(components, fixComponentsPath(componentArr))
+	const selected = get(components, fixComponentsPath(componentArr).concat('component'))
+	const fixtures = get(components, fixComponentsPath(componentArr).concat('fixtures'))
 
-	if ( !!fixtureArr ) {
-		selectedFixture = get(selectedComponent, fixtureArr)
+	if ( selected ) {
+		selectedComponent = selected
 	}
 
-	if ( selectedComponent && selectedComponent.hasOwnProperty('component') ) {
-		selectedComponent = selectedComponent.component
+	if ( !!fixtureArr ) {
+		const currentFixture = fixtureArr.pop()
+		selectedFixture = get(fixtures, [currentFixture])
 	}
 
 	if ( selectedComponent && selectedComponent.hasOwnProperty('components') ) {

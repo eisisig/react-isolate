@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from 'react'
 import ReactDOM from 'react-dom'
+import get from 'lodash/get'
 import {stitch} from 'keo'
 import {connect} from 'react-redux'
 
@@ -12,35 +13,36 @@ const mapStateToProps = state => ({
 
 const propTypes = {
 	selectedFixture: PropTypes.object,
-	selectedComponent: PropTypes.object,
+	selectedComponent: PropTypes.func,
 }
 
-export const renderComponent = ({ selectedComponent, selectedFixture }) => {
+export const renderComponent = ( { selectedComponent, selectedFixture } ) => {
 
-	if ( !selectedComponent ) return null
+	if ( !selectedComponent ) {
+		return null
+	}
 
-	selectedFixture = selectedFixture && selectedFixture.content || selectedComponent.Component && selectedComponent.Component.defaultProps || {}
+	if ( !selectedFixture && selectedComponent.hasOwnProperty('defaultProps') ) {
+		selectedFixture = selectedComponent.defaultProps
+	}
 
 	const container = document.getElementById('preview-container')
 
 	ReactDOM.unmountComponentAtNode(container)
 
-	if ( !selectedFixture && !selectedComponent ) {
-		ReactDOM.render(<div></div>, container)
-	} else {
-		ReactDOM.render(React.createElement(selectedComponent.Component, { ...selectedFixture }), container)
+	try {
+		ReactDOM.render(React.createElement(selectedComponent, { ...selectedFixture }), container)
+	} catch ( e ) {
+		console.log('e1', e)
+		return null
 	}
-
-	// console.log('selectedFixture', selectedFixture)
-
-	return null
 }
 
-const componentDidMount = ({ props }) => renderComponent(props)
-const componentDidUpdate = ({ props }) => renderComponent(props)
+const componentDidMount = ( { props } ) => renderComponent(props)
+const componentDidUpdate = ( { props } ) => renderComponent(props)
 
 const render = () => {
 	return <div id="preview-container" className="PreviewComponent"></div>
 }
 
-export default connect(mapStateToProps)(stitch({ propTypes, componentDidMount, componentDidUpdate, render }))
+export default stitch({ propTypes, componentDidMount, componentDidUpdate, render }, mapStateToProps)

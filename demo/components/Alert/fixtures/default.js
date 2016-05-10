@@ -1,3 +1,4 @@
 export default {
-    message: "I'm an alert message"
+	title: 'Default 2',
+	message: 'I\'m an alert message'
 }

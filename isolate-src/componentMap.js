@@ -57,7 +57,7 @@ const componentsMap = reduce(components.files, (last, current) => {
 				fixtures: {
 					[fileName]: {
 						path: current,
-						content: content,
+						// content: () => content,
 						name: fileName,
 					}
 				}
@@ -76,18 +76,18 @@ const componentsMap = reduce(components.files, (last, current) => {
 
 		const fileName = getFile(currentArr)
 
-		let Component = components.context(current)
-
-		if ( 'default' in Component ) {
-			Component = Component.default
-		}
+		// let Component = components.context(current)
+		//
+		// if ( 'default' in Component ) {
+		// 	Component = Component.default
+		// }
 
 		merge(componentObj, {
 			[fileName]: {
 				component: {
 					name: fileName,
 					path: current,
-					Component: Component,
+					// Component: Component,
 				}
 			}
 
