@@ -1,26 +1,13 @@
 {
   "babelrc": false,
   "presets": [
+    "es2015-webpack-loose",
+    "react-hmre",
     "react"
   ],
   "plugins": [
-    "syntax-trailing-function-commas",
-    "transform-async-to-generator",
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "transform-es2015-parameters",
-    "transform-es2015-destructuring",
     "jsx-control-statements",
+    "transform-class-properties",
     "transform-decorators-legacy"
-  ],
-  "env": {
-    "test": {
-      "presets": []
-    },
-    "development": {
-      "plugins": [
-        "react-hot-loader/babel"
-      ]
-    }
-  }
+  ]
 }

@@ -13,12 +13,12 @@ export class Alert extends React.Component {
 		title: '',
 		message: '',
 		disabled: null,
-		kind: 'default',
-		child: null,
-		metadata: {},
-		linkedId: [1, 6],
-		accountId: 246,
-		comments: [],
+		// kind: 'default',
+		// child: null,
+		// metadata: {},
+		// linkedId: [1, 6],
+		// accountId: 246,
+		// comments: ['qwe'],
 	};
 
 	static propTypes = {
@@ -28,22 +28,22 @@ export class Alert extends React.Component {
 		icon: PropTypes.string.isRequired,
 		disabled: PropTypes.bool,
 		/** Add branding colors to alert */
-		kind: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'info', 'error']),
-		child: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.bool,
-			PropTypes.func,
-		]),
-		metadata: PropTypes.shape({
-			desc: PropTypes.string,
-			count: PropTypes.number,
-		}),
-		linkedIds: PropTypes.arrayOf(React.PropTypes.number),
-		/** The owners id */
-		accountId: PropTypes.number.isRequired,
-		comments: PropTypes.arrayOf([
-			PropTypes.string
-		]),
+		// kind: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'info', 'error']),
+		// child: PropTypes.oneOfType([
+		// 	PropTypes.string,
+		// 	PropTypes.bool,
+		// 	PropTypes.func,
+		// ]),
+		// metadata: PropTypes.shape({
+		// 	desc: PropTypes.string,
+		// 	count: PropTypes.number,
+		// }),
+		// linkedIds: PropTypes.arrayOf(React.PropTypes.number),
+		// /** The owners id */
+		// accountId: PropTypes.number.isRequired,
+		// comments: PropTypes.arrayOf([
+		// 	PropTypes.string
+		// ]),
 	};
 
 	render () {

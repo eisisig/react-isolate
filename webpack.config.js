@@ -2,6 +2,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const HappyPack = require('happypack')
 const omit = require('lodash/omit')
 const argv = require('minimist')(process.argv.slice(2))
 
@@ -15,12 +16,12 @@ const PORT = process.env.PORT || argv.port || 9999
 const resolvePath = ( userPath ) => cwd + '/' + userPath || ''
 
 let common = {
-	devtool: 'source-map',
+	cache: true,
+	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		isolate: [
-			'react-hot-loader/patch',
 			'webpack-hot-middleware/client',
-			'webpack/hot/only-dev-server',
+			// 'webpack/hot/only-dev-server',
 			path.resolve(__dirname, 'isolate-src', 'index.js'),
 		]
 	},
@@ -41,7 +42,7 @@ let common = {
 			'keo': path.resolve(__dirname, 'isolate-vendor', 'keo.js'),
 			COMPONENTS_PATH: resolvePath(config.componentsPath),
 		},
-		extensions: ['', '.js', '.jsx']
+		extensions: [ '', '.js', '.jsx' ]
 	},
 	resolveLoader: {
 		modulesDirectories: [
@@ -52,18 +53,22 @@ let common = {
 	module: {
 		// noParse: [],
 		loaders: [
-			{ test: /\.json$/, loader: 'json5' },
+			{
+				test: /\.json$/, loader: 'json5'
+			},
 			{
 				test: /\.md$/,
-				loader: 'raw!markdown'
+				loader: 'raw!markdown',
+				happy: { id: 'md' }
 			},
 			{
 				test: /\.js$/,
-				loaders: ['babel'],
+				loaders: [ 'babel' ],
 				include: [
 					path.resolve(__dirname, 'isolate-src'),
 					resolvePath(config.componentsPath)
 				],
+				happy: { id: 'js' }
 			},
 			{
 				test: /\.less$/,
@@ -82,18 +87,19 @@ let common = {
 		'react-dom': 'ReactDOM',
 	},
 	plugins: [
+		new HappyPack({ id: 'js' }),
+		new HappyPack({ id: 'md' }),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new webpack.IgnorePlugin(/\/_.+\//),
 		new webpack.DefinePlugin({
-			__ISOLATE__: JSON.stringify(omit(config, ['webpackConfig'])),
+			__ISOLATE__: JSON.stringify(omit(config, [ 'webpackConfig' ])),
 			'process.env': {
 				'NODE_ENV': JSON.stringify(NODE_ENV)
 			}
 		}),
 		new webpack.PrefetchPlugin(path.resolve(__dirname, 'isolate-src'), './componentMap'),
 		new webpack.PrefetchPlugin('keo'),
-		new webpack.PrefetchPlugin('react-hot-loader'),
 		// new webpack.PrefetchPlugin('react-ace'),
 		new webpack.PrefetchPlugin('deep-equal'),
 		new webpack.PrefetchPlugin('history'),
@@ -102,21 +108,22 @@ let common = {
 		new webpack.PrefetchPlugin('react-proxy'),
 		new webpack.PrefetchPlugin('es6-weak-map'),
 	],
-	devServer: {
-		contentBase: path.resolve(__dirname, 'isolate-src'),
-		publicPath: '/',
-		hot: true,
-		historyApiFallback: true,
-		stats: {
-			colors: true,
-			timings: true,
-			chunks: true,
-			assets: false,
-			version: false,
-			hash: false,
-			chunkModules: false,
-		}
-	}
+	// devServer: {
+	// 	contentBase: path.resolve(__dirname, 'isolate-src'),
+	// 	publicPath: '/',
+	// 	hot: true,
+	// 	inline: true,
+	// 	historyApiFallback: true,
+	// 	stats: {
+	// 		colors: true,
+	// 		timings: true,
+	// 		chunks: true,
+	// 		assets: false,
+	// 		version: false,
+	// 		hash: false,
+	// 		chunkModules: false,
+	// 	}
+	// }
 }
 
 if ( 'webpackConfig' in config ) {

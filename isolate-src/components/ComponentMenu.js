@@ -13,6 +13,8 @@ import styles from '../styles/ComponentMenu.less'
 
 const sx = styleclasses(styles)
 
+const displayName = 'ComponentMenu'
+
 const mapStateToProps = state => ({
 	componentMap: state.componentMap,
 	searchResults: state.searchResults,
@@ -63,4 +65,4 @@ const render = ( { props, args } ) => {
 	)
 }
 
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

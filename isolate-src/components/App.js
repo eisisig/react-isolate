@@ -12,6 +12,8 @@ import {Editor, Markup, Panel, Preview, Sidebar, Spec, Topbar} from './index'
 
 import styles from '../styles/App.less'
 
+const displayName = 'App'
+
 const mapStateToProps = state => ({
 	viewState: state.viewState
 })
@@ -84,4 +86,4 @@ const render = ({ props }) => {
 	)
 }
 
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

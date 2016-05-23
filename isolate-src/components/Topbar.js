@@ -8,6 +8,8 @@ import {navigate, setViewState} from '../actions'
 
 import styles from '../styles/Topbar.less'
 
+const displayName = 'Topbar'
+
 const mapStateToProps = state => ({
 	viewState: state.viewState
 })
@@ -63,4 +65,4 @@ const render = ({ props }) => {
 /**
  * Export
  */
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

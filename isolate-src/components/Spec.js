@@ -6,12 +6,14 @@ import {connect} from 'react-redux'
 import get from 'lodash/get'
 import {renderPropTypes} from '../utils'
 
+const displayName = 'Spec'
+
 const mapStateToProps = state => ({
 	selectedComponent: state.selectedComponent
 })
 
 const propTypes = {
-	selectedComponent: PropTypes.object
+	selectedComponent: PropTypes.func
 }
 //
 // const sortProps = props => {
@@ -128,4 +130,4 @@ const render = ( { props: { selectedComponent } } ) => {
 	// )
 }
 
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

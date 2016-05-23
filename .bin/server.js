@@ -50,5 +50,6 @@ app.get('*', function ( req, res ) {
 
 app.listen(webpackConfig.PORT, function ( err ) {
 	if ( err ) { return console.error(err) }
-	console.log('Listening at localhost:' + webpackConfig.PORT)
+	banner()
+	console.log('Listening at http://localhost:' + webpackConfig.PORT)
 })

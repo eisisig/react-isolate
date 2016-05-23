@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import {search, searchClear} from '../actions'
 
+const displayName = 'SearchInput'
+
 const mapStateToProps = state => ({
 	searchQuery: state.searchQuery
 })
@@ -39,4 +41,4 @@ const render = ({ props }) => {
 /**
  * Export
  */
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

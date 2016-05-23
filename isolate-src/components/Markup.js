@@ -7,6 +7,8 @@ import {stitch} from 'keo'
 import renderMarkup from '../utils/renderMarkup'
 import AceEditor from 'react-ace'
 
+const displayName = 'Markup'
+
 const mapStateToProps = state => ({
 	selectedFixture: state.selectedFixture,
 	selectedComponent: state.selectedComponent,
@@ -14,12 +16,10 @@ const mapStateToProps = state => ({
 
 const propTypes = {
 	selectedFixture: PropTypes.object,
-	selectedComponent: PropTypes.object,
+	selectedComponent: PropTypes.func,
 }
 
 const render = ( { props } ) => {
-
-	console.log('props', props)
 
 	const currentFixturePath = get(props, 'selectedFixture.path')
 
@@ -59,4 +59,4 @@ const render = ( { props } ) => {
 	)
 }
 
-export default stitch({ propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, render }, mapStateToProps)

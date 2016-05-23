@@ -5,8 +5,10 @@ import {connect} from 'react-redux'
 import {stitch} from 'keo'
 import get from 'lodash/get'
 import ace from 'brace';
-import beautify from 'js-beautify'
+// import beautify from 'js-beautify'
 import {setFixture} from '../actions'
+
+const displayName = 'Editor'
 
 const mapStateToProps = state => ({
 	selectedFixture: get(state, 'selectedFixture.props'),
@@ -15,7 +17,7 @@ const mapStateToProps = state => ({
 
 const propTypes = {
 	selectedFixture: PropTypes.object,
-	selectedComponent: PropTypes.object,
+	selectedComponent: PropTypes.func,
 }
 
 const shouldComponentUpdate = ({ props, nextProps }) => {
@@ -25,7 +27,7 @@ const shouldComponentUpdate = ({ props, nextProps }) => {
 	return JSON.stringify(props.selectedFixture) !== JSON.stringify(nextProps.selectedFixture)
 }
 
-const serializeValue = value => beautify(JSON.stringify(value))
+const serializeValue = value => JSON.stringify(value)
 const deserializeValue = value => JSON.parse(value)
 // let editor = null
 
@@ -99,4 +101,4 @@ const render = ({ props, args }) => {
 	// )
 }
 
-export default stitch({ propTypes, shouldComponentUpdate, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, shouldComponentUpdate, render }, mapStateToProps)

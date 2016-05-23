@@ -2,33 +2,20 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Root from './components/Root'
-import {AppContainer} from 'react-hot-loader'
-import store from './store'
 
 import './utils/subscribe'
 
+const Root = require('./components/Root').default
 const rootElement = document.getElementById('root')
 
-ReactDOM.render(
-	<AppContainer>
-		<Root store={ store } />
-	</AppContainer>,
+let instance = ReactDOM.render(
+	<Root />,
 	rootElement
-);
+)
 
 if ( module.hot ) {
-	// module.hot.accept('./components/Root', () => renderApp());
-	module.hot.accept(() => renderApp())
+	module.hot.accept(function () {
+		const NextApp = require('./components/Root').default
+		instance = ReactDOM.render(<NextApp />, rootElement)
+	})
 }
-
-function renderApp () {
-	const NextApp = require('./components/Root').default
-	ReactDOM.render(
-		<AppContainer>
-			<NextApp store={ store } />
-		</AppContainer>,
-		rootElement
-	);
-}
-

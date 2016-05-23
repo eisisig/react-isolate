@@ -6,6 +6,8 @@ import {stitch} from 'keo'
 import ComponentMenu from './ComponentMenu'
 import SearchInput from './SearchInput'
 
+const displayName = 'Sidebar'
+
 const render = () => {
 	return (
 		<aside className="Sidebar">
@@ -18,4 +20,4 @@ const render = () => {
 /**
  * Export
  */
-export default stitch({ render })
+export default stitch({ displayName, render })
