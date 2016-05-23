@@ -1,7 +1,6 @@
 {
-  "babelrc": false,
   "presets": [
-    "es2015-webpack-loose",
+    "es2015-webpack",
     "react-hmre",
     "react"
   ],

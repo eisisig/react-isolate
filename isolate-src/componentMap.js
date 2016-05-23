@@ -17,20 +17,20 @@ const getComponents = () => {
 
 const components = getComponents()
 
-const getFile = (array) => array[array.length - 1].replace('.js', '')
-const isFile = (part) => ~part.indexOf('.js')
-const isFixturePath = (path) => ~path.indexOf('/fixtures/')
+const getFile = ( array ) => array[ array.length - 1 ].replace('.js', '')
+const isFile = ( part ) => ~part.indexOf('.js')
+const isFixturePath = ( path ) => ~path.indexOf('/fixtures/')
 
-const getFixtureParent = (array) => array[array.indexOf('fixtures') - 1]
-const getBeforeFixtures = (array) => array.slice(0, array.indexOf('fixtures'))
+const getFixtureParent = ( array ) => array[ array.indexOf('fixtures') - 1 ]
+const getBeforeFixtures = ( array ) => array.slice(0, array.indexOf('fixtures'))
 
-const componentsMap = reduce(components.files, (last, current) => {
+const componentsMap = reduce(components.files, ( last, current ) => {
 
 	let componentObj = {}
 	let fixtureObj = {}
 	let returnObj = {}
 
-	const blacklist = ['index.js', 'rules.js', 'utils.js']
+	const blacklist = [ 'index.js', 'rules.js', 'utils.js' ]
 
 	if ( some(blacklist, part => ~current.indexOf(part)) ) {
 		return last
@@ -38,7 +38,7 @@ const componentsMap = reduce(components.files, (last, current) => {
 
 	const currentArr = flow(
 		split('/'),
-		slice(1, this.length),
+		slice(1, this.length)
 	)(current)
 
 	if ( isFixturePath(current) && isFile(current) ) {
@@ -64,9 +64,9 @@ const componentsMap = reduce(components.files, (last, current) => {
 			}
 		})
 
-		if ( currentArr.length > 3 && currentArr[0] !== fileName ) {
+		if ( currentArr.length > 3 && currentArr[ 0 ] !== fileName ) {
 			fixtureObj = {
-				[currentArr[0]]: {
+				[currentArr[ 0 ]]: {
 					components: fixtureObj
 				}
 			}
@@ -93,9 +93,9 @@ const componentsMap = reduce(components.files, (last, current) => {
 
 		})
 
-		if ( currentArr.length > 1 && currentArr[0] !== fileName ) {
+		if ( currentArr.length > 1 && currentArr[ 0 ] !== fileName ) {
 			componentObj = {
-				[currentArr[0]]: {
+				[currentArr[ 0 ]]: {
 					components: componentObj,
 				}
 			}

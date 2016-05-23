@@ -17,6 +17,7 @@ const resolvePath = ( userPath ) => cwd + '/' + userPath || ''
 
 let common = {
 	cache: true,
+	context: path.resolve(__dirname),
 	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		isolate: [
@@ -46,12 +47,14 @@ let common = {
 	},
 	resolveLoader: {
 		modulesDirectories: [
-			path.resolve(process.cwd(), 'node_modules'),
 			path.resolve(__dirname, 'node_modules'),
+			path.resolve(process.cwd(), 'node_modules'),
+			'node_modules',
 		]
 	},
 	module: {
 		// noParse: [],
+		// TODO: Add less, svg, img loaders
 		loaders: [
 			{
 				test: /\.json$/, loader: 'json5'
@@ -108,22 +111,6 @@ let common = {
 		new webpack.PrefetchPlugin('react-proxy'),
 		new webpack.PrefetchPlugin('es6-weak-map'),
 	],
-	// devServer: {
-	// 	contentBase: path.resolve(__dirname, 'isolate-src'),
-	// 	publicPath: '/',
-	// 	hot: true,
-	// 	inline: true,
-	// 	historyApiFallback: true,
-	// 	stats: {
-	// 		colors: true,
-	// 		timings: true,
-	// 		chunks: true,
-	// 		assets: false,
-	// 		version: false,
-	// 		hash: false,
-	// 		chunkModules: false,
-	// 	}
-	// }
 }
 
 if ( 'webpackConfig' in config ) {
@@ -133,8 +120,6 @@ if ( 'webpackConfig' in config ) {
 		common = merge.smart(common.module.loaders, webpackConfig.smart)
 	}
 }
-
-// console.log(JSON.stringify(common, null, 4))
 
 module.exports = common
 module.exports.PORT = PORT
