@@ -2,9 +2,7 @@
 
 import React, {PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import get from 'lodash/get'
 import {stitch} from 'keo'
-import {connect} from 'react-redux'
 
 const displayName = 'Preview'
 
@@ -40,19 +38,11 @@ export const renderComponent = ( { selectedComponent, selectedFixture } ) => {
 	}
 }
 
-// const componentDidMount = ( { props } ) => renderComponent(props)
-// const componentDidUpdate = ( { props } ) => {
-// 	console.log('Preview: componentDidUpdate')
-// 	renderComponent(props)
-// }
+const componentDidMount = ( { props } ) => renderComponent(props)
+const componentDidUpdate = ( { props } ) => renderComponent(props)
 
-const render = ( { props: { selectedComponent, selectedFixture } } ) => {
-	console.log('Preview: render')
-	return (
-		<div id="preview-container" className="PreviewComponent">
-		     { React.createElement(selectedComponent, { ...selectedFixture }) }
-		</div>
-	)
+const render = () => {
+	return <div id="preview-container" className="PreviewComponent"></div>
 }
 
-export default stitch({ displayName, propTypes, render }, mapStateToProps)
+export default stitch({ displayName, propTypes, componentDidMount, componentDidUpdate, render }, mapStateToProps)

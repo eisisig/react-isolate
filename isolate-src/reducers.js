@@ -10,7 +10,9 @@ import {urlToComponent, findComponents} from './utils'
 import appConfig from '.././isolate.config'
 import * as c from './constants'
 
+console.groupCollapsed('%cCOMPONENTS', 'color: LightSeaGreen', 'total:', Object.keys(componentMap).length)
 console.log(componentMap)
+console.groupEnd()
 // console.log(JSON.stringify(componentMap, null, 4))
 
 const initialState = {
@@ -63,6 +65,7 @@ export default handleActions({
 				component = require('COMPONENTS_PATH/' + componentPath.slice(2))
 				if ( component.hasOwnProperty('default') ) {
 					component = component.default
+					component._filePath = componentPath
 				}
 			} catch ( e ) {
 				console.log('e', e)
@@ -83,7 +86,7 @@ export default handleActions({
 		return assign({}, state, { selectedComponent: component, selectedFixture: fixture })
 	},
 	[c.SET_FIXTURE]: ( state, { payload } ) => {
-		return assign({}, state, { selectedFixture: assign({}, state.selectedFixture, { props: payload }) })
+		return assign({}, state, { selectedFixture: assign({}, state.selectedFixture, payload) })
 	},
 	// Set view state
 	[c.SET_VIEW_STATE]: ( state, { payload } ) => {

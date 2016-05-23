@@ -13,10 +13,10 @@ export function urlToComponent ( url, components ) {
 	let selectedComponent = null
 	let selectedFixture = null
 
-	let componentArr = flow(string => split(string, '/'), arr => slice(arr, 1, arr.length),)(url)
+	let componentArr = flow(string => split(string, '/'), arr => slice(arr, 1, arr.length))(url)
 
 	const fixtureIndex = indexOf(componentArr, 'fixtures')
-	const fixComponentsPath = arr => reduce(arr, ( l, c, i ) => i + 1 < arr.length ? l.concat([c, 'components']) : l.concat([c]), [])
+	const fixComponentsPath = arr => reduce(arr, ( l, c, i ) => i + 1 < arr.length ? l.concat([ c, 'components' ]) : l.concat([ c ]), [])
 
 	if ( ~fixtureIndex ) {
 		fixtureArr = slice(componentArr, fixtureIndex, componentArr.length)
@@ -26,13 +26,15 @@ export function urlToComponent ( url, components ) {
 	const selected = get(components, fixComponentsPath(componentArr).concat('component'))
 	const fixtures = get(components, fixComponentsPath(componentArr).concat('fixtures'))
 
+	console.log('selected', selected)
+
 	if ( selected ) {
 		selectedComponent = selected
 	}
 
 	if ( !!fixtureArr ) {
 		const currentFixture = fixtureArr.pop()
-		selectedFixture = get(fixtures, [currentFixture])
+		selectedFixture = get(fixtures, [ currentFixture ])
 	}
 
 	if ( selectedComponent && selectedComponent.hasOwnProperty('components') ) {

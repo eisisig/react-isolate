@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 const propTypes = {
 	selectedComponent: PropTypes.func
 }
-//
+
 // const sortProps = props => {
 // 	return orderBy(Object.keys(props).map(( prop ) => ({
 // 		name: prop,
@@ -69,19 +69,19 @@ const propTypes = {
 
 const render = ( { props: { selectedComponent } } ) => {
 
-	if ( !selectedComponent || typeof selectedComponent.Component !== 'function' ) {
+	if ( !selectedComponent || typeof selectedComponent !== 'function' && !selectedComponent._filePath ) {
 		return null
 	}
 
 	let spec = null
 
 	try {
-		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + selectedComponent.path.slice(2))
+		spec = require('!!docgen?markdownDescription!COMPONENTS_PATH/' + selectedComponent._filePath.slice(2))
 	} catch ( e ) {
 		console.log('Spec: Load file', e)
 	}
 
-	spec = get(spec[0], 'props')
+	spec = get(spec[ 0 ], 'props')
 
 	console.log('spec', spec)
 
@@ -94,40 +94,6 @@ const render = ( { props: { selectedComponent } } ) => {
 			{ renderPropTypes(spec) }
 		</div>
 	)
-
-	//
-	// spec = spec && spec.length ? spec[0] : spec
-	//
-	// const sortedProps = sortProps(spec.props)
-	//
-	// return (
-	// 	<div>
-	// 		<table className="">
-	// 			<thead>
-	// 			<tr>
-	// 				<th>Name</th>
-	// 				<th>Type</th>
-	// 				<th>Values</th>
-	// 				<th>Default</th>
-	// 				<th>Description</th>
-	// 			</tr>
-	// 			</thead>
-	// 			<tbody>
-	// 			{sortedProps.map((prop, i) => {
-	// 				return (
-	// 					<tr key={ i } className={ `${prop.required ? 'is-required' : '' }` }>
-	// 						<td><strong>{ prop.name + (prop.required ? '*' : '') }</strong></td>
-	// 						<td><em><span className="code">{ getType(prop) }</span></em></td>
-	// 						<td>{ getTypeValues(prop) }</td>
-	// 						<td>{ getDefault(prop) }</td>
-	// 						<td>{ prop.description }</td>
-	// 					</tr>
-	// 				)
-	// 			}) }
-	// 			</tbody>
-	// 		</table>
-	// 	</div>
-	// )
 }
 
 export default stitch({ displayName, propTypes, render }, mapStateToProps)
