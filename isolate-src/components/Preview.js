@@ -33,7 +33,7 @@ export const renderComponent = ( { selectedComponent, selectedFixture } ) => {
 	try {
 		ReactDOM.render(React.createElement(selectedComponent, { ...selectedFixture }), container)
 	} catch ( e ) {
-		console.log('e1', e)
+		console.error(e)
 		return null
 	}
 }
