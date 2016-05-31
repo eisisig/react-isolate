@@ -7,8 +7,6 @@ import map from 'lodash/map'
 import sortObject from '../utils/sortObject'
 import {navigate} from '../actions'
 
-import Alert from './../../demo/components/Alert/Alert'
-
 import styles from '../styles/ComponentMenu.less'
 
 const sx = styleclasses(styles)
@@ -57,7 +55,6 @@ const render = ( { props, args } ) => {
 	const components = props.searchResults || props.componentMap
 	return (
 		<div>
-			<Alert title="This is the title" message="" />
 			<If condition={ !!components }>
 				{ renderMenu(components, '', 1, args) }
 			</If>
