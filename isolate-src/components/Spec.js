@@ -1,10 +1,10 @@
 'use strict'
 
-import React, {PropTypes} from 'react'
-import {stitch} from 'keo'
-import {connect} from 'react-redux'
+import React, { PropTypes } from 'react'
+import { stitch } from 'keo'
+import { connect } from 'react-redux'
 import get from 'lodash/get'
-import {renderPropTypes} from '../utils'
+import { renderPropTypes } from '../utils'
 
 const displayName = 'Spec'
 
@@ -81,9 +81,7 @@ const render = ( { props: { selectedComponent } } ) => {
 		console.log('Spec: Load file', e)
 	}
 
-	spec = get(spec[ 0 ], 'props')
-
-	console.log('spec', spec)
+	spec = get(spec, '[0].props')
 
 	if ( !spec ) {
 		return <div>No prop validations defined</div>

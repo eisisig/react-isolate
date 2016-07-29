@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 
-const WebpackDevServer = require('webpack-dev-server')
+// const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const path = require("path")
 const express = require("express")
@@ -9,7 +9,7 @@ const style = require('ansi-styles')
 const pkg = require("../package.json")
 
 const config = require('../config')
-const webpackConfig = require('../webpack.config')
+const webpackConfig = require(path.resolve(__dirname, '..', 'webpack.config'))
 
 const app = express()
 const compiler = webpack(webpackConfig)
