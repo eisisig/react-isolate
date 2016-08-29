@@ -1,6 +1,5 @@
 {
   "presets": [
-    "es2015-webpack",
     "react-hmre",
     "react"
   ],
