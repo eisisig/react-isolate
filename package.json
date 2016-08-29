@@ -95,6 +95,7 @@
     "style-loader": "^0.13.1",
     "styleclasses": "^1.2.4",
     "super-json": "2.2.0",
+    "svg-inline-loader": "^0.6.1",
     "svgo": "^0.7.0",
     "svgo-loader": "^1.1.0",
     "webpack": "^2.1.0-beta.21",
