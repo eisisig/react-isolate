@@ -87,11 +87,7 @@ const render = ( { props: { selectedComponent } } ) => {
 		return <div>No prop validations defined</div>
 	}
 
-	return (
-		<div>
-			{ renderPropTypes(spec) }
-		</div>
-	)
+	return <div>{ renderPropTypes(spec) }</div>
 }
 
 export default stitch({ displayName, propTypes, render }, mapStateToProps)

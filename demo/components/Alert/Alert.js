@@ -17,7 +17,7 @@ export class Alert extends React.Component {
 		// child: null,
 		// metadata: {},
 		// linkedId: [1, 6],
-		// accountId: 246,
+		// accountId: 246,3
 		// comments: ['qwe'],
 	};
 
