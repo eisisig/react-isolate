@@ -1,11 +1,10 @@
 'use strict'
 
-import React, {PropTypes} from 'react'
-import {stitch} from 'keo'
+import React, { PropTypes } from 'react'
+import { stitch } from 'keo'
 import get from 'lodash/get'
-// import ace from 'brace';
 import AceEditor from 'react-ace'
-import {setFixture} from '../actions'
+import { setFixture } from '../actions'
 
 const displayName = 'Editor'
 
@@ -28,13 +27,12 @@ const render = ( { props } ) => {
 	if ( !props.selectedFixture ) return null
 
 	const handleChange = ( value ) => {
-		// console.info('handleChange.value', value)
+		console.info('handleChange.value', value)
 		try {
-			const toJS = deserializeValue(value)
-			console.log('handleChange.toJS', toJS)
+			const toJS = JSON.parse(value)
 			props.dispatch(setFixture(toJS))
 		} catch ( e ) {
-			console.warn('JSON.parse error', e)
+			// console.warn('JSON.parse error', e)
 		}
 	}
 
@@ -57,7 +55,7 @@ const render = ( { props } ) => {
 
 	return (
 		<If condition={ props.selectedFixture }>
-		    { Editor }
+			{ Editor }
 		</If>
 	)
 }
