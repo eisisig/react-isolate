@@ -40,17 +40,17 @@ const render = ({ props }) => {
 						Preview
 					</label>
 					<label className={ sx('label', { inactive: !props.viewState.showMarkup }) }>
-						<input type="checkbox" name="showMarkup" defaultChecked={ props.viewState.showMarkup } onChange={ handleChange } />
+						<input disabled type="checkbox" name="showMarkup" defaultChecked={ props.viewState.showMarkup } onChange={ handleChange } />
 						Markup
 					</label>
-					<label className={ sx('label', { inactive: !props.viewState.showEditor }) }>
-						<input type="checkbox" name="showEditor" defaultChecked={ props.viewState.showEditor } onChange={ handleChange } />
-						Editor
-					</label>
-					<span className={ sx('sep') }>|</span>
 					<label className={ sx('label', { inactive: !props.viewState.showSpec }) }>
 						<input type="checkbox" name="showSpec" defaultChecked={ props.viewState.showSpec } onChange={ handleChange } />
 						Spec
+					</label>
+					<span className={ sx('sep') }>|</span>
+					<label className={ sx('label', { inactive: !props.viewState.showEditor }) }>
+						<input type="checkbox" name="showEditor" defaultChecked={ props.viewState.showEditor } onChange={ handleChange } />
+						Editor
 					</label>
 					<label className={ sx('label', { inactive: !props.viewState.showDoc }) }>
 						<input disabled type="checkbox" name="showDoc" defaultChecked={ props.viewState.showDoc } onChange={ handleChange } />
